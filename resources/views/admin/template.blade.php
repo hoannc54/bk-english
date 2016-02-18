@@ -54,5 +54,6 @@
         <script src="{!! url('public/js/bootstrap.min.js') !!}"></script>
         <script src="{!! url('public/js/myscript.js') !!}"></script>
         <script src="{!! url('public/js/list-items.js') !!}"></script>
+        <script src="{!! url('public/js/play-sound.js') !!}"></script>
     </body>
 </html>

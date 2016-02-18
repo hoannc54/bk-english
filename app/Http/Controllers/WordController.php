@@ -20,7 +20,7 @@ class WordController extends Controller {
         $word->word = $request->word;
         $word->spell = $request->spell;
         $word->mean = $request->means;
-        $word->sound = $request->word.'.mp3';
+        $word->sound = 'public/sound/'.$request->word.'.mp3';
         $word->parent_id = 0;
         $word->save();
         word_to_ex($word->id, $word->word);
@@ -36,7 +36,7 @@ class WordController extends Controller {
                     $chil_word->parent_id = $word_parent;
                     $chil_word->save();
 
-                    word_to_ex($chil->id, $chil->word);
+                    word_to_ex($chil_word->id, $chil_word->word);
                 }
             }
         }
@@ -44,7 +44,7 @@ class WordController extends Controller {
     }
 
     public function getList() {
-        $data = Word::select('id', 'word', 'spell', 'mean', 'parent_id')->orderBy('word', 'ASC')->get();
+        $data = Word::select('id', 'word', 'spell', 'mean', 'sound', 'parent_id')->orderBy('word', 'ASC')->get();
         return view('admin.word.list', compact('data'));
     }
 

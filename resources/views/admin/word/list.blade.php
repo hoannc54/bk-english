@@ -34,7 +34,13 @@ if (count($data) == 0) {
                     ?>
                     <tr class="">
                         <td>{!! $id !!}</td>
-                        <td>{!! $item->word !!}</td>
+                        <td>
+                            <div
+                                data-src-mp3="{!! url($item->sound) !!}" 
+                                title="play sound" style="cursor: pointer" onclick="playSound($(this));">{!! $item->word !!}
+                                <!-- End of DIV sound audio_play_button pron-uk icon-audio-->
+                            </div>
+                        </td>
                         <td>{!! $item->spell !!}</td>
                         <td>{!! $item->mean !!}</td>
                         <td>None</td>
@@ -43,8 +49,8 @@ if (count($data) == 0) {
                         ?>
                         <td>
                             <ul class="list-group">
-                                <?php foreach ($examples as $ex){ ?>
-                                <li><a href="" title="{!! $ex->mean !!}">{!! $ex->example !!}</a></li>
+                                <?php foreach ($examples as $ex) { ?>
+                                    <li><a href="" title="{!! $ex->mean !!}">{!! $ex->example !!}</a></li>
                                 <?php } ?>
                             </ul>
                         </td>
@@ -58,14 +64,24 @@ if (count($data) == 0) {
                     $id++;
 
                     foreach ($data as $item_chil) {
-                        if ($item_chil['parent_id'] == $item['id']) {
+                        if ($item_chil->parent_id == $item->id) {
                             ?>
                             <tr class="success">
                                 <td>{!! $id !!}</td>
-                                <td>{!! $item_chil["word"] !!}</td>
-                                <td>{!! $item_chil["spell"] !!}</td>
-                                <td>{!! $item_chil["mean"] !!}</td>
-                                <td>{!! $item['word'] !!}</td>
+                                <td>{!! $item_chil->word !!}</td>
+                                <td>{!! $item_chil->spell !!}</td>
+                                <td>{!! $item_chil->mean !!}</td>
+                                <td>{!! $item->word !!}</td>
+                                <?php
+                                $chil_examples = $item_chil->examples()->get();
+                                ?>
+                                <td>
+                                    <ul class="list-group">
+                                        <?php foreach ($chil_examples as $chil_ex) { ?>
+                                            <li><a href="" title="{!! $chil_ex->mean !!}">{!! $chil_ex->example !!}</a></li>
+                                        <?php } ?>
+                                    </ul>
+                                </td>
                                 <td><a href="{!! route('admin.word.getEdit', $item_chil['id']) !!}"><span class="glyphicon glyphicon-edit"></span></a></td>
                                 <td><a href="{!! route('admin.word.getDelete', $item_chil['id']) !!}"><span class="glyphicon glyphicon-remove"></span></a></td>
                                 <td><input type="checkbox"></td>
