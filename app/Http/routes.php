@@ -55,6 +55,3 @@ Route::group(['prefix' => 'admin'], function () {
 Route::get('abc', function (){
     return view('abc');   
 });
-Route::get('list', function (){
-    return view('admin.list');   
-});
