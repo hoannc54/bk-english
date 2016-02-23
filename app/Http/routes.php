@@ -27,6 +27,7 @@ Route::group(['prefix' => 'admin'], function () {
 //        view('admin.home');
 //    });
     Route::get('login', ['as' => 'admin.login', 'uses' => 'AdminController@login']);
+    
     Route::group(['prefix' => 'words'], function() {
         Route::get('add', ['as' => 'admin.word.getAdd', 'uses' => 'wordController@getAdd']);
         Route::post('add', ['as' => 'admin.word.postAdd', 'uses' => 'wordController@postAdd']);
@@ -36,7 +37,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('edit/{id}', ['as' => 'admin.word.getEdit', 'uses' => 'wordController@getEdit']);
         Route::post('edit/{id}', ['as' => 'admin.word.postEdit', 'uses' => 'wordController@postEdit']);
         
-        Route::get('delete/{id}', ['as' => 'admin.word.getDelete', 'uses' => 'wordController@getDelete']);
+        Route::post('delete/', ['as' => 'admin.word.postDelete', 'uses' => 'wordController@postDelete']);
     });
     
     Route::group(['prefix' => 'example'], function() {

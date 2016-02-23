@@ -20,7 +20,7 @@ class WordController extends Controller {
         $word->word = $request->word;
         $word->spell = $request->spell;
         $word->mean = $request->means;
-        $word->sound = 'public/sound/'.$request->word.'.mp3';
+        $word->sound = 'public/sound/' . $request->word . '.mp3';
         $word->parent_id = 0;
         $word->save();
         word_to_ex($word->id, $word->word);
@@ -96,22 +96,35 @@ class WordController extends Controller {
         }
     }
 
-    public function getDelete($id) {
-        $chil = Word::where('parent_id', $id)->get();
-        if ($chil->count() > 0) {
+    public function postDelete(Request $request) {
+        $i = 0;
+        if (is_string($request->ids) && strcmp($request->action, 'delete') == 0) {
+            $list_w = explode(' ', $request->ids);
+//            print_r($list_w);
+            foreach ($list_w as $w_id) {
+                if ($w_id!=NULL) {
+                    $chil = Word::where('parent_id', $w_id)->get();
+                    if ($chil->count() > 0) {
 //            print_r($chil);
-            foreach ($chil as $value) {
-                del_word_ex($value->id);
-                $value->delete();
+                        foreach ($chil as $value) {
+                            del_word_ex($value->id);
+                            $value->delete();
+                        }
+                    }
+                    $word = Word::find($w_id);
+                    if (!empty($word)) {
+                        del_word_ex($word->id);
+                        $word->delete();
+                        $i++;
+                    }
+                }
             }
         }
-        $word = Word::find($id);
-        if (!empty($word)) {
-            del_word_ex($word->id);
-            $word->delete();
-            return redirect()->route('admin.word.getList')->with(['flash_level' => 'success', 'flash_message' => 'Xóa thành công!']);
+        echo $request->ids;
+        if ($i != 0) {
+            return redirect()->route('admin.word.getList')->with(['flash_level' => 'success', 'flash_message' => 'Xóa thành công ' . $i . ' mục!']);
         } else {
-            return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Không tồn tại từ.']);
+            return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không có gì để xóa.']);
         }
     }
 

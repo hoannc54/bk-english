@@ -57,8 +57,16 @@ if (count($data) == 0) {
                         <?php
                         ?>
                         <td><a href="{!! route('admin.word.getEdit', $item['id']) !!}"><span class="glyphicon glyphicon-edit"></span></a></td>
-                        <td><a href="{!! route('admin.word.getDelete', $item['id']) !!}"><span class="glyphicon glyphicon-remove"></span></a></td>
-                        <td><input type="checkbox" class="item"></td>
+                        <td>
+                            <form action="{!! route('admin.word.postDelete') !!}" method="post" class="f_delete">
+                                <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
+                                <input type="hidden" name="ids" value="{!! $item['id'] !!}"/>
+                                <input type="hidden" name="action" value="delete"/>
+                                <span class="glyphicon glyphicon-remove b_delete action"></span>
+                            </form>
+                        </td>
+
+                        <td><input type="checkbox" class="item" id="{!! $item['id'] !!}"></td>
                     </tr>
                     <?php
                     $id++;
@@ -83,8 +91,15 @@ if (count($data) == 0) {
                                     </ul>
                                 </td>
                                 <td><a href="{!! route('admin.word.getEdit', $item_chil['id']) !!}"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                <td><a href="{!! route('admin.word.getDelete', $item_chil['id']) !!}"><span class="glyphicon glyphicon-remove"></span></a></td>
-                                <td><input type="checkbox" class="item"></td>
+                                <td>
+                                    <form action="{!! route('admin.word.postDelete') !!}" method="post" class="f_delete">
+                                        <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
+                                        <input type="hidden" name="ids" value="{!! $item_chil['id'] !!}"/>
+                                        <input type="hidden" name="action" value="delete"/>
+                                        <span class="glyphicon glyphicon-remove b_delete action"></span>
+                                    </form>
+                                </td>
+                                <td><input type="checkbox" class="item" id="{!! $item_chil['id'] !!}"></td>
                             </tr>
                             <?php
                             $id++;
@@ -93,6 +108,17 @@ if (count($data) == 0) {
                 }
             }
             ?>
+
+            <tr>
+                <td colspan="9">
+                    <form action="{!! route('admin.word.postDelete') !!}" method="post" class="f_delete">
+                        <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
+                        <input type="hidden" id="id_all" name="ids" value="1"/>
+                        <input type="hidden" name="action" value="delete"/>
+                        <div id="sb_all" class="col-xs-offset-9 action">Xóa các mục đã chọn <span class="glyphicon glyphicon-trash"></span></div>
+                    </form>
+                </td>
+            </tr>
         </tbody>
     </table>
     <?php
