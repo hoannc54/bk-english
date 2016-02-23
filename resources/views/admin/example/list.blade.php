@@ -3,7 +3,7 @@ $example_manage = 'active';
 ?>
 @extends('admin.template')
 
-@section('main-title','Danh sách từ')
+@section('main-title','Danh sách câu ví dụ')
 
 @section('content')
 <?php
@@ -36,7 +36,7 @@ if (count($data) == 0) {
                     <td>
                         <form action="{!! route('admin.example.postDelete') !!}" method="post" class="f_delete">
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
-                            <input type="hidden" name="id[]" value="{!! $item['id'] !!}"/>
+                            <input type="hidden" name="ids" value="{!! $item['id'] !!}"/>
                             <input type="hidden" name="action" value="delete"/>
                             <span class="glyphicon glyphicon-remove b_delete action"></span>
                         </form>
@@ -51,9 +51,9 @@ if (count($data) == 0) {
                 <td colspan="6">
                     <form action="{!! route('admin.example.postDelete') !!}" method="post" class="f_delete">
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
-                        <input type="hidden" name="id" value=""/>
+                        <input type="hidden" id="id_all" name="ids" value=""/>
                         <input type="hidden" name="action" value="delete"/>
-                        <div class="col-xs-offset-9 b_delete action">Xóa các mục đã chọn <span class="glyphicon glyphicon-trash"></span></div>
+                        <div id="sb_all" class="col-xs-offset-9 action">Xóa các mục đã chọn <span class="glyphicon glyphicon-trash"></span></div>
                     </form>
                 </td>
             </tr>

@@ -35,32 +35,43 @@ $(document).ready(function () {
         if ($(this).prop('checked') == true) {
             $(this).parents('.list').find('.item').prop('checked', true);
             $(this).prop('title', 'Bỏ chọn tất cả');
-            $('#ghichu').html('Đang chọn tất cả');
+//            $('#ghichu').html('Đang chọn tất cả');
         } else {
             $(this).parents('.list').find('.item').prop('checked', false);
             $(this).prop('title', 'Chọn tất cả');
-            $('#ghichu').html('Không chọn tất cả');
+//            $('#ghichu').html('Không chọn tất cả');
         }
     });
 
     $('.item').click(function () {
         var bien = true;
-        var i = 0;
+//        var i = 0;
         $(this).parents('.list').find('.item').each(function () {
             if ($(this).prop('checked') == false) {
                 bien = false;
-                $('#bien').html($('#bien').html() + $(this).prop('id') + ' ' + i + ' ' + bien + '<br>');
-                i++;
+//                $('#bien').html($('#bien').html() + $(this).prop('id') + ' ' + i + ' ' + bien + '<br>');
+//                i++;
             }
         });
 
         if (bien == true) {
             $(this).parents('.list').find('.check-all').prop({'checked': true, 'title': 'Bỏ chọn tất cả'});
-            $('#ghichu').html('Đang chọn tất cả ' + bien);
+//            $('#ghichu').html('Đang chọn tất cả ' + bien);
         } else {
             $(this).parents('.list').find('.check-all').prop({'checked': false, 'title': 'Chọn tất cả'});
-            $('#ghichu').html('Không chọn tất cả ' + bien);
+//            $('#ghichu').html('Không chọn tất cả ' + bien);
         }
     });
     //END CHECK ALL
+    
+    $('#sb_all').click(function () {
+        var value = '';
+        $(this).parents('.list').find('.item').each(function () {
+            if ($(this).prop('checked') == true) {
+                value = value + ' ' + $(this).prop('id');
+            }
+        });
+        $('#id_all').prop('value', value);
+        $(this).parent().submit();
+    });
 });

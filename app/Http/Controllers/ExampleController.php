@@ -61,8 +61,9 @@ class ExampleController extends Controller {
 
     public function postDelete(Request $request) {
         $i = 0;
-        if (is_array($request->id)) {
-            foreach ($request->id as $ex_id) {
+        if (is_string($request->ids)) {
+            $list_examples = explode(' ', $request->ids);
+            foreach ($list_examples as $ex_id) {
                 $example = Example::find($ex_id);
                 if (!empty($example) && strcmp($request->action, 'delete') == 0) {
                     del_ex_word($example->id);
