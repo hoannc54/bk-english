@@ -38,7 +38,7 @@ if (count($data) == 0) {
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
                             <input type="hidden" name="id" value="{!! $item['id'] !!}"/>
                             <input type="hidden" name="action" value="delete"/>
-                            <div class="action"><span class="glyphicon glyphicon-remove b_delete"></span></div>
+                            <span class="glyphicon glyphicon-remove b_delete action"></span>
                         </form>
                     </td>
                     <td><input type="checkbox"></td>
