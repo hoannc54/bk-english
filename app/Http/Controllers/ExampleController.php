@@ -60,11 +60,21 @@ class ExampleController extends Controller {
     }
 
     public function postDelete(Request $request) {
-        $example = Example::find($request->id);
-        if (!empty($example)&&strcmp($request->action, 'delete')==0) {
-            del_ex_word($example->id);
-            $example->delete();
-            return redirect()->route('admin.example.getList')->with(['flash_level' => 'success', 'flash_message' => 'Xóa thành công!']);
+        $i = 0;
+        if (is_array($request->id)) {
+            foreach ($request->id as $ex_id) {
+                $example = Example::find($ex_id);
+                if (!empty($example) && strcmp($request->action, 'delete') == 0) {
+                    del_ex_word($example->id);
+                    $example->delete();
+                    $i++;
+                }
+            }
+            if ($i != 0) {
+                return redirect()->route('admin.example.getList')->with(['flash_level' => 'success', 'flash_message' => 'Xóa thành công ' . $i . ' mục!']);
+            } else {
+                return redirect()->route('admin.example.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không có gì để xóa!']);
+            }
         } else {
             return redirect()->route('admin.example.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không thể xóa!']);
         }

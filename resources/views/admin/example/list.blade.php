@@ -11,7 +11,7 @@ if (count($data) == 0) {
     echo '<h4>Danh sách trống!</h4>';
 } else {
     ?>
-    <table class="table table-hover">
+    <table class="table table-hover list">
         <thead>
             <tr>
                 <th>STT</th>
@@ -19,7 +19,7 @@ if (count($data) == 0) {
                 <th>Nghĩa</th>
                 <th>Edit</th>
                 <th>Delete</th>
-                <th><label class="checkbox-inline"><input type="checkbox"> Check All</label></th>
+                <th><input type="checkbox" class="check-all"></th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@ if (count($data) == 0) {
 
             foreach ($data as $item) {
                 ?>
-                <tr class="">
+                <tr>
                     <td>{!! $id !!}</td>
                     <td>{!! $item->example !!}</td>
                     <td>{!! $item->mean !!}</td>
@@ -36,16 +36,27 @@ if (count($data) == 0) {
                     <td>
                         <form action="{!! route('admin.example.postDelete') !!}" method="post" class="f_delete">
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
-                            <input type="hidden" name="id" value="{!! $item['id'] !!}"/>
+                            <input type="hidden" name="id[]" value="{!! $item['id'] !!}"/>
                             <input type="hidden" name="action" value="delete"/>
                             <span class="glyphicon glyphicon-remove b_delete action"></span>
                         </form>
                     </td>
-                    <td><input type="checkbox"></td>
-                </tr><?php
+                    <td><input class="item" type="checkbox" id="{!! $item['id'] !!}"></td>
+                </tr>
+                <?php
                 $id ++;
             }
             ?>
+            <tr>
+                <td colspan="6">
+                    <form action="{!! route('admin.example.postDelete') !!}" method="post" class="f_delete">
+                        <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
+                        <input type="hidden" name="id" value=""/>
+                        <input type="hidden" name="action" value="delete"/>
+                        <div class="col-xs-offset-9 b_delete action">Xóa các mục đã chọn <span class="glyphicon glyphicon-trash"></span></div>
+                    </form>
+                </td>
+            </tr>
         </tbody>
     </table>
     <?php

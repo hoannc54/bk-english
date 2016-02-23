@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     //submit form delete
     $('.f_delete').submit(function () {
-        return confirm('Bạn có muốn chắc chắn xóa?');
+        return confirm('Bạn chắc chắn xóa?');
     });
 
     $('.b_delete').click(function () {
