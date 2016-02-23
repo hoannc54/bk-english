@@ -59,8 +59,15 @@ class ExampleController extends Controller {
         }
     }
 
-    public function getDelete() {
-        
+    public function postDelete(Request $request) {
+        $example = Example::find($request->id);
+        if (!empty($example)&&strcmp($request->action, 'delete')==0) {
+            del_ex_word($example->id);
+            $example->delete();
+            return redirect()->route('admin.example.getList')->with(['flash_level' => 'success', 'flash_message' => 'Xóa thành công!']);
+        } else {
+            return redirect()->route('admin.example.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không thể xóa!']);
+        }
     }
 
     public function getList() {
