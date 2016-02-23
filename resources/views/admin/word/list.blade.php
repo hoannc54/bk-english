@@ -11,7 +11,7 @@ if (count($data) == 0) {
     echo '<h4>Không có từ nào trong danh sách</h4>';
 } else {
     ?>
-    <table class="table table-hover">
+    <table class="table table-hover list">
         <thead>
             <tr>
                 <th>STT</th>
@@ -22,7 +22,7 @@ if (count($data) == 0) {
                 <th>Examples</th>
                 <th>Edit</th>
                 <th>Delete</th>
-                <th><label class="checkbox-inline"><input type="checkbox"> Check All</label></th>
+                <th><input type="checkbox" class="check-all"></th>
             </tr>
         </thead>
         <tbody>
@@ -58,7 +58,7 @@ if (count($data) == 0) {
                         ?>
                         <td><a href="{!! route('admin.word.getEdit', $item['id']) !!}"><span class="glyphicon glyphicon-edit"></span></a></td>
                         <td><a href="{!! route('admin.word.getDelete', $item['id']) !!}"><span class="glyphicon glyphicon-remove"></span></a></td>
-                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox" class="item"></td>
                     </tr>
                     <?php
                     $id++;
@@ -84,7 +84,7 @@ if (count($data) == 0) {
                                 </td>
                                 <td><a href="{!! route('admin.word.getEdit', $item_chil['id']) !!}"><span class="glyphicon glyphicon-edit"></span></a></td>
                                 <td><a href="{!! route('admin.word.getDelete', $item_chil['id']) !!}"><span class="glyphicon glyphicon-remove"></span></a></td>
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" class="item"></td>
                             </tr>
                             <?php
                             $id++;
