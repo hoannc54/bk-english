@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WordRequest;
 use App\Word;
-use App\WordEx;
 
 class WordController extends Controller {
 
