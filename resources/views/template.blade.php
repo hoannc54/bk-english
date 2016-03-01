@@ -17,8 +17,7 @@
         <div class="container">
             <!-- begin banner -->
             <div class="banner shadow">
-                <h1 class="number"><span class="relief neon">600</span> Words For</h1>
-                <h1 class="shade t-color">TOEIC</h1>               
+                <h1 class="number"><span class="relief neon">600</span> Words For TOEIC</h1>
             </div><!-- end banner -->
             <!--<div class="col-lg-12">-->
             <div id='top-menu'>
