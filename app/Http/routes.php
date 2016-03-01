@@ -29,15 +29,15 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('login', ['as' => 'admin.login', 'uses' => 'AdminController@login']);
     
     Route::group(['prefix' => 'words'], function() {
-        Route::get('add', ['as' => 'admin.word.getAdd', 'uses' => 'wordController@getAdd']);
-        Route::post('add', ['as' => 'admin.word.postAdd', 'uses' => 'wordController@postAdd']);
+        Route::get('add', ['as' => 'admin.word.getAdd', 'uses' => 'WordController@getAdd']);
+        Route::post('add', ['as' => 'admin.word.postAdd', 'uses' => 'WordController@postAdd']);
         
-        Route::get('list', ['as' => 'admin.word.getList', 'uses' => 'wordController@getList']);
+        Route::get('list', ['as' => 'admin.word.getList', 'uses' => 'WordController@getList']);
         
-        Route::get('edit/{id}', ['as' => 'admin.word.getEdit', 'uses' => 'wordController@getEdit']);
-        Route::post('edit/{id}', ['as' => 'admin.word.postEdit', 'uses' => 'wordController@postEdit']);
+        Route::get('edit/{id}', ['as' => 'admin.word.getEdit', 'uses' => 'WordController@getEdit']);
+        Route::post('edit/{id}', ['as' => 'admin.word.postEdit', 'uses' => 'WordController@postEdit']);
         
-        Route::post('delete/', ['as' => 'admin.word.postDelete', 'uses' => 'wordController@postDelete']);
+        Route::post('delete/', ['as' => 'admin.word.postDelete', 'uses' => 'WordController@postDelete']);
     });
     
     Route::group(['prefix' => 'example'], function() {
