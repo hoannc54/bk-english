@@ -1,7 +1,8 @@
 <?php
 $word_manage = 'active';
 ?>
-@extends('admin/template')
+
+@extends('admin.template')
 
 @section('main-title','Thêm từ mới')
 
