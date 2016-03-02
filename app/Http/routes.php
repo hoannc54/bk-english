@@ -23,10 +23,11 @@ Route::controllers([
 ]);
 
 Route::group(['prefix' => 'admin'], function () {
-//    Route::get('/', function(){
-//        view('admin.home');
+//    Route::get('login', function(){
+//       return view('admin.login');
 //    });
-    Route::get('login', ['as' => 'admin.login', 'uses' => 'AdminController@login']);
+    Route::get('login', ['as' => 'admin.getLogin', 'uses' => 'AdminController@getLogin']);
+    Route::post('login', ['as' => 'admin.postLogin', 'uses' => 'AdminController@postLogin']);
     
     Route::group(['prefix' => 'words'], function() {
         Route::get('add', ['as' => 'admin.word.getAdd', 'uses' => 'WordController@getAdd']);
