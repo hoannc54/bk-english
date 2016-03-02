@@ -42,7 +42,7 @@
             </div>
             <div class="col-12">
                 <div class="footer col-offset-9">
-                    Design by HOANG HOI.
+                    Design by HOANG HOI & Công Hoan
                 </div>
 
             </div>
