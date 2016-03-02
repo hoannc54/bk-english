@@ -1,6 +1,6 @@
 
 <ul class="nav nav-pills nav-stacked">
-    <li class="{{ $home or '' }}"><a href="#section1">Trang chủ</a></li>
+    <li class="{{ $home or '' }}"><a href="{!! route('admin') !!}">Trang chủ</a></li>
     <li class="{{ $word_manage or '' }}">
         <a data-toggle="collapse" href="#collapse1">Quản lý từ</a>
         <div id="collapse1" class="collapse">

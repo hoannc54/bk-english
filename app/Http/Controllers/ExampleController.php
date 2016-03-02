@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class ExampleController extends Controller {
 
+    public function index() {
+        return redirect()->route('admin.example.getList');
+    }
+
     public function getAdd() {
         return view('admin.example.add');
     }
