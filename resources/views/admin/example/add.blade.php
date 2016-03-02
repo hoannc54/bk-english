@@ -42,3 +42,7 @@ $example_manage = 'active';
     <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
 </form>
 @stop
+
+@section('script')
+<script src="{!! url('public/js/list-items.js') !!}"></script>
+@endsection

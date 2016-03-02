@@ -7,19 +7,7 @@
         <link rel="stylesheet" href="{!! url('public/css/list.css') !!}">
         <link rel="stylesheet" href="{!! url('public/css/effeckt.css') !!}">
         <link rel="stylesheet" href="{!! url('public/css/bootstrap.min.css') !!}">
-        <style>
-            .container-fluid, col-lg-3{
-                min-height: 600px;
-            }
-            .col-lg-3{
-                /*background-color: #D7EFBA;*/
-            }
-            footer {
-                background-color: #555;
-                color: white;
-                padding: 15px;
-            }
-        </style>
+        <link rel="stylesheet" href="{!! url('public/css/admin-style.css') !!}"/>
     </head>
     <body>
 
@@ -53,6 +41,7 @@
         <script src="{!! url('public/js/jquery-1.11.3.min.js') !!}"></script>
         <script src="{!! url('public/js/bootstrap.min.js') !!}"></script>
         <script src="{!! url('public/js/myscript.js') !!}"></script>
-        <script src="{!! url('public/js/list-items.js') !!}"></script>
+        <script src="{!! url('public/js/play-sound.js') !!}"></script>
+        @yield('script')
     </body>
 </html>
