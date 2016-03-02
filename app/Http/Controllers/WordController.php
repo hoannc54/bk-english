@@ -10,6 +10,10 @@ use App\Word;
 
 class WordController extends Controller {
 
+    public function index() {
+        return redirect()->route('admin.word.getList');
+    }
+
     public function getAdd() {
         return view('admin.word.add');
     }
@@ -101,7 +105,7 @@ class WordController extends Controller {
             $list_w = explode(' ', $request->ids);
 //            print_r($list_w);
             foreach ($list_w as $w_id) {
-                if ($w_id!=NULL) {
+                if ($w_id != NULL) {
                     $chil = Word::where('parent_id', $w_id)->get();
                     if ($chil->count() > 0) {
 //            print_r($chil);
