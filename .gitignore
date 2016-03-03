@@ -1,5 +1,4 @@
 /.idea
 /nbproject
-/vendor
 /node_modules
 .env
