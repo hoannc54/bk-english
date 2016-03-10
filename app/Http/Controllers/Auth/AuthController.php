@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Auth;
 
 class AuthController extends Controller {
 
@@ -34,10 +35,20 @@ class AuthController extends Controller {
 
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
-
-        public function getLogin() {
+	public function authenticate()
+    {
+        if (Auth::attempt(['email' => $email, 'password' => $password]))
+        {
+            return redirect()->intended('admin');
+        }
+    }
+     public function getLogin() {
             return view('auth.login');
         }
         public function postLogin() {
-        }
+     }
+
+     public function login(){
+     	echo 'trang đăng nhập';
+     }
 }

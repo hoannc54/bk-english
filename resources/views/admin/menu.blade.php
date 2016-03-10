@@ -33,4 +33,15 @@
             </ul>
         </div>
     </li>
+
+    <li class="{{ $user_manage or '' }}">
+        <a data-toggle="collapse" href="#collapse4">Câu hỏi</a>
+        <div id="collapse3" class="collapse">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="{!! url('addQuestion') !!}">Thêm câu hỏi</a></li>
+                <li class="list-group-item"><a href="#">Danh sách câu hỏi</a></li>
+                <!--<li class="list-group-item"><a href="#">Three</a></li>-->
+            </ul>
+        </div>
+    </li>
 </ul>

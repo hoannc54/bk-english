@@ -30,7 +30,12 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('home');
+		if(Auth::check()){
+			echo 'đã đăng nhập';
+		}else {
+			echo 'chưa đăng nhập';
+		}
+		//return view('home');
 	}
 
 }

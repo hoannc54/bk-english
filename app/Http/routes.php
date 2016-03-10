@@ -16,17 +16,18 @@ Route::get('/', function () {
 });
 
 Route::get('home', 'HomeController@index');
+Route::get('admin', 'AdminController@index');
 
-//Route::controllers([
-//    'auth' => 'Auth\AuthController',
-//    'password' => 'Auth\PasswordController',
-//]);
+Route::controllers([
+   'auth' => 'Auth\AuthController',
+   'password' => 'Auth\PasswordController',
+]);
+
+// Cấu hình phần Admin
 
 Route::group(['prefix' => 'admin'], function () {
-//    Route::get('login', function(){
-//       return view('admin.login');
-//    });
-    Route::get('/', ['as' => 'admin', 'uses' => 'AdminController@index']);
+
+    Route::get('/', ['as' => 'admin', 'uses' => 'AdminController@index']); //Chưa hiểu
     
     Route::get('login', ['as' => 'admin.getLogin', 'uses' => 'AdminController@getLogin']);
     Route::post('login', ['as' => 'admin.postLogin', 'uses' => 'AdminController@postLogin']);
@@ -59,6 +60,14 @@ Route::group(['prefix' => 'admin'], function () {
         
         Route::post('delete', ['as' => 'admin.example.postDelete', 'uses' => 'ExampleController@postDelete']);
     });
+
+    Route::group(['prefix' => 'test'], function(){
+      Route::group(['prefix' => 'question'], function() {
+          Route::get('create','QuestionController@create');
+          Route::post('create','QuestionController@store');
+      });
+    });
+
 });
 
 Route::get('abc', function (){

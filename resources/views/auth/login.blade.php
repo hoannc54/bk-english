@@ -5,18 +5,18 @@
 @stop
 
 @section('content')
-	<form action="" method="POST" >
+	<form action="{{ url('/auth/login') }}" method="POST" >
 		<div class="group">
-			<label class="col-4" for="name">Tên đăng nhập:</label>
-			<input class="col-7 form-control" type="text"/>
+			<label class="col-4" for="name">Email:</label>
+			<input class="col-7 form-control" type="text" name="email" value="{{ old('email') }}"/>
 		</div>
 		<div class="group">
 			<label class="col-4" for="pass">Mật khẩu:</label>
-			<input class="col-7 form-control" type="text"/>
+			<input class="col-7 form-control" type="text" name="password"/>
 		</div>
 
 		<div class="col-7 col-offset-4 checkbox">
-			<label><input type="checkbox" value="">Ghi nhớ mật khẩu</label>
+			<label><input type="checkbox" value="" name="checkbox">Ghi nhớ mật khẩu</label>
 		</div>
 		<div class="group col-7 col-offset-4" >
 			<input class="button" type="submit" value="Đăng nhập"/>
