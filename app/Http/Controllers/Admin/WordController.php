@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 //use App\Http\Requests;
@@ -81,18 +81,22 @@ class WordController extends Controller {
             }
             $word->spell = $request->spell;
             $word->mean = $request->means;
-            $word_parent = Word::where('word', $request->parent)->first();
-            if (!empty($word_parent)) {
-                if ($word_parent->parent_id == 0) {
-                    $word->parent_id = $word_parent->id;
-                } else {
-                    return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ gốc là từ con của 1 từ khác.']);
-                }
-            } else {
-                $word->parent_id = 0;
-            }
             $word->save();
 
+            if (trim($request->parent) != '') {
+                $word_parent = Word::where('word', trim($request->parent))->first();
+                if (!empty($word_parent)) {
+                    if ($word_parent->parent_id == 0) {
+                        $word->parent_id = $word_parent->id;
+                    } else {
+                        return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ gốc là từ con của 1 từ khác.']);
+                    }
+                } else {
+                    $word->parent_id = 0;
+                    return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ gốc không tồn tại.']);
+                }
+                $word->save();
+            }
             return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Sửa thành công!']);
         } else {
             return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không tìm thấy từ cần sửa!']);

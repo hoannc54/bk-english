@@ -22,15 +22,15 @@ class LoginRequests extends Request {
      */
     public function rules() {
         return [
-            'user' => 'required',
-            'pass' => 'requered'
+            'username' => 'required',
+            'password' => 'required'
         ];
     }
 
     public function messages() {
         return [
-            'user.required' => 'Bạn chưa nhập Tên đăng nhập.',
-            'pass.required' => 'Bạn chưa nhập mật khẩu'
+            'username.required' => 'Bạn chưa nhập Tên đăng nhập!',
+            'password.required' => 'Bạn chưa nhập mật khẩu!'
         ];
     }
 }
