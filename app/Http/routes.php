@@ -75,3 +75,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('delete', ['as' => 'admin.user.postDelete', 'uses' => 'Admin\UserController@postDelete']);
     });
 });
+
+Route::get('/abc', function (){
+    return view('admin_test.template');
+});
