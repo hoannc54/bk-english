@@ -27,8 +27,13 @@
         <a data-toggle="collapse" href="#collapse3">Quản lý thành viên</a>
         <div id="collapse3" class="collapse">
             <ul class="list-group">
+<<<<<<< HEAD
                 <li class="list-group-item"><a href="#">Thêm thành viên mới</a></li>
                 <li class="list-group-item"><a href="#">Danh sách thành viên</a></li>
+=======
+                <li class="list-group-item"><a href="{!! route('admin.user.getAdd') !!}">Thêm thành viên mới</a></li>
+                <li class="list-group-item"><a href="{!! route('admin.user.getList') !!}">Danh sách thành viên</a></li>
+>>>>>>> a3f3cd30310fa48c602744f4625716156187f69a
                 <!--<li class="list-group-item"><a href="#">Three</a></li>-->
             </ul>
         </div>

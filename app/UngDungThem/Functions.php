@@ -86,4 +86,8 @@ function del_ex_word($ex_id) {
     foreach ($exampleExList as $exampleEx) {
         $exampleEx->delete();
     }
+
 }
+
+
+// >>>>>>> a3f3cd30310fa48c602744f4625716156187f69a
