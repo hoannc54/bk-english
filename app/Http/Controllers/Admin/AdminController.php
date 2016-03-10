@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 //use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Requests\LoginRequests;
 
-class AdminController extends Controller {
+class AdminController extends AuthController {
 
+//    public $redirectPath = '/admin';
+//    public $redirectTo = '/admin';
+    
     public function index() {
         return view('admin.home');
     }
@@ -16,9 +19,18 @@ class AdminController extends Controller {
         return view('admin.login');
     }
 
-    public function postLogin(Request $request) {
-        echo $request->user;
-        echo $request->pass;
+    public function postLogin(LoginRequests $request) {
+        $login = [
+            'name' => $request->username,
+            'password' => $request->password,
+            'level' => 2
+        ];
+        if ($this->auth->attempt($login)) {
+            return redirect()->route('admin');
+        } else {
+            return redirect()->back();
+//            echo 'ssss';
+        }
     }
 
 }
