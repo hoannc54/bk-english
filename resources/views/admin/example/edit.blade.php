@@ -1,9 +1,8 @@
-<?php
-$example_manage = 'active';
-?>
 @extends('admin.template')
 
-@section('main-title','Chỉnh sửa câu ví dụ')
+@section('main-title','Quản lý ví dụ')
+
+@section('sub-title','Chỉnh sửa câu ví dụ')
 
 @section('content')
 <form class="form-horizontal" role="form" action="{!! route('admin.example.postEdit',$data->id) !!}" method="POST">

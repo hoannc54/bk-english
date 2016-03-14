@@ -17,10 +17,13 @@
         <link href="{!! url('public/css/dataTables.bootstrap.css') !!}" rel="stylesheet">
 
         <!-- DataTables Responsive CSS -->
-        <link href="{!! url('public/css/jquery.dataTables.min.css') !!}" rel="stylesheet">
+        <link href="{!! url('public/css/jquery.dataTables.css') !!}" rel="stylesheet">
 
         <!-- Custom CSS -->
         <link href="{!! url('public/css/sb-admin-2.css') !!}" rel="stylesheet">
+        
+        <!-- My CSS -->
+        <link href="{!! url('public/css/mystyle.css') !!}" rel="stylesheet">
 
         <!-- Custom Fonts -->
         <link href="{!! url('public/font-awesome/css/font-awesome.min.css') !!}" rel="stylesheet" type="text/css">
@@ -39,7 +42,7 @@
                 </div>
                 <!-- /.row -->
 
-                @include('admin_test.table')
+                @include('admin_test.table-ajax')
                 @include('admin_test.other')
                 
             </div>
@@ -49,7 +52,7 @@
         <!-- /#wrapper -->
 
         <!-- jQuery -->
-        <script src="{!! url('public/js/jquery-1.11.3.min.js') !!}"></script>
+        <script src="{!! url('public/js/jquery-2.2.0.min.js') !!}"></script>
 
         <!-- Bootstrap Core JavaScript -->
         <script src="{!! url('public/js/bootstrap.min.js') !!}"></script>

@@ -1,9 +1,8 @@
-<?php
-$user_manage = 'active';
-?>
 @extends('admin.template')
 
-@section('main-title','Danh sách thành viên')
+@section('main-title','Quản lý thành viên')
+
+@section('sub-title','Danh sách thành viên')
 
 @section('content')
 <?php

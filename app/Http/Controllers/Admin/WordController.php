@@ -97,7 +97,7 @@ class WordController extends Controller {
                 }
                 $word->save();
             }
-            return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Sửa thành công!']);
+            return redirect()->route('admin.word.getList')->with(['flash_level' => 'success', 'flash_message' => 'Sửa thành công!']);
         } else {
             return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không tìm thấy từ cần sửa!']);
         }

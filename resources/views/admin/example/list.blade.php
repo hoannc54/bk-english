@@ -1,9 +1,8 @@
-<?php
-$example_manage = 'active';
-?>
 @extends('admin.template')
 
-@section('main-title','Danh sách câu ví dụ')
+@section('main-title','Quản lý ví dụ')
+
+@section('sub-title','Danh sách câu ví dụ')
 
 @section('content')
 <?php

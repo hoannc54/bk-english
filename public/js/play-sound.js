@@ -7,7 +7,7 @@
 
 
 function playSound(btn) {
-    var src_mp3 = btn.attr("data-src-mp3");
+    var src_mp3 = btn.data('srcMp3');
 //    var src_ogg = btn.attr("data-src-ogg");
 
     if (supportAudioHtml5()){
@@ -36,7 +36,7 @@ function playHtml5(src_mp3){
 //        audio = new Audio(src_ogg);
 
     //play
-    audio.addEventListener("error", function(e){alert("Apologies, the sound is not available.");});
+    audio.addEventListener("error", function(e){alert("File âm thanh không tồn tại!");});
     audio.play();
 //    audio.play();
 }

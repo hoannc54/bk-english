@@ -1,9 +1,8 @@
-<?php
-$word_manage = 'active';
-?>
 @extends('admin.template')
 
-@section('main-title','Danh sách từ')
+@section('main-title','Quản lý tự vựng')
+
+@section('sub-title','Danh sách từ')
 
 @section('content')
 <?php

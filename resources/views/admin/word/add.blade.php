@@ -1,10 +1,8 @@
-<?php
-$word_manage = 'active';
-?>
-
 @extends('admin.template')
 
-@section('main-title','Thêm từ mới')
+@section('main-title','Quản lý tự vựng')
+
+@section('sub-title','Thêm từ mới')
 
 @section('content')
 <form class="form-horizontal" role="form" action="{!! route('admin.word.postAdd') !!}" method="POST">
@@ -56,5 +54,6 @@ $word_manage = 'active';
 @stop
 
 @section('script')
+@parent
 <script src="{!! url('public/js/list-items.js') !!}"></script>
 @endsection

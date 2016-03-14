@@ -1,9 +1,8 @@
-<?php
-$word_manage = 'active';
-?>
 @extends('admin.template')
 
-@section('main-title','Chỉnh sửa từ')
+@section('main-title','Quản lý từ vựng')
+
+@section('sub-title','Chỉnh sửa từ')
 
 @section('content')
 <form class="form-horizontal" role="form" action="{!! route('admin.word.postEdit',$data->id) !!}" method="POST">

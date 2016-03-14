@@ -1,5 +1,6 @@
 
 .effeckt-list {
+    margin: 0;
     list-style: none; 
 }
 
@@ -7,6 +8,7 @@
     /*background: #e6e6e6;*/
     /*padding: 0 0.5rem;*/
     overflow: hidden;
+    margin-left: 0;
     margin-bottom: 2px;
     /*line-height: 2;*/ 
 }
@@ -15,3 +17,6 @@
     /*background: #ccc;*/ 
 }
 
+.list-wrap{
+    margin-right: 50px;
+}
