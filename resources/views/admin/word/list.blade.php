@@ -23,6 +23,7 @@
                             <th></th>
                             <th>Từ</th>
                             <th>Phát âm</th>
+                            <th>Từ loại</th>
                             <th>Nghĩa</th>
                             <th>Từ gốc</th>
                             <th>Hành động</th>
@@ -34,6 +35,7 @@
                             <th></th>
                             <th>Từ</th>
                             <th>Phát âm</th>
+                            <th>Từ loại</th>
                             <th>Nghĩa</th>
                             <th>Từ gốc</th>
                             <th>Hành động</th>
@@ -70,6 +72,7 @@
             },
             { "data": "word" },
             { "data": "spell" },
+            { "data": "type" },
             { "data": "mean" },
             { "data": "parent_word" },
             {"data": "parent_word" }

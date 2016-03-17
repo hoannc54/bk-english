@@ -12,6 +12,24 @@
             <input type="text" class="form-control" id="word" name="word" placeholder="Nhập từ" required="required" value="{!! old('word', isset($data)?$data->word:NULL) !!}">
         </div>
     </div>
+    
+    <div class="form-group">
+        <label class="control-label col-sm-2">Từ loại:</label>
+        <?php 
+        if(isset($data)){
+            $ar = explode(' ', $data->type);
+        } else {
+            $ar=[];
+        }
+        ?>
+        <div class="col-sm-8">
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="n" {!! in_array('n', $ar)?'checked="checked"':NULL !!}>Danh từ</label>
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="v" {!! in_array('v', $ar)?'checked="checked"':NULL !!}>Động từ</label>
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="adj" {!! in_array('adj', $ar)?'checked="checked"':NULL !!}>Tính từ</label>
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="adv" {!! in_array('adv', $ar)?'checked="checked"':NULL !!}>Trạng từ</label>
+        </div>
+    </div>
+    
     <div class="form-group">
         <label class="control-label col-sm-2" for="spell">Phát âm:</label>
         <div class="col-sm-8">

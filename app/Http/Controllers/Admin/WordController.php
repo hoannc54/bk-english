@@ -25,6 +25,13 @@ class WordController extends Controller {
         $word->word = $request->word;
         $word->spell = $request->spell;
         $word->mean = $request->means;
+        $word->type = '';
+        if (is_array($request->type)) {
+            foreach ($request->type as $va) {
+                $word->type .= ' ' . $va;
+            }
+        }
+        $word->type = trim($word->type);
         $word->sound = 'public/sound/' . $request->word . '.mp3';
         $word->parent_id = 0;
         $word->save();
@@ -38,6 +45,13 @@ class WordController extends Controller {
                     $chil_word->word = $chil['word'];
                     $chil_word->spell = $chil['spell'];
                     $chil_word->mean = $chil['means'];
+                    $chil_word->type = '';
+                    if (is_array($chil['type'])) {
+                        foreach ($chil['type'] as $va) {
+                            $chil_word->type .= ' ' . $va;
+                        }
+                    }
+                    $chil_word->type = trim($chil_word->type);
                     $chil_word->parent_id = $word_parent;
                     $chil_word->save();
 
@@ -137,6 +151,13 @@ class WordController extends Controller {
                 $word->word = $new_word;
             }
             $word->spell = $request->spell;
+            $word->type = '';
+            if (is_array($request->type)) {
+                foreach ($request->type as $va) {
+                    $word->type .= ' ' . $va;
+                }
+            }
+            $word->type = trim($word->type);
             $word->mean = $request->means;
             $word->save();
 
