@@ -10,10 +10,20 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        ok
-        <?php 
-        $str = 'đây là chuỗi';
-        echo "changeTitle($str a";
-        ?>
+        <input type="text" id="input"/>
+        <button id="button">Button</button>
+        <script src="{!! url('public/js/jquery-1.11.3.min.js') !!}"></script>
+        <script>
+            $(document).ready(function () {
+                $('#button').on('click', function () {
+                    var URL = "{!! url('post') !!}";
+                    var data = $('input').val();
+                        alert(data);
+                    $.post(URL, data, function (data, status, xhr) {
+                        alert(data);
+                    })
+                });
+            });
+        </script>
     </body>
 </html>

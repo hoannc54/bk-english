@@ -25,7 +25,7 @@
                 <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a href="{!! route('admin.getLogout') !!}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->
@@ -53,7 +53,7 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-dashboard fa-fw"></i> Thống kê</a>
+                    <a href="{!! route('admin.home') !!}"><i class="fa fa-dashboard fa-fw"></i> Thống kê</a>
                 </li>
                 
                 <li>

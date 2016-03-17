@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WordRequest;
 use App\Word;
+//use JSON;
 
 class WordController extends Controller {
 
@@ -49,6 +50,52 @@ class WordController extends Controller {
     public function getList() {
         $data = Word::select('id', 'word', 'spell', 'mean', 'sound', 'parent_id')->orderBy('word', 'ASC')->get();
         return view('admin.word.list', compact('data'));
+    }
+
+    public function getListAjax() {
+
+        $data = Word::get()->toArray();
+        foreach ($data as &$word) {
+            $p_word = Word::find($word['parent_id']);
+            if (!empty($p_word)) {
+                $word['parent_word'] = $p_word->word;
+            } else {
+                $word['parent_word'] = 'none';
+            }
+        }
+        $json_word = json_encode($data);
+//        print_r($data2);
+        return '{"data":' . $json_word . '}';
+
+//        $ar_data = [];
+//        $data = Word::get();
+//        foreach ($data as $word) {
+//            $da = $word->examples()->get()->toArray();
+//            $a_word = $word->toArray();
+//            $p_word = Word::find($word->parent_id);
+//            if (!empty($p_word)) {
+//                $a_word['parent_word'] = $p_word->word;
+//            } else {
+//                $a_word['parent_word'] = 'none';
+//            }
+//            $a_word['example'] = $da;
+//            
+//            $ar_data[] = $a_word;
+////            $json_word = json_encode($a_word);
+////            echo '<pre>';
+////            print_r($json_word);
+////            
+////            echo '</pre>';
+//        }
+//        $json_word = json_encode($ar_data);
+////        print_r($data2);
+//        return '{"data":' . $json_word . '}';
+    }
+
+    public function getExample($id) {
+        $word = Word::find($id);
+        $exs = $word->examples()->get()->toArray();
+        return $exs;
     }
 
     public function getEdit($id) {

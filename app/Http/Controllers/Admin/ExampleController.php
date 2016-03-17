@@ -89,5 +89,10 @@ class ExampleController extends Controller {
         $data = Example::get();
         return view('admin.example.list', compact('data'));
     }
+    
+    public function getListAjax() {
+        $data = Example::get()->toJson();
+        return '{"data":'.$data.'}';
+    }
 
 }
