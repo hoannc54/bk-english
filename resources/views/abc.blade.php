@@ -15,13 +15,16 @@ and open the template in the editor.
         <script src="{!! url('public/js/jquery-1.11.3.min.js') !!}"></script>
         <script>
             $(document).ready(function () {
-                $('#button').on('click', function () {
-                    var URL = "{!! url('post') !!}";
-                    var data = $('input').val();
-                        alert(data);
-                    $.post(URL, data, function (data, status, xhr) {
-                        alert(data);
-                    })
+//                $('#button').on('click', function () {
+//                    var URL = "{!! url('post') !!}";
+//                    var data = $('input').val();
+//                        alert(data);
+//                    $.post(URL, data, function (data, status, xhr) {
+//                        alert(data);
+//                    })
+//                });
+                $.get("{!! route('admin.word.getExample') !!}"+"/"+"3", function (data, status) {
+                    alert("Data: " + data + "\nStatus: " + status);
                 });
             });
         </script>

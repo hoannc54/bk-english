@@ -43,7 +43,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::get('add', ['as' => 'admin.word.getAdd', 'uses' => 'Admin\WordController@getAdd']);
         Route::post('add', ['as' => 'admin.word.postAdd', 'uses' => 'Admin\WordController@postAdd']);
 
-        Route::get('examples/{id?}', ['as' => 'admin.word.getExample', 'uses' => 'Admin\WordController@getExample']);
+        Route::get('ex/{id?}', ['as' => 'admin.word.getExample', 'uses' => 'Admin\WordController@getExample']);
 
         Route::get('list', ['as' => 'admin.word.getList', 'uses' => 'Admin\WordController@getList']);
         Route::get('list/ajax', ['as' => 'admin.word.getListAjax', 'uses' => 'Admin\WordController@getListAjax']);
@@ -88,7 +88,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 });
 
 Route::get('/abc', function () {
-    return view('admin_test.template');
+    return view('abc');
 });
 //Route::post('/post', function (\Illuminate\Http\Request $request){
 //    $data = $request->;

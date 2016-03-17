@@ -58,6 +58,7 @@
 <script>
             $(document).ready(function() {
 
+
     var table = $('#table').DataTable({
     "ajax": "{!! route('admin.word.getListAjax') !!}",
             "columns": [
@@ -72,14 +73,28 @@
             ],
             "order": [[1, 'asc']],
             "rowCallback": function(row, data, displayIndex, displayIndexFull) {
-            if (data.parent_id != 0) {
+//            if (data.parent_id != 0) {
+//            $('td:eq(0)', row).addClass('has-chil');
+            $.get("{!! route('admin.word.getExample') !!}" + "/" + data.id, function(data, status){
+//        alert("Data: " + data + "\nStatus: " + status);
+            if (data != '') {
             $('td:eq(0)', row).addClass('has-chil');
-                    var vidu = 'Ví dụ:' + data.parent_id+
-                    '<ul>' +
-                    '<li>'+'</li>'+
-                    '</ul>';
-                    $('td:eq(0)', row).attr('data-html-Chil', vidu);
+                    var vidu = '<div class="table_ex"><table class="table"><tr><td colspan="3">Ví dụ:</td></tr>';
+                    for (var i = 0; i < data.length; i++){
+            vidu += '<tr><td>' + (i + 1) + '</td><td>' + data[i]['example'] + '</td>' +
+                    '<td>' + data[i]['mean'] + '</td></tr>';
             }
+            vidu += '</table></div>';
+                    $('td:eq(0)', row).attr('data-html-Chil', vidu);
+//            alert(data);
+            }
+            });
+//                    var vidu = 'Ví dụ:' + data.parent_id +
+//                    '<ul>' +
+//                    '<li>' + '</li>' +
+//                    '</ul>';
+//                    $('td:eq(0)', row).attr('data-html-Chil', vidu);
+//            }
             }
     });
 //            $('#table tfoot th').each(function () {

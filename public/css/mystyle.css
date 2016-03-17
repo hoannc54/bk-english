@@ -27,3 +27,8 @@ td.shown {
     cursor: pointer;
     background: url('../images/details_close.png') no-repeat center center;
 }
+
+.table_ex{
+    margin-left: 50px;
+    margin-right: 50px;
+}

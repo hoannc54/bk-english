@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WordRequest;
 use App\Word;
+
 //use JSON;
 
 class WordController extends Controller {
@@ -92,10 +93,19 @@ class WordController extends Controller {
 //        return '{"data":' . $json_word . '}';
     }
 
-    public function getExample($id) {
+    public function getExample($id = NULL) {
         $word = Word::find($id);
-        $exs = $word->examples()->get()->toArray();
-        return $exs;
+        if (!empty($word)) {
+            $exs = $word->examples()->get()->toArray();
+            if (empty($exs)) {
+                return NULL;
+            } else {
+//                echo '<span>';
+                return $exs;
+            }
+        } else {
+            return NULL;
+        }
     }
 
     public function getEdit($id) {
