@@ -25,6 +25,7 @@
                             <th>Phát âm</th>
                             <th>Nghĩa</th>
                             <th>Từ gốc</th>
+                            <th>Hành động</th>
                             <!--<th>salary</th>-->
                         </tr>
                     </thead>
@@ -35,6 +36,7 @@
                             <th>Phát âm</th>
                             <th>Nghĩa</th>
                             <th>Từ gốc</th>
+                            <th>Hành động</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -69,15 +71,17 @@
             { "data": "word" },
             { "data": "spell" },
             { "data": "mean" },
-            { "data": "parent_word" }
+            { "data": "parent_word" },
+            {"data": "parent_word" }
             ],
             "order": [[1, 'asc']],
+            //Khi bảng đã load xong duyệt từng hàng trong bảng để thêm danh sách example (nếu có) 
+            //đối với từ tương ứng
             "rowCallback": function(row, data, displayIndex, displayIndexFull) {
-//            if (data.parent_id != 0) {
-//            $('td:eq(0)', row).addClass('has-chil');
+                //lấy danh sách ví dụ trong router admin.word.getExample với mỗi id của từ
             $.get("{!! route('admin.word.getExample') !!}" + "/" + data.id, function(data, status){
-//        alert("Data: " + data + "\nStatus: " + status);
             if (data != '') {
+                //Thêm class has-chil vào cột nếu bảng nào có danh sách example
             $('td:eq(0)', row).addClass('has-chil');
                     var vidu = '<div class="table_ex"><table class="table"><tr><td colspan="3">Ví dụ:</td></tr>';
                     for (var i = 0; i < data.length; i++){
@@ -85,24 +89,12 @@
                     '<td>' + data[i]['mean'] + '</td></tr>';
             }
             vidu += '</table></div>';
+            //thêm dữ liệu example (data-html-Chil) vào cột 0 ứng với mỗi bản ghi
                     $('td:eq(0)', row).attr('data-html-Chil', vidu);
-//            alert(data);
             }
             });
-//                    var vidu = 'Ví dụ:' + data.parent_id +
-//                    '<ul>' +
-//                    '<li>' + '</li>' +
-//                    '</ul>';
-//                    $('td:eq(0)', row).attr('data-html-Chil', vidu);
-//            }
             }
     });
-//            $('#table tfoot th').each(function () {
-//    if ($(this).text() != ""){
-//    var title = $(this).text();
-//            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-//    }
-//    });
             $('#table tbody').on('click', 'td.has-chil', function () {
     var tr = $(this).closest('tr');
             var row = table.row(tr);

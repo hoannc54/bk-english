@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Word extends Model {
 
     protected $table = 'words';
-    protected $fillable = ['id', 'word', 'spell', 'mean', 'sound', 'parent_id'];
+    protected $fillable = ['id', 'word', 'spell', 'mean', 'type', 'sound', 'parent_id'];
 //    public $timestamps = false;
     
     public function examples() {
