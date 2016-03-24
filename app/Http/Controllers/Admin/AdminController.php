@@ -18,7 +18,7 @@ class AdminController extends AuthController {
 
     public function getLogin() {
 //        die();
-        if (Auth::check() && Auth::user()->level==2) {
+        if (Auth::check() && Auth::user()->level==1) {
             return redirect()->route('admin.home');
         } else {
             return view('admin.login');
@@ -33,8 +33,8 @@ class AdminController extends AuthController {
     public function postLogin(LoginRequests $request) {
         $login = [
             'name' => $request->username,
-            'password' => $request->password,
-            'level' => 2
+            'password' => $request->password
+//            'level' => $request->level
         ];
         if ($this->auth->attempt($login)) {
             return redirect()->route('admin.home');

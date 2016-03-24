@@ -4,6 +4,14 @@
  * and open the template in the editor.
  */
 
+function message(c, m) {
+    $('#message').removeClass();
+    $('#message').addClass(c);
+    $('#message').html(m);
+    $('#message').slideDown();
+    $('#message').delay(3000).slideUp();
+
+}
 
 $(document).ready(function () {
     $('.alert').delay(3000).slideUp();
@@ -63,7 +71,7 @@ $(document).ready(function () {
         }
     });
     //END CHECK ALL
-    
+
     $('#sb_all').click(function () {
         var value = '';
         $(this).parents('.list').find('.item').each(function () {
@@ -74,4 +82,5 @@ $(document).ready(function () {
         $('#id_all').prop('value', value);
         $(this).parent().submit();
     });
+
 });

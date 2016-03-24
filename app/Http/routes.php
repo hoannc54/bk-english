@@ -25,7 +25,7 @@ Route::get('home', 'HomeController@index');
 Route::get('admin/login', ['as' => 'admin.getLogin', 'uses' => 'Admin\AdminController@getLogin']);
 Route::post('admin/login', ['as' => 'admin.postLogin', 'uses' => 'Admin\AdminController@postLogin']);
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 //    Route::get('login', function(){
 //       return view('admin.login');
 //    });
@@ -52,6 +52,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('edit/{id}', ['as' => 'admin.word.postEdit', 'uses' => 'Admin\WordController@postEdit']);
 
         Route::post('delete', ['as' => 'admin.word.postDelete', 'uses' => 'Admin\WordController@postDelete']);
+
+        Route::post('postdel', ['as' => 'admin.word.postDel', 'uses' => 'Admin\WordController@postDel']);
     });
 
     Route::group(['prefix' => 'example'], function() {

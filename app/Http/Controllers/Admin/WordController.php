@@ -213,4 +213,35 @@ class WordController extends Controller {
         }
     }
 
+    public function postDel(Request $request) {
+        $i = 0;
+        if (is_string($request->ids) && strcmp($request->action, 'delete') == 0) {
+            $list_w = explode(' ', $request->ids);
+            foreach ($list_w as $w_id) {
+                if ($w_id != NULL) {
+                    $chil = Word::where('parent_id', $w_id)->get();
+                    if ($chil->count() > 0) {
+                        foreach ($chil as $value) {
+                            del_word_ex($value->id);
+                            $value->delete();
+                        }
+                    }
+                    $word = Word::find($w_id);
+                    if (!empty($word)) {
+                        del_word_ex($word->id);
+                        $word->delete();
+                        $i++;
+                    }
+                }
+            }
+        }
+//        echo $request->ids;
+//        echo $request->action;
+        if ($i != 0) {
+            return '{"status":"success", "message":"Xóa thành công '. $i . ' mục!"}';
+        } else {
+            return '{"status":"danger", "message":"Không có gì để xóa."}';
+        }
+    }
+
 }

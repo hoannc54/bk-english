@@ -16,10 +16,10 @@
     <div class="form-group">
         <label class="control-label col-sm-2">Từ loại:</label>
         <div class="col-sm-8">
-            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="n">Danh từ</label>
-            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="v">Động từ</label>
-            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="adj">Tính từ</label>
-            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="adv">Trạng từ</label>
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="N">Danh từ</label>
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="V">Động từ</label>
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="Adj">Tính từ</label>
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="Adv">Trạng từ</label>
         </div>
     </div>
 
@@ -45,10 +45,10 @@
                     <div class="col-sm-3"><input type="text" class="form-control" name="chil[0][word]" placeholder="Nhập từ"></div>
                     <div class="col-sm-3"><input type="text" class="form-control" name="chil[0][spell]" placeholder="Nhập phát âm"></div>
                     <div class="col-sm-3">
-                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="n">N</label>
-                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="v">V</label>
-                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="adj">Adj</label>
-                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="adv">Adv</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="N">N</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="V">V</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="Adj">Adj</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="Adv">Adv</label>
                     </div>
                     <div class="col-sm-3"><input type="text" class="form-control" name="chil[0][means]" placeholder="Nhập nghĩa"></div>
                 </div>';
@@ -56,10 +56,10 @@
                     <div class="col-sm-3"><input type="text" class="form-control" name="chil[id][word]" placeholder="Nhập từ"></div>
                     <div class="col-sm-3"><input type="text" class="form-control" name="chil[id][spell]" placeholder="Nhập phát âm"></div>
                     <div class="col-sm-3">
-                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="n">N</label>
-                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="v">V</label>
-                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="adj">Adj</label>
-                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="adv">Adv</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="N">N</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="V">V</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="Adj">Adj</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="Adv">Adv</label>
                     </div>
                     <div class="col-sm-3"><input type="text" class="form-control" name="chil[id][means]" placeholder="Nhập nghĩa"></div>
                 </div>';

@@ -16,6 +16,9 @@
         <!-- DataTables CSS -->
         <link href="{!! url('public/css/dataTables.bootstrap.css') !!}" rel="stylesheet">
 
+        <!-- Select DataTables CSS -->
+        <link href="{!! url('public/css/select.dataTables.css') !!}" rel="stylesheet">
+
         <!-- DataTables Responsive CSS -->
         <link href="{!! url('public/css/jquery.dataTables.css') !!}" rel="stylesheet">
 
@@ -33,6 +36,9 @@
 
         <!-- Effeckt CSS-->
         <link href="{!! url('public/css/effeckt.css') !!}" rel="stylesheet">
+
+        @yield('style')
+
     </head>
 
     <body>
@@ -60,7 +66,8 @@
 
                                 <!-- Trang tin nhắn -->
                                 @include('block.message')
-
+                                <div id="message"></div>
+                                
                                 <!-- Nội dung chính-->
                                 @yield('content')
                             </div>

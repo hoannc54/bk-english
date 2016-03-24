@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder {
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('12344321'),
-            'level' => 2
+            'level' => 1
         ]);
         // $this->call('UserTableSeeder');
     }
