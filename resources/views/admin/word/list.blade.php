@@ -5,6 +5,7 @@
 @section('sub-title','Danh sách từ trong từ điển')
 
 @section('content')
+<div id="message"></div>
 <!--<div class="dataTable_wrapper">-->
 <table id="table" class="display" cellspacing="0" width="100%">
     <thead>
@@ -48,8 +49,8 @@
                 <h4 class="modal-title">Chỉnh sửa từ</h4>
             </div>
             <div class="modal-body">
-
-                <form class="form-horizontal form-model" role="form" method="POST">
+                <div id="modal_message"></div>
+                <form class="form-horizontal form-modal" role="form" method="POST" id="form_modal">
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="word">Từ:</label>
                         <div class="col-sm-10">
@@ -93,6 +94,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
+                    <input type="hidden" name="id" id="id"/>
                 </form>
 
             </div>
@@ -110,149 +112,14 @@
 <script src="{!! url('public/js/jquery.dataTables.js') !!}"></script>
 <script src="{!! url('public/js/dataTables.select.js') !!}"></script>
 
-<script>
-            $(document).ready(function() {
+<!-- List word JavaScript -->
+<script src="{!! url('public/js/list-words.js') !!}"></script>
 
-
-    var table = $('#table').DataTable({
-        "processing": true,
-//        "stateSave": true,
-//        serverSide: true,
-    "ajax": "{!! route('admin.word.getListAjax') !!}",
-            "columns": [
-            {
-            "orderable":      false,
-                    "defaultContent": ''
-            },
-            { "data": "word" },
-            { "data": "spell" },
-            { "data": "type" },
-            { "data": "mean" },
-            { "data": "parent_word" },
-            {
-            "orderable":      false,
-                    "searchable":      false,
-                    className: 'word_edit',
-                    "defaultContent": '<i class="fa fa-edit"></i>'
-            }, {
-            "orderable":      false,
-                    "searchable":      false,
-                    className: 'word_delete',
-                    "defaultContent": '<i class="fa fa-close"></i>'
-            },
-            {
-            "orderable":      false,
-                    "searchable":      false,
-                    className: 'select-checkbox',
-                    "defaultContent": " "
-            }
-            ],
-            "order": [[1, 'asc']],
-            select: {
-            style: 'multi',
-                    selector: 'td:last-child'
-            }
-    //Khi bảng đã load xong duyệt từng hàng trong bảng để thêm danh sách example (nếu có) 
-    //đối với từ tương ứng
-//            "rowCallback": function(row, data, displayIndex, displayIndexFull) {
-//            //lấy danh sách ví dụ trong router admin.word.getExample với mỗi id của từ
-//            $.get("{!! route('admin.word.getExample') !!}" + "/" + data.id, function(data, status){
-//            if (data != '') {
-//            //Thêm class has-chil vào cột nếu bảng nào có danh sách example
-//            $('td:eq(0)', row).addClass('has-chil');
-//                    var vidu = '<div class="table_ex"><table class="table"><tr><td colspan="3">Ví dụ:</td></tr>';
-//                    for (var i = 0; i < data.length; i++){
-//            vidu += '<tr><td>' + (i + 1) + '</td><td>' + data[i]['example'] + '</td>' +
-//                    '<td>' + data[i]['mean'] + '</td></tr>';
-//            }
-//            vidu += '</table></div>';
-//                    //thêm dữ liệu example (data-html-Chil) vào cột 0 ứng với mỗi bản ghi
-//                    $('td:eq(0)', row).attr('data-html-Chil', vidu);
-//            }
-//            });
-//            }
-    });
-//    setInterval( function () {
-//	table.ajax.reload();
-//    }, 30000 );
-            $('#table tbody').on('click', 'td.has-chil', function () {
-    var tr = $(this).closest('tr');
-            var row = table.row(tr);
-            var data_chil = $(this).data('htmlChil');
-            if (row.child.isShown()) {
-    // This row is already open - close it
-    row.child.hide();
-            $(this).removeClass('shown');
-    }
-    else {
-    // Open this row
-    row.child(data_chil).show();
-            $(this).addClass('shown');
-    }
-    });
-            $('#table tbody').on('click', 'td.word_edit', function () {
-    var tr = $(this).closest('tr');
-            var row = table.row(tr);
-            var rdata = row.data();
-            var wtype = rdata.type;
-            $('#word').val(rdata.word);
-            $('#spell').val(rdata.spell);
-            $('#means').val(rdata.mean);
-            
-            if (wtype.search('N') >= 0){
-    $('#type_n').prop({'checked':true});
-    }else{
-    $('#type_n').prop({'checked':false});
-    }
-    if (wtype.search('V') >= 0){
-    $('#type_v').prop({'checked':true});
-    }else{
-    $('#type_v').prop({'checked':false});
-    }
-    if (wtype.search('Adj') >= 0){
-    $('#type_adj').prop({'checked':true});
-    }else{
-    $('#type_adj').prop({'checked':false});
-    }
-    if (wtype.search('Adv') >= 0){
-    $('#type_adv').prop({'checked':true});
-    }else{
-    $('#type_adv').prop({'checked':false});
-    }
-
-    if (rdata.parent_word == 'none'){
-    $('#parent').val('');
-    } else{
-    $('#parent').val(rdata.parent_word);
-    }
-    $("#myModal").modal();
-    });
-            $('#table tbody').on('click', 'td.word_delete', function () {
-    var tr = $(this).closest('tr');
-            var row = table.row(tr);
-            var id = row.data().id;
-            var request = {ids: id, action:"delete", _token: "{!! csrf_token() !!}"};
-            var r = confirm("Bạn có chắc chắn xóa?");
-            if(r){
-            $.post("{!! route('admin.word.postDel') !!}", request,
-                    function (data, status) {
-                    table.ajax.reload(null, false);
-                    result = JSON.parse(data);
-                    switch(result.status){
-                        case 'success': message('alert alert-success', result.message); break;
-                        case 'danger': message('alert alert-danger', result.message); break;
-                            default : message('alert alert-danger', 'Lỗi không xác định.'); break;
-    }
-                    });
-                }
-//            message('alert alert-danger', 'dddddd');
-    });
-    
-//            $(".word_edit").click(function(){
-//    $("#myModal").modal();
-//    });
-    });
-        </script>
+<script type="text/javascript">
+            var listAjax = "{!! route('admin.word.getListAjax') !!}",
+            token = "{!! csrf_token() !!}",
+            postDel = "{!! route('admin.word.postDel') !!}",
+            postEdit = "{!! route('admin.word.postEdit') !!}";</script>
 
 <!-- play sound -->
 <script src="{!! url('public/js/play-sound.js') !!}"></script>
@@ -262,7 +129,7 @@
 @section('style')
 @parent
 <style>
-    .form-model{
+    .form-modal{
         margin: 50px;
     }
     .word_edit, .word_delete, .select-checkbox{cursor: pointer;}

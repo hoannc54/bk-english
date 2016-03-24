@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-function message(c, m) {
-    $('#message').removeClass();
-    $('#message').addClass(c);
-    $('#message').html(m);
-    $('#message').slideDown();
-    $('#message').delay(3000).slideUp();
+function message(id, c, m) {
+    $(id).removeClass();
+    $(id).addClass(c);
+    $(id).html(m);
+    $(id).slideDown();
+    $(id).delay(3000).slideUp();
 
 }
 

@@ -66,7 +66,6 @@
 
                                 <!-- Trang tin nhắn -->
                                 @include('block.message')
-                                <div id="message"></div>
                                 
                                 <!-- Nội dung chính-->
                                 @yield('content')

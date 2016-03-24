@@ -69,42 +69,40 @@ class WordController extends Controller {
 
     public function getListAjax() {
 
-        $data = Word::get()->toArray();
-        foreach ($data as &$word) {
-            $p_word = Word::find($word['parent_id']);
-            if (!empty($p_word)) {
-                $word['parent_word'] = $p_word->word;
-            } else {
-                $word['parent_word'] = 'none';
-            }
-        }
-        $json_word = json_encode($data);
-//        print_r($data2);
-        return '{"data":' . $json_word . '}';
-
-//        $ar_data = [];
-//        $data = Word::get();
-//        foreach ($data as $word) {
-//            $da = $word->examples()->get()->toArray();
-//            $a_word = $word->toArray();
-//            $p_word = Word::find($word->parent_id);
+//        $data = Word::get()->toArray();
+//        foreach ($data as &$word) {
+//            $p_word = Word::find($word['parent_id']);
 //            if (!empty($p_word)) {
-//                $a_word['parent_word'] = $p_word->word;
+//                $word['parent_word'] = $p_word->word;
 //            } else {
-//                $a_word['parent_word'] = 'none';
+//                $word['parent_word'] = 'none';
 //            }
-//            $a_word['example'] = $da;
-//            
-//            $ar_data[] = $a_word;
-////            $json_word = json_encode($a_word);
-////            echo '<pre>';
-////            print_r($json_word);
-////            
-////            echo '</pre>';
 //        }
-//        $json_word = json_encode($ar_data);
+//        $json_word = json_encode($data);
 ////        print_r($data2);
 //        return '{"data":' . $json_word . '}';
+
+        $ar_data = [];
+        $data = Word::get();
+        foreach ($data as $word) {
+            $da = $word->examples()->get()->toArray();
+            $a_word = $word->toArray();
+            $p_word = Word::find($word->parent_id);
+            if (!empty($p_word)) {
+                $a_word['parent_word'] = $p_word->word;
+            } else {
+                $a_word['parent_word'] = 'none';
+            }
+            if (empty($da)) {
+                $a_word['example'] = '';
+            } else {
+                $a_word['example'] = $da;
+            }
+            $ar_data[] = $a_word;
+        }
+        $json_word = json_encode($ar_data);
+//        print_r($data2);
+        return '{"data":' . $json_word . '}';
     }
 
     public function getExample($id = NULL) {
@@ -134,7 +132,7 @@ class WordController extends Controller {
         }
     }
 
-    public function postEdit(Request $request, $id) {
+    public function postEdit2(Request $request, $id) {
         $word = Word::find($id);
 
         if (!empty($word)) {
@@ -178,6 +176,56 @@ class WordController extends Controller {
             return redirect()->route('admin.word.getList')->with(['flash_level' => 'success', 'flash_message' => 'Sửa thành công!']);
         } else {
             return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không tìm thấy từ cần sửa!']);
+        }
+    }
+
+    public function postEdit(Request $request) {
+        $word = Word::find($request->id);
+
+        if (!empty($word)) {
+            $old_word = mb_convert_case($word->word, MB_CASE_LOWER, 'utf-8');
+            $new_word = mb_convert_case($request->word, MB_CASE_LOWER, 'utf-8');
+//            $word->word = $request->word;
+            if (strcmp($old_word, $new_word) != 0) {
+                $w = Word::where('word', $new_word)->count();
+                if ($w > 0) {
+                    return '{"status" : "danger", "message" : "Lỗi! Từ sửa bị trùng."}';
+//                    return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ sửa bị trùng.']);
+                }
+                del_word_ex($id);
+                word_to_ex($id, $new_word);
+                $word->word = $new_word;
+            }
+            $word->spell = $request->spell;
+            $word->type = '';
+            if (is_array($request->type)) {
+                foreach ($request->type as $va) {
+                    $word->type .= ' ' . $va;
+                }
+            }
+            $word->type = trim($word->type);
+            $word->mean = $request->means;
+            $word->save();
+
+            if (trim($request->parent) != '') {
+                $word_parent = Word::where('word', trim($request->parent))->first();
+                if (!empty($word_parent)) {
+                    if ($word_parent->parent_id == 0) {
+                        $word->parent_id = $word_parent->id;
+                    } else {
+                        return '{"status" : "danger", "message" : "Lỗi! Từ gốc là từ con của 1 từ khác."}';
+//                        return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ gốc là từ con của 1 từ khác.']);
+                    }
+                } else {
+                    $word->parent_id = 0;
+                    return '{"status" : "danger", "message" : "Lỗi! Từ gốc không tồn tại."}';
+//                    return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => '']);
+                }
+                $word->save();
+            }
+            return '{"status" : "success", "message" : "Sửa thành công!"}';
+        } else {
+            return '{"status" : "danger", "message" : "Không tìm thấy từ cần sửa!"}';
         }
     }
 
@@ -238,7 +286,7 @@ class WordController extends Controller {
 //        echo $request->ids;
 //        echo $request->action;
         if ($i != 0) {
-            return '{"status":"success", "message":"Xóa thành công '. $i . ' mục!"}';
+            return '{"status":"success", "message":"Xóa thành công ' . $i . ' mục!"}';
         } else {
             return '{"status":"danger", "message":"Không có gì để xóa."}';
         }

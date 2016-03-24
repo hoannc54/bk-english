@@ -49,7 +49,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('list/ajax', ['as' => 'admin.word.getListAjax', 'uses' => 'Admin\WordController@getListAjax']);
 
         Route::get('edit/{id}', ['as' => 'admin.word.getEdit', 'uses' => 'Admin\WordController@getEdit']);
-        Route::post('edit/{id}', ['as' => 'admin.word.postEdit', 'uses' => 'Admin\WordController@postEdit']);
+        Route::post('edit', ['as' => 'admin.word.postEdit', 'uses' => 'Admin\WordController@postEdit']);
+//        Route::post('edit/{id}', ['as' => 'admin.word.postEdit', 'uses' => 'Admin\WordController@postEdit']);
 
         Route::post('delete', ['as' => 'admin.word.postDelete', 'uses' => 'Admin\WordController@postDelete']);
 
