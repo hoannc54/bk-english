@@ -6,28 +6,29 @@
 
 
 
-function playSound(btn) {
-    var src_mp3 = btn.data('srcMp3');
+function playSound(src_mp3) {
+//    var src_mp3 = btn.data('srcMp3');
 //    var src_ogg = btn.attr("data-src-ogg");
 
-    if (supportAudioHtml5()){
+    if (supportAudioHtml5()) {
         playHtml5(src_mp3);
-    }else{
-        alert("Browser don't support HTML5!");
+    } else {
+        alert("Trình duyệt không hỗ trợ HTML5!");
     }
 }
 
-function supportAudioHtml5(){
-    var audioTag  = document.createElement('audio');
-    try{
-        return ( !!(audioTag.canPlayType)
-                 &&( audioTag.canPlayType("audio/mpeg") != "no" && audioTag.canPlayType("audio/mpeg") != "" ) );     
-    }catch(e){
+function supportAudioHtml5() {
+    var audioTag = document.createElement('audio');
+    try {
+        return (!!(audioTag.canPlayType)
+                && (audioTag.canPlayType("audio/mpeg") != "no"
+                        && audioTag.canPlayType("audio/mpeg") != ""));
+    } catch (e) {
         return false;
-    } 
+    }
 }
 
-function playHtml5(src_mp3){
+function playHtml5(src_mp3) {
     //use appropriate source
     var audio = new Audio("");
     if (audio.canPlayType("audio/mpeg") != "no" && audio.canPlayType("audio/mpeg") != "")
@@ -36,7 +37,9 @@ function playHtml5(src_mp3){
 //        audio = new Audio(src_ogg);
 
     //play
-    audio.addEventListener("error", function(e){alert("File âm thanh không tồn tại!");});
+    audio.addEventListener("error", function (e) {
+        alert("File âm thanh không tồn tại!");
+    });
     audio.play();
 //    audio.play();
 }

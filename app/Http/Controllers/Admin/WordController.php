@@ -32,7 +32,7 @@ class WordController extends Controller {
             }
         }
         $word->type = trim($word->type);
-        $word->sound = 'public/sound/' . $request->word . '.mp3';
+        $word->sound = 'public/sounds/' . $request->word . '.mp3';
         $word->parent_id = 0;
         $word->save();
         word_to_ex($word->id, $word->word);
@@ -96,7 +96,7 @@ class WordController extends Controller {
             if (empty($da)) {
                 $a_word['example'] = '';
             } else {
-                $a_word['example'] = $da;
+                $a_word['examples'] = $da;
             }
             $ar_data[] = $a_word;
         }
@@ -191,10 +191,11 @@ class WordController extends Controller {
                 if ($w > 0) {
                     return '{"status" : "danger", "message" : "Lỗi! Từ sửa bị trùng."}';
 //                    return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ sửa bị trùng.']);
+                } else {
+                    del_word_ex($request->id);
+                    word_to_ex($request->id, $new_word);
+                    $word->word = $new_word;
                 }
-                del_word_ex($id);
-                word_to_ex($id, $new_word);
-                $word->word = $new_word;
             }
             $word->spell = $request->spell;
             $word->type = '';

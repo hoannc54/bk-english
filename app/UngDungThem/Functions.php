@@ -51,9 +51,13 @@ function ex_to_word($ex_id, $ex) {
     foreach ($ar_word as $value) {
         $word = DB::table('words')->where('word', trim($value, '.,!?;:'))->first();
         if (!empty($word)) {
-            DB::table('word_exes')->insert(
-                    ['word_id' => $word->id, 'example_id' => $ex_id]
-            );
+            $w_ex = DB::table('word_exes')->where('word_id', $word->id)
+                            ->where('example_id', $ex_id)->first();
+            if (empty($w_ex)) {
+                DB::table('word_exes')->insert(
+                        ['word_id' => $word->id, 'example_id' => $ex_id]
+                );
+            }
         }
     }
 }
@@ -66,9 +70,13 @@ function word_to_ex($w_id, $word) {
             $word1 = mb_convert_case($word, MB_CASE_LOWER, 'utf-8');
             $word2 = mb_convert_case(trim($val, '.,!?;:'), MB_CASE_LOWER, 'utf-8');
             if (strcmp($word1, $word2) == 0) {
-                DB::table('word_exes')->insert(
-                        ['word_id' => $w_id, 'example_id' => $ex->id]
-                );
+                $w_ex = DB::table('word_exes')->where('word_id', $w_id)
+                                ->where('example_id', $ex->id)->first();
+                if (empty($w_ex)) {
+                    DB::table('word_exes')->insert(
+                            ['word_id' => $w_id, 'example_id' => $ex->id]
+                    );
+                }
             }
         }
     }

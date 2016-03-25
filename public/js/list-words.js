@@ -16,29 +16,40 @@ $(document).ready(function () {
         "columns": [
             {
                 "orderable": false,
+                "className": "center",
+                "data": function (source, type, val) {
+                    if (source.examples) {
+                        return '<i class="has-chil fa fa-plus-square"></i>';
+                    } else {
+                        return '';
+                    }
+                },
                 "defaultContent": ''
             },
             {"data": "word"},
-            {"data": "spell"},
+            {
+                "data": "spell",
+                "className": "spell center"
+            },
             {"data": "type"},
             {"data": "mean"},
             {"data": "parent_word"},
             {
                 "orderable": false,
                 "searchable": false,
-                className: 'word_edit',
+                "className": "word_edit center",
                 "defaultContent": '<i class="fa fa-edit"></i>'
             },
             {
                 "orderable": false,
                 "searchable": false,
-                className: 'word_delete',
+                "className": "word_delete center",
                 "defaultContent": '<i class="fa fa-close"></i>'
             },
             {
                 "orderable": false,
                 "searchable": false,
-                className: 'select-checkbox',
+                "className": "select-checkbox center",
                 "defaultContent": " "
             }
         ],
@@ -70,19 +81,37 @@ $(document).ready(function () {
 //    setInterval( function () {
 //	table.ajax.reload();
 //    }, 30000 );
-    $('#table tbody').on('click', 'td.has-chil', function () {
+    $('#table tbody').on('click', 'td.spell', function () {
+//        alert(1111);
         var tr = $(this).closest('tr');
         var row = table.row(tr);
-        var data_chil = $(this).data('htmlChil');
+        var rdata = row.data();
+        playSound((typeof linkSound !== "undefined" ? linkSound : "")+'/'+rdata.sound);
+//        alert(rdata.sound);
+    });
+
+    $('#table tbody').on('click', 'i.has-chil', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row(tr);
+//        var data_chil = $(this).data('htmlChil');
+        var examples = row.data().examples;
+        var data_chil = '<table class="table"><tr><td colspan="3">Ví dụ:</td></tr>';
+        for (var i = 0; i < examples.length; i++) {
+            data_chil += '<tr class="info"><td>' + (i + 1) + '.</td><td>' + examples[i].example + '</td>\n\
+                            <td>' + examples[i].mean + '</td></tr>';
+        }
+        data_chil += '</table>';
+//        var data_chil = row.data().examples[0].example;
         if (row.child.isShown()) {
             // This row is already open - close it
             row.child.hide();
-            $(this).removeClass('shown');
-        }
-        else {
+            $(this).addClass('fa-plus-square');
+            $(this).removeClass('fa-minus-square');
+        } else {
             // Open this row
             row.child(data_chil).show();
-            $(this).addClass('shown');
+            $(this).addClass('fa-minus-square');
+            $(this).removeClass('fa-plus-square');
         }
     });
     $('#table tbody').on('click', 'td.word_edit', function () {
@@ -159,9 +188,6 @@ $(document).ready(function () {
         // Serialize the data in the form
         var serializedData = $form.serialize();
 
-        // Let's disable the inputs for the duration of the Ajax request.
-        // Note: we disable elements AFTER the form data has been serialized.
-        // Disabled form elements will not be serialized.
         $inputs.prop("disabled", true);
 
         $.post(typeof postEdit !== "undefined" ? postEdit : "", serializedData,
@@ -181,34 +207,8 @@ $(document).ready(function () {
                             break;
                     }
                 });
-        // Fire off the request to /form.php
-//                    request = $.ajax({
-//                        url: "{!! route('admin.word.postEdit') !!}",
-//                        type: "post",
-//                        data: serializedData
-//                    });
 
-        // Callback handler that will be called on success
-//                    request.done(function (response, textStatus, jqXHR) {
-//                        // Log a message to the console
-//                        console.log("Hooray, it worked!");
-//                    });
-
-        // Callback handler that will be called on failure
-//                    request.fail(function (jqXHR, textStatus, errorThrown) {
-//                        // Log the error to the console
-//                        console.error(
-//                                "The following error occurred: " +
-//                                textStatus, errorThrown
-//                                );
-//                    });
-
-        // Callback handler that will be called regardless
-        // if the request failed or succeeded
-//                    request.always(function () {
-        // Reenable the inputs
         $inputs.prop("disabled", false);
-//                    });
 
         // Prevent default posting of form
         event.preventDefault();

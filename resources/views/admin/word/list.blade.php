@@ -119,7 +119,8 @@
             var listAjax = "{!! route('admin.word.getListAjax') !!}",
             token = "{!! csrf_token() !!}",
             postDel = "{!! route('admin.word.postDel') !!}",
-            postEdit = "{!! route('admin.word.postEdit') !!}";</script>
+            postEdit = "{!! route('admin.word.postEdit') !!}",
+            linkSound = "{!! url('/') !!}";</script>
 
 <!-- play sound -->
 <script src="{!! url('public/js/play-sound.js') !!}"></script>
@@ -132,6 +133,10 @@
     .form-modal{
         margin: 50px;
     }
-    .word_edit, .word_delete, .select-checkbox{cursor: pointer;}
+    .center{text-align: center;}
+    td.word_edit, td.word_delete, td.select-checkbox, td.spell, i.has-chil{cursor: pointer; color: #0000C2;}
+/*    .chil_table{
+        margin-left: 50px;
+    }*/
 </style>
 @stop
