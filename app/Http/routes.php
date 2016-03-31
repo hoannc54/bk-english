@@ -71,6 +71,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::post('edit/{id}', ['as' => 'admin.example.postEdit', 'uses' => 'Admin\ExampleController@postEdit']);
 
         Route::post('delete', ['as' => 'admin.example.postDelete', 'uses' => 'Admin\ExampleController@postDelete']);
+        
+        Route::post('postdel', ['as' => 'admin.example.postDel', 'uses' => 'Admin\ExampleController@postDel']);
     });
 
     Route::group(['prefix' => 'user'], function() {

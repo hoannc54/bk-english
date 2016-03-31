@@ -38,7 +38,7 @@
 </table>
 
 
-<!-- Modal -->
+<!-- Modal edit-->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
 
@@ -111,6 +111,7 @@
 <!-- DataTables JavaScript -->
 <script src="{!! url('public/js/jquery.dataTables.js') !!}"></script>
 <script src="{!! url('public/js/dataTables.select.js') !!}"></script>
+<script src="{!! url('public/js/dataTables.buttons.js') !!}"></script>
 
 <!-- List word JavaScript -->
 <script src="{!! url('public/js/list-words.js') !!}"></script>
@@ -129,6 +130,10 @@
 
 @section('style')
 @parent
+
+<!-- Button DataTables CSS -->
+<link href="{!! url('public/css/buttons.dataTables.css') !!}" rel="stylesheet">
+
 <style>
     .form-modal{
         margin: 50px;

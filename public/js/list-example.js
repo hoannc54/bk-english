@@ -5,46 +5,31 @@
  */
 
 
-
 $(document).ready(function () {
 
     var table = $('#table').DataTable({
         dom: 'Bfrtip',
+//        dom: 'Bflirtflp',
         "processing": true,
-//        "stateSave": true,
-//        serverSide: true,
         "ajax": typeof listAjax !== "undefined" ? listAjax : "",
         "columns": [
             {
+                "searchable": false,
                 "orderable": false,
-                "className": "center",
-                "data": function (source, type, val) {
-                    if (source.examples) {
-                        return '<i class="has-chil fa fa-plus-square"></i>';
-                    } else {
-                        return '';
-                    }
-                },
-                "defaultContent": ''
+                "defaultContent": ""
             },
-            {"data": "word"},
-            {
-                "data": "spell",
-                "className": "spell center"
-            },
-            {"data": "type"},
+            {"data": "example"},
             {"data": "mean"},
-            {"data": "parent_word"},
             {
                 "orderable": false,
                 "searchable": false,
-                "className": "word_edit center",
+                "className": "example_edit center",
                 "defaultContent": '<i class="fa fa-edit"></i>'
             },
             {
                 "orderable": false,
                 "searchable": false,
-                "className": "word_delete center",
+                "className": "example_delete center",
                 "defaultContent": '<i class="fa fa-close"></i>'
             },
             {
@@ -76,8 +61,8 @@ $(document).ready(function () {
             {
                 text: 'Đảo lựa chọn PAGE',
                 action: function () {
-                    de = table.rows({selected: true, page: 'current'});
-                    se = table.rows({selected: false, page: 'current'});
+                    de = table.rows({selected: true,page: 'current'});
+                    se = table.rows({selected: false,page: 'current'});
                     se.select();
                     de.deselect();
                 }
@@ -116,32 +101,6 @@ $(document).ready(function () {
         ]
     });
 
-    //nếu không có mục nào được chọn thì disable mất nút không cần thiết
-    function en_dis_button() {
-        var selectedRows = table.rows({selected: true}).count();
-
-//        table.button(0).enable();
-//        alert(selectedRows);
-        if (selectedRows > 0) {
-            table.button(4).enable();
-            table.button(5).enable();
-        } else {
-            table.button(4).disable();
-            table.button(5).disable();
-        }
-    }
-
-    table
-            .on('select', function () {
-                en_dis_button();
-            })
-            .on('deselect', function () {
-                en_dis_button();
-            })
-            .on('processing.dt', function () {
-                en_dis_button();
-            });
-
     function delete_id(id) {
         //tạo dữ liệu gửi đi
         var request = {ids: id, action: "delete", _token: typeof token !== "undefined" ? token : ""};
@@ -170,114 +129,65 @@ $(document).ready(function () {
         }
     }
 
-    $('#table tbody').on('click', 'td.spell', function () {
-//        alert(1111);
-        var tr = $(this).closest('tr');
-        var row = table.row(tr);
-        var rdata = row.data();
-        playSound((typeof linkSound !== "undefined" ? linkSound : "") + '/' + rdata.sound);
-//        alert(rdata.sound);
-    });
+    //nếu không có mục nào được chọn thì disable mất nút không cần thiết
+    function en_dis_button() {
+        var selectedRows = table.rows({selected: true}).count();
 
-    //click hiển thị danh sách ví dụ
-    $('#table tbody').on('click', 'i.has-chil', function () {
-        var tr = $(this).closest('tr');
-        var row = table.row(tr);
-//        var data_chil = $(this).data('htmlChil');
-        var examples = row.data().examples;
-        var data_chil = '<table class="table"><tr><td colspan="3">Ví dụ:</td></tr>';
-        for (var i = 0; i < examples.length; i++) {
-            data_chil += '<tr class="info"><td>' + (i + 1) + '.</td><td>' + examples[i].example + '</td>\n\
-                            <td>' + examples[i].mean + '</td></tr>';
-        }
-        data_chil += '</table>';
-//        var data_chil = row.data().examples[0].example;
-        if (row.child.isShown()) {
-            // This row is already open - close it
-            row.child.hide();
-            $(this).addClass('fa-plus-square');
-            $(this).removeClass('fa-minus-square');
+//        table.button(0).enable();
+//        alert(selectedRows);
+        if (selectedRows > 0) {
+            table.button(4).enable();
+            table.button(5).enable();
         } else {
-            // Open this row
-            row.child(data_chil).show();
-            $(this).addClass('fa-minus-square');
-            $(this).removeClass('fa-plus-square');
+            table.button(4).disable();
+            table.button(5).disable();
         }
-    });
-    
-    //click sửa từ
-    $('#table tbody').on('click', 'td.word_edit', function () {
+    }
+
+
+    table
+            .on('select', function () {
+                en_dis_button();
+            })
+            .on('deselect', function () {
+                en_dis_button();
+            })
+            .on('processing.dt', function () {
+                en_dis_button();
+            });
+//    setInterval( function () {
+//	table.ajax.reload();
+//    }, 30000 );
+    $('#table tbody').on('click', 'td.example_edit', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
         var rdata = row.data();
-        var wtype = rdata.type;
-        
-        //Thêm dữ liệu mặc định vào modal
+
+        //Thêm thông tin vào modal
         $('#id').val(rdata.id);
-        $('#word').val(rdata.word);
-        $('#spell').val(rdata.spell);
-        $('#means').val(rdata.mean);
+        $('#example').val(rdata.example);
+        $('#mean').val(rdata.mean);
 
-        if (wtype.search('N') >= 0) {
-            $('#type_n').prop({'checked': true});
-        } else {
-            $('#type_n').prop({'checked': false});
-        }
-        if (wtype.search('V') >= 0) {
-            $('#type_v').prop({'checked': true});
-        } else {
-            $('#type_v').prop({'checked': false});
-        }
-        if (wtype.search('Adj') >= 0) {
-            $('#type_adj').prop({'checked': true});
-        } else {
-            $('#type_adj').prop({'checked': false});
-        }
-        if (wtype.search('Adv') >= 0) {
-            $('#type_adv').prop({'checked': true});
-        } else {
-            $('#type_adv').prop({'checked': false});
-        }
-
-        if (rdata.parent_word == 'none') {
-            $('#parent').val('');
-        } else {
-            $('#parent').val(rdata.parent_word);
-        }
-        
-        //hiện modal
+        //Hiển thị modal
         $("#myModal").modal();
     });
-    
-    //click vào nút xóa
-    $('#table tbody').on('click', 'td.word_delete', function () {
+
+    //click vào button xóa
+    $('#table tbody').on('click', 'td.example_delete', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
         var id = row.data().id;
-        
+
         //thực hiện hàm xóa
         delete_id(id);
-//        var request = {ids: id, action: "delete", _token: typeof token !== "undefined" ? token : ""};
-//        var r = confirm("Bạn có chắc chắn xóa?");
-//        if (r) {
-//            $.post(typeof postDel !== "undefined" ? postDel : "", request,
-//                    function (data, status) {
-//                        table.ajax.reload(null, false);
-//                        result = JSON.parse(data);
-//                        switch (result.status) {
-//                            case 'success':
-//                                message('#message', 'alert alert-success', result.message);
-//                                break;
-//                            case 'danger':
-//                                message('#message', 'alert alert-danger', result.message);
-//                                break;
-//                            default :
-//                                message('#message', 'alert alert-danger', 'Lỗi không xác định.');
-//                                break;
-//                        }
-//                    });
-//        }
     });
+
+    //Hiển thị chỉ số của các hàng
+    table.on('order.dt search.dt', function () {
+        table.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1;
+        });
+    }).draw();
 
     $("#form_modal").submit(function (event) {
 
@@ -296,7 +206,7 @@ $(document).ready(function () {
                 function (data, status) {
                     table.ajax.reload(null, false);
                     result = JSON.parse(data);
-                    
+
                     //Nhận thông báo và đưa ra các thông báo cần thiết
                     switch (result.status) {
                         case 'success':

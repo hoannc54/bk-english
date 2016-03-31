@@ -5,16 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
+use Auth;
 
 class AdminAuthentication {
 
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
     protected $auth;
 
     public function __construct(Guard $auth) {
@@ -26,7 +20,8 @@ class AdminAuthentication {
             if ($this->auth->user()->level == 1) {
                 return $next($request);
             } else {
-                return new RedirectResponse(url('/'));
+                Auth::logout();
+                return new RedirectResponse(route('admin.getLogin'));
             }
         } else {
             return new RedirectResponse(route('admin.getLogin'));
