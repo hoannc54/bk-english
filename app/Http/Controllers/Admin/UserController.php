@@ -15,8 +15,13 @@ class UserController extends Controller {
     }
     
     public function getList() {
-        $data = User::select('id', 'name', 'email', 'level')->orderBy('id', 'DESC')->get();
+        $data = User::select('id', 'name', 'email', 'level')->get();
         return view('admin.user.list', compact('data'));
+    }
+    
+    public function getListAjax() {
+        $data = User::select('id', 'name', 'email', 'level')->get()->toJson();
+        return '{"data":'.$data.'}';
     }
 
     public function getAdd() {

@@ -1,10 +1,8 @@
-<?php
-$user_manage = 'active';
-?>
-
 @extends('admin.template')
 
-@section('main-title','Thêm thành viên mới')
+@section('main-title','Quản lý thành viên')
+
+@section('sub-title','Thêm thành viên mới')
 
 @section('content')
 <form class="form-horizontal" role="form" action="{!! route('admin.user.postAdd') !!}" method="POST">

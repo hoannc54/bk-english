@@ -1,10 +1,8 @@
-<?php
-$word_manage = 'active';
-?>
-
 @extends('admin.template')
 
-@section('main-title','Thêm từ mới')
+@section('main-title','Quản lý tự vựng')
+
+@section('sub-title','Thêm từ mới')
 
 @section('content')
 <form class="form-horizontal" role="form" action="{!! route('admin.word.postAdd') !!}" method="POST">
@@ -14,6 +12,17 @@ $word_manage = 'active';
             <input type="text" class="form-control" id="word" name="word" value="{!! old('word') !!}" placeholder="Nhập từ" required="required">
         </div>
     </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Từ loại:</label>
+        <div class="col-sm-8">
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="N">Danh từ</label>
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="V">Động từ</label>
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="Adj">Tính từ</label>
+            <label class="checkbox-inline"><input type="checkbox" name="type[]" value="Adv">Trạng từ</label>
+        </div>
+    </div>
+
     <div class="form-group">
         <label class="control-label col-sm-2" for="spell">Phát âm:</label>
         <div class="col-sm-8">
@@ -33,14 +42,26 @@ $word_manage = 'active';
     $sh_title = 'Từ đi kèm';
     $list_id = 'chil_list';
     $list_data = '<div class="form-group">
-                    <div class="col-sm-4"><input type="text" class="form-control" name="chil[0][word]" placeholder="Nhập từ"></div>
-                    <div class="col-sm-4"><input type="text" class="form-control" name="chil[0][spell]" placeholder="Nhập phát âm"></div>
-                    <div class="col-sm-4"><input type="text" class="form-control" name="chil[0][means]" placeholder="Nhập nghĩa"></div>
+                    <div class="col-sm-3"><input type="text" class="form-control" name="chil[0][word]" placeholder="Nhập từ"></div>
+                    <div class="col-sm-3"><input type="text" class="form-control" name="chil[0][spell]" placeholder="Nhập phát âm"></div>
+                    <div class="col-sm-3">
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="N">N</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="V">V</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="Adj">Adj</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[0][type][]" value="Adv">Adv</label>
+                    </div>
+                    <div class="col-sm-3"><input type="text" class="form-control" name="chil[0][means]" placeholder="Nhập nghĩa"></div>
                 </div>';
     $list_data_add = '<div class="form-group">
-                    <div class="col-sm-4"><input type="text" class="form-control" name="chil[id][word]" placeholder="Nhập từ"></div>
-                    <div class="col-sm-4"><input type="text" class="form-control" name="chil[id][spell]" placeholder="Nhập phát âm"></div>
-                    <div class="col-sm-4"><input type="text" class="form-control" name="chil[id][means]" placeholder="Nhập nghĩa"></div>
+                    <div class="col-sm-3"><input type="text" class="form-control" name="chil[id][word]" placeholder="Nhập từ"></div>
+                    <div class="col-sm-3"><input type="text" class="form-control" name="chil[id][spell]" placeholder="Nhập phát âm"></div>
+                    <div class="col-sm-3">
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="N">N</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="V">V</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="Adj">Adj</label>
+                        <label class="checkbox-inline"><input type="checkbox" name="chil[id][type][]" value="Adv">Adv</label>
+                    </div>
+                    <div class="col-sm-3"><input type="text" class="form-control" name="chil[id][means]" placeholder="Nhập nghĩa"></div>
                 </div>';
     ?>
     @include('block.showhide')
@@ -56,5 +77,6 @@ $word_manage = 'active';
 @stop
 
 @section('script')
+@parent
 <script src="{!! url('public/js/list-items.js') !!}"></script>
 @endsection

@@ -16,6 +16,7 @@ class CreateWordsTable extends Migration
             $table->increments('id');
             $table->string('word');
             $table->string('spell');
+            $table->string('type');
             $table->string('mean');
             $table->string('sound');
             $table->integer('parent_id');

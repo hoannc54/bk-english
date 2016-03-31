@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 18, 2016 at 09:25 PM
+-- Generation Time: Mar 10, 2016 at 09:37 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -39,8 +39,8 @@ CREATE TABLE `examples` (
 --
 
 INSERT INTO `examples` (`id`, `example`, `mean`, `created_at`, `updated_at`) VALUES
-(1, 'gggg dd sssa ddk  	 abbreviate ', 'abattoir gggg dd sssa ddk', '2016-02-15 03:03:05', '2016-02-15 03:03:46'),
-(2, 'abattoir hsah adá đs sad ads ád', 'ddd', '2016-02-17 20:27:14', '2016-02-17 20:27:14');
+(1, 'day la cau vi du', 'day la cau vi du 2', '2016-03-10 10:44:16', '2016-03-10 10:44:16'),
+(2, 'day la cau vi du 2', 'day la cau vi du 2', '2016-03-10 10:44:20', '2016-03-10 10:44:20');
 
 -- --------------------------------------------------------
 
@@ -153,6 +153,13 @@ CREATE TABLE `users` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `level`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'hoanghoi1310@gmail.com', '$2y$10$ddTFdehwMoVINS//NYy3aetmKD9X2MB8c9qd7swb95M.sdVFiEknW', 2, 'DmDhnHEzUHQhDJVJL50WTA5UU0TU45QuLz1rEKQR', '2016-03-10 01:37:56', '2016-03-10 01:37:56');
+
 -- --------------------------------------------------------
 
 --
@@ -175,14 +182,8 @@ CREATE TABLE `words` (
 --
 
 INSERT INTO `words` (`id`, `word`, `spell`, `mean`, `sound`, `parent_id`, `created_at`, `updated_at`) VALUES
-(2, 'abattoir', 'ss', 'ff', 'public/sound/abattoir.mp3', 0, '2016-02-14 07:20:21', '2016-02-14 07:20:21'),
-(4, 'Abbott and Costello', 'xxx', 'eee', 'public/sound/Abbott and Costello.mp3', 0, '2016-02-14 07:22:52', '2016-02-14 07:22:52'),
-(6, 'abdicate', 'xxxx', 'deeeww', 'public/sound/abdicate.mp3', 0, '2016-02-14 07:23:43', '2016-02-14 07:23:43'),
-(7, 'agreement', 'ə\'gri:mənt', 'Hợp đồng,  giao kèo', 'public/sound/agreement.mp3', 0, '2016-02-17 20:39:05', '2016-02-17 20:39:05'),
-(8, 'agree', 'ə\'gri:', 'Đồng ý, tán thành', '', 7, '2016-02-17 20:39:05', '2016-02-17 20:39:05'),
-(9, 'agreementgggg', 'ə\'gri:mənt', 'Hợp đồng,  giao kèo', 'public/sound/agreementgggg.mp3', 0, '2016-02-17 20:41:45', '2016-02-17 20:41:45'),
-(10, 'abc', 'dđ', 'dđ', '', 9, '2016-02-17 20:41:45', '2016-02-17 20:41:45'),
-(11, 'ssss', 'aa', 'dđ', '', 9, '2016-02-17 20:41:45', '2016-02-17 20:41:45');
+(2, 'agreement', 'ə\'gri:mənt', 'dddd', 'public/sound/agreement.mp3', 0, '2016-03-10 02:07:08', '2016-03-10 02:07:08'),
+(3, 'du', 'fg', 'dddd', 'public/sound/du.mp3', 0, '2016-03-10 10:44:34', '2016-03-10 10:44:34');
 
 -- --------------------------------------------------------
 
@@ -203,7 +204,8 @@ CREATE TABLE `word_exes` (
 --
 
 INSERT INTO `word_exes` (`id`, `word_id`, `example_id`, `created_at`, `updated_at`) VALUES
-(3, 2, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(1, 3, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 3, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -304,17 +306,17 @@ ALTER TABLE `not_learns`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `words`
 --
 ALTER TABLE `words`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `word_exes`
 --
 ALTER TABLE `word_exes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --

@@ -2,7 +2,7 @@
 @parent
 <!-- đây là đoạn script khác -->
 <script>
-    $(document).ready(function () 
+    $(document).ready(function () {
     });
 </script>
 @stop

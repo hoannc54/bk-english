@@ -41,7 +41,7 @@ class ExampleController extends Controller {
         }
     }
 
-    public function postEdit(Request $request, $id) {
+    public function postEdit2(Request $request, $id) {
         $example = Example::find($id);
         if (!empty($example)) {
             $old_ex = mb_convert_case(trim($example->example, '.?!'), MB_CASE_LOWER, 'utf-8');
@@ -60,6 +60,32 @@ class ExampleController extends Controller {
             return redirect()->route('admin.example.getList')->with(['flash_level' => 'success', 'flash_message' => 'Sửa thành công!']);
         } else {
             return redirect()->route('admin.example.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không tìm thấy câu cần sửa!']);
+        }
+    }
+
+    public function postEdit(Request $request) {
+        $example = Example::find($request->id);
+        if (!empty($example)) {
+            $old_ex = mb_convert_case(trim($example->example, '.?!'), MB_CASE_LOWER, 'utf-8');
+            $new_ex = mb_convert_case(trim($request->example, '.?!'), MB_CASE_LOWER, 'utf-8');
+            if (strcmp($old_ex, $new_ex) != 0) {
+                $e = Example::where('example', $request->example)->count();
+                if ($e > 0) {
+                    return '{"status" : "danger", "message" : "Lỗi! Câu sửa bị trùng."}';
+//                    return redirect()->route('admin.example.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Câu sửa bị trùng.']);
+                } else {
+                    del_ex_word($request->id);
+                    ex_to_word($request->id, $new_ex);
+                    $example->example = $new_ex;
+                }
+            }
+            $example->mean = $request->mean;
+            $example->save();
+            return '{"status" : "success", "message" : "Sửa thành công!"}';
+//            return redirect()->route('admin.example.getList')->with(['flash_level' => 'success', 'flash_message' => 'Sửa thành công!']);
+        } else {
+            return '{"status" : "danger", "message" : "Không tìm thấy câu cần sửa!"}';
+//            return redirect()->route('admin.example.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không tìm thấy câu cần sửa!']);
         }
     }
 
@@ -85,9 +111,35 @@ class ExampleController extends Controller {
         }
     }
 
+    public function postDel(Request $request) {
+        $i = 0;
+        if (is_string($request->ids) && strcmp($request->action, 'delete') == 0) {
+            $list_examples = explode(' ', $request->ids);
+            foreach ($list_examples as $ex_id) {
+                $example = Example::find($ex_id);
+                if (!empty($example) && strcmp($request->action, 'delete') == 0) {
+                    del_ex_word($example->id);
+                    $example->delete();
+                    $i++;
+                }
+            }
+        }
+        
+        if ($i != 0) {
+            return '{"status":"success", "message":"Xóa thành công ' . $i . ' mục!"}';
+        } else {
+            return '{"status":"danger", "message":"Không có gì để xóa."}';
+        }
+    }
+
     public function getList() {
         $data = Example::get();
         return view('admin.example.list', compact('data'));
+    }
+
+    public function getListAjax() {
+        $data = Example::get()->toJson();
+        return '{"data":' . $data . '}';
     }
 
 }
