@@ -7,9 +7,6 @@
         <link rel="stylesheet" href="{!! url('/public/css/style.css') !!}"/>
         <link rel="stylesheet" href="{!! url('/public/css/hover.css') !!}"/>
         <link rel="stylesheet" href="{!! url('/public/css/font-awesome.css') !!}"/>
-        <script src="{!! url('public/js/jquery-1.11.3.min.js') !!}"></script>
-        <script src="{!! url('public/js/style.js') !!}"></script>
-        <script src="{!! url('public/js/play-sound.js') !!}"></script>
 
     </head>
 
@@ -21,13 +18,17 @@
             </div><!-- end banner -->
             <!--<div class="col-lg-12">-->
             <div id='top-menu'>
-                @yield('top-menu')
+                @if (Auth::check())
+                @include('block.topmenu')
+                @else
+                @include('block.topmenu-guest')
+                @endif
             </div>
 
             <!--<div style="height: 100px;"></div>-->
             <div class="BackgroundLinedPaper shadow content">
                 <div class="col-4">
-                   @yield('left-menu')
+                    @yield('left-menu')
                 </div>
                 <div class="col-8">
                     <div class="main">
@@ -46,6 +47,10 @@
 
             </div>
         </div>
-        <script src="{!! url('public/js/mousehoa.js') !!}" type="text/javascript"></script>
+        
+        <script src="{!! url('public/js/jquery-1.11.3.min.js') !!}"></script>
+        <script src="{!! url('public/js/style.js') !!}"></script>
+        <script src="{!! url('public/js/play-sound.js') !!}"></script>
+        <!--<script src="{!! url('public/js/mousehoa.js') !!}" type="text/javascript"></script>-->
     </body>
 </html>

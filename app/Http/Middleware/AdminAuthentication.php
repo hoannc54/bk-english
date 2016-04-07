@@ -10,6 +10,7 @@ use Auth;
 class AdminAuthentication {
 
     protected $auth;
+    protected $message = 'Bạn cần đăng nhập với tài khoản admin.';
 
     public function __construct(Guard $auth) {
         $this->auth = $auth;
@@ -17,14 +18,16 @@ class AdminAuthentication {
 
     public function handle($request, Closure $next) {
         if ($this->auth->check()) {
-            if ($this->auth->user()->level == 1) {
+            if ($this->auth->user()->level == 1 || $this->auth->user()->level == 2) {
                 return $next($request);
             } else {
                 Auth::logout();
-                return new RedirectResponse(route('admin.getLogin'));
+                return redirect(route('admin.getLogin'))->withErrors([
+                            'error' => $this->message,
+        ]);
             }
         } else {
-            return new RedirectResponse(route('admin.getLogin'));
+            return redirect(route('admin.getLogin'));
         }
     }
 

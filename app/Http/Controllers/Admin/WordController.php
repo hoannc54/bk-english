@@ -254,7 +254,7 @@ class WordController extends Controller {
                 }
             }
         }
-        echo $request->ids;
+//        echo $request->ids;
         if ($i != 0) {
             return redirect()->route('admin.word.getList')->with(['flash_level' => 'success', 'flash_message' => 'Xóa thành công ' . $i . ' mục!']);
         } else {

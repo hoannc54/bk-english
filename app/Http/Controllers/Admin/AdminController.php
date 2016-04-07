@@ -1,50 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
-//use App\Http\Requests;
-//use App\Http\Controllers\Auth\AuthController;
-//use App\Http\Requests\LoginRequests;
 use Auth;
-//class AdminController extends AuthController {
-//
-////    public $redirectPath = '/admin';
-////    protected $redirectTo = '/admin';
-//    protected $redirectAfterLogout = 'admin/login';
-//
-//    public function index() {
-//        return view('admin.home');
-//    }
-//
-//    public function getLogin() {
-////        die();
-//        if (Auth::check() && Auth::user()->level == 1) {
-//            return redirect()->route('admin.home');
-//        } else {
-//            return view('admin.login');
-//        }
-//    }
-//
-////    public function getLogout() {
-////        $this->auth->logout();
-////        return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : route('admin.getLogin'));
-////    }
-//
-//    public function postLogin(LoginRequests $request) {
-//        $login = [
-//            'name' => $request->username,
-//            'password' => $request->password
-////            'level' => $request->level
-//        ];
-//        if ($this->auth->attempt($login)) {
-//            return redirect()->route('admin.home');
-//        } else {
-//            return redirect()->back();
-////            echo 'ssss';
-//        }
-//    }
-//
-//}
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
@@ -84,7 +41,9 @@ class AdminController extends Controller {
             return view('admin.login');
         }
     }
-
+    protected function getFailedLoginMessage() {
+        return 'Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng nhập lại!';
+    }
     public function postLogin(LoginRequests $request) {
         $login = [
             'name' => $request->username,
@@ -94,7 +53,7 @@ class AdminController extends Controller {
             return redirect()->route('admin.home');
         } else {
             return redirect($this->loginPath())->withErrors([
-                            'email' => $this->getFailedLoginMessage(),
+                            'error' => $this->getFailedLoginMessage(),
         ]);
         }
     }

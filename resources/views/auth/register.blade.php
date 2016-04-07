@@ -1,65 +1,48 @@
-@extends('app')
+@extends('template')
+
+@section('left-menu')
+<div class="left-menu bg-color-1">
+    <div class="left-title">MỤC LỤC</div>
+    <ul>
+        <li>Trang chủ</li>
+        <li>Thông tin tác giả</li>
+    </ul>
+</div>
+@stop
+
+@section('main-title','Đăng ký')
 
 @section('content')
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Register</div>
-				<div class="panel-body">
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
+@include('block.error')
+@include('block.message')
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/register') }}">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+<form action="{!! route('postRegister') !!}" method="POST" >
+    <div class="group">
+        <label class="col-4" for="name">Tên đăng nhập:</label>
+        <input class="col-7 form-control" type="text" id="name" name="name"/>
+    </div>
+    <div class="group">
+        <label class="col-4" for="email">Email:</label>
+        <input class="col-7 form-control" type="email" id="email" name="email"/>
+    </div>
+    <div class="group">
+        <label class="col-4" for="password">Mật khẩu:</label>
+        <input class="col-7 form-control" type="text" id="password" name="password"/>
+    </div>
+    <div class="group">
+        <label class="col-4" for="password">Nhập lại mật khẩu:</label>
+        <input class="col-7 form-control" type="text" id="repassword" name="repassword"/>
+    </div>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">Name</label>
-							<div class="col-md-6">
-								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Password</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Confirm Password</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password_confirmation">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">
-									Register
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-@endsection
+    <!--    <div class="col-7 col-offset-4 checkbox">
+            <label><input type="checkbox" value="">Ghi nhớ mật khẩu</label>
+        </div>-->
+    <div class="group col-7 col-offset-4" >
+        <input class="button" type="submit" value="Đăng kí"/>
+    </div>
+    <div class="group col-7 col-offset-4" >
+        <span>Đã có tài khoản? <a href="{!! route('getLogin') !!}">Đăng nhập</a>.</span>
+    </div>
+    <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
+</form>
+@stop

@@ -34,11 +34,16 @@
     <div class="form-group">
         <label class="control-label col-sm-3">Cấp độ:</label>
         <div class="col-sm-7">
+            <?php if(Auth::user()->level==1){ ?>
             <label class="radio-inline">
-                <input type="radio" name="level" value="2" <?php if((int)old('level')==2) echo 'checked="checked"'; ?>>Quản trị
+                <input type="radio" name="level" value="1" <?php if((int)old('level')==1) echo 'checked="checked"'; ?>>Super Admin
+            </label>
+            <?php }?>
+            <label class="radio-inline">
+                <input type="radio" name="level" value="2" <?php if((int)old('level')==2) echo 'checked="checked"'; ?>>Admin
             </label>
             <label class="radio-inline">
-                <input type="radio" name="level" value="1" <?php if((int)old('level')!=2) echo 'checked="checked"'; ?>>Thành viên
+                <input type="radio" name="level" value="3" <?php if((int)old('level')!=1&&(int)old('level')!=2) echo 'checked="checked"'; ?>>Member
             </label>
         </div>
     </div>

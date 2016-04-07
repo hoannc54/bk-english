@@ -1,17 +1,17 @@
-@extends('app')
+@extends('template')
+
+@section('left-menu')
+<div class="left-menu bg-color-1">
+    <div class="left-title">MỤC LỤC</div>
+    <ul>
+        <li>Trang chủ</li>
+        <li>Thông tin tác giả</li>
+    </ul>
+</div>
+@stop
+
+@section('main-title','Trang chủ')
 
 @section('content')
-<div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<div class="panel panel-default">
-				<div class="panel-heading">Home</div>
-
-				<div class="panel-body">
-					You are logged in!
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-@endsection
+<h2>Đây là trang chủ</h2>
+@stop

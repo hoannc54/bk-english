@@ -741,6 +741,40 @@ label{
     margin-top: 10px;
     margin-left: -20px;
 }
+
 .footer{
     height: 100px;
+}
+
+.alert {
+    padding: 5px;
+    margin-bottom: 10px;
+    /*margin-top: 10px;*/
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.alert > ul {
+    /*margin-bottom: 0;*/
+    list-style: none;
+    margin-left: -25px;
+}
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+.alert-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }

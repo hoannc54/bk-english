@@ -12,18 +12,26 @@
  */
 
 Route::get('/', function () {
-    return view('login');
+    return redirect()->route('getHome');
 });
+//Route::group(['middleware' => 'guest'], function () {
+Route::get('home', ['as' => 'getHome', 'uses' => 'HomeController@index']);
 
-Route::get('home', 'HomeController@index');
+Route::get('login', ['as' => 'getLogin', 'uses' => 'Auth\AuthController@getLogin']);
+Route::post('login', ['as' => 'postLogin', 'uses' => 'Auth\AuthController@postLogin']);
 
+Route::get('register', ['as' => 'getRegister', 'uses' => 'Auth\AuthController@getRegister']);
+Route::post('register', ['as' => 'postRegister', 'uses' => 'Auth\AuthController@postRegister']);
+
+Route::get('admin/login', ['as' => 'admin.getLogin', 'uses' => 'Admin\AdminController@getLogin']);
+Route::post('admin/login', ['as' => 'admin.postLogin', 'uses' => 'Admin\AdminController@postLogin']);
+//});
+//Route::get('home', 'HomeController@index');
 //Route::controllers([
 //    'auth' => 'Auth\AuthController',
 //    'password' => 'Auth\PasswordController',
 //]);
 
-Route::get('admin/login', ['as' => 'admin.getLogin', 'uses' => 'Admin\AdminController@getLogin']);
-Route::post('admin/login', ['as' => 'admin.postLogin', 'uses' => 'Admin\AdminController@postLogin']);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 //    Route::get('login', function(){
@@ -68,10 +76,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('list/ajax', ['as' => 'admin.example.getListAjax', 'uses' => 'Admin\ExampleController@getListAjax']);
 
         Route::get('edit/{id}', ['as' => 'admin.example.getEdit', 'uses' => 'Admin\ExampleController@getEdit']);
-        Route::post('edit/{id}', ['as' => 'admin.example.postEdit', 'uses' => 'Admin\ExampleController@postEdit']);
+        Route::post('edit', ['as' => 'admin.example.postEdit', 'uses' => 'Admin\ExampleController@postEdit']);
+//        Route::post('edit/{id}', ['as' => 'admin.example.postEdit', 'uses' => 'Admin\ExampleController@postEdit']);
 
         Route::post('delete', ['as' => 'admin.example.postDelete', 'uses' => 'Admin\ExampleController@postDelete']);
-        
+
         Route::post('postdel', ['as' => 'admin.example.postDel', 'uses' => 'Admin\ExampleController@postDel']);
     });
 
@@ -85,16 +94,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('list', ['as' => 'admin.user.getList', 'uses' => 'Admin\UserController@getList']);
         Route::get('list/ajax', ['as' => 'admin.user.getListAjax', 'uses' => 'Admin\UserController@getListAjax']);
 
-        Route::get('edit/{id}', ['as' => 'admin.user.getEdit', 'uses' => 'Admin\UserController@getEdit']);
-        Route::post('edit/{id}', ['as' => 'admin.user.postEdit', 'uses' => 'Admin\UserController@postEdit']);
+//        Route::get('edit/{id}', ['as' => 'admin.user.getEdit', 'uses' => 'Admin\UserController@getEdit']);
+        Route::post('edit', ['as' => 'admin.user.postEdit', 'uses' => 'Admin\UserController@postEdit']);
 
-        Route::post('delete', ['as' => 'admin.user.postDelete', 'uses' => 'Admin\UserController@postDelete']);
+        Route::post('delete', ['as' => 'admin.user.postDel', 'uses' => 'Admin\UserController@postDel']);
     });
 });
 
-Route::get('/abc', function () {
-    return view('abc');
-});
 //Route::post('/post', function (\Illuminate\Http\Request $request){
 //    $data = $request->;
 //    return view('post',  compact());

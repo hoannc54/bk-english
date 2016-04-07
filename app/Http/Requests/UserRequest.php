@@ -26,6 +26,7 @@ class UserRequest extends Request {
                     'password' => 'required',
                     'repassword' => 'required|same:password',
                     'email' => 'required|unique:users,email|regex:/^[a-z][a-z0-9]*(_[a-z0-9]+)*(\.[a-z0-9]+)*@[a-z0-9]([a-z0-9-][a-z0-9]+)*(\.[a-z]{2,4}){1,2}$/',
+//                    'level' =>'required',
 		];
 	}
         
@@ -39,6 +40,7 @@ class UserRequest extends Request {
                 'email.required' => 'Email không được bỏ trống!',
                 'email.unique' => 'Email đã tồn tại!',
                 'email.regex' => 'Email nhập vào không đúng!',
+//                'level.required' => 'Bạn chưa chọn cấp độ cho người dùng!',
             ];
         }
 
