@@ -1,5 +1,5 @@
-
-<!-- Tin nhắn -->
+<!--
+ Tin nhắn 
 <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -23,11 +23,11 @@
             </a>
         </li>
     </ul>
-    <!-- /.dropdown-messages -->
+     /.dropdown-messages 
 </li>
-<!-- /.dropdown -->
+ /.dropdown 
 
-<!-- Task -->
+ Task 
 <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -56,11 +56,11 @@
             </a>
         </li>
     </ul>
-    <!-- /.dropdown-tasks -->
+     /.dropdown-tasks 
 </li>
-<!-- /.dropdown -->
+ /.dropdown 
 
-<!-- Thông báo -->
+ Thông báo 
 <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -82,6 +82,6 @@
             </a>
         </li>
     </ul>
-    <!-- /.dropdown-alerts -->
+     /.dropdown-alerts 
 </li>
-<!-- /.dropdown -->
+ /.dropdown -->

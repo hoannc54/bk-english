@@ -30,7 +30,7 @@ class Registrar implements RegistrarContract {
      */
     public function create(array $data) {
         if(!isset($data['level'])){
-            $data['level'] = 2;
+            $data['level'] = 3;
         }
         return User::create([
                     'name' => $data['name'],

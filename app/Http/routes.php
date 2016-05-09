@@ -37,13 +37,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 //    Route::get('login', function(){
 //       return view('admin.login');
 //    });
-    Route::get('/home', ['as' => 'admin.home', 'uses' => 'Admin\AdminController@index']);
+    Route::get('home', ['as' => 'admin.home', 'uses' => 'Admin\AdminController@index']);
 
-    Route::get('/logout', ['as' => 'admin.getLogout', 'uses' => 'Admin\AdminController@getLogout']);
-
-    Route::get('/', function() {
-        return redirect()->route('admin.home');
-    });
+    Route::get('logout', ['as' => 'admin.getLogout', 'uses' => 'Admin\AdminController@getLogout']);
 
     Route::group(['prefix' => 'words'], function() {
         Route::get('/', ['as' => 'admin.word', 'uses' => 'Admin\WordController@index']);
@@ -99,9 +95,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
         Route::post('delete', ['as' => 'admin.user.postDel', 'uses' => 'Admin\UserController@postDel']);
     });
+    
+    
+    Route::get('/', function() {
+        return redirect()->route('admin.home');
+    });
 });
 
 //Route::post('/post', function (\Illuminate\Http\Request $request){
 //    $data = $request->;
 //    return view('post',  compact());
 //});
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('logout', ['as' => 'getLogout', 'uses' => 'Auth\AuthController@getLogout']);
+});

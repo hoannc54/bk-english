@@ -52,8 +52,8 @@
             </fieldset>
             <fieldset class="actions">
                 <input class="submit" value="Log in" type="submit">
-                <a href="">Quên mật khẩu?</a>
-                <a href="">Đăng kí</a>
+<!--                <a href="">Quên mật khẩu?</a>
+                <a href="">Đăng kí</a>-->
             </fieldset>
         </form>
         
