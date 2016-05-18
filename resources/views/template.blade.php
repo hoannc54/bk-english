@@ -4,6 +4,15 @@
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <title>600 Words For TOEIC</title>
+        <!-- DataTables CSS -->
+        <link href="{!! url('public/css/dataTables.bootstrap.css') !!}" rel="stylesheet">
+
+        <!-- Select DataTables CSS -->
+        <link href="{!! url('public/css/select.dataTables.css') !!}" rel="stylesheet">
+
+        <!-- DataTables Responsive CSS -->
+        <link href="{!! url('public/css/jquery.dataTables.css') !!}" rel="stylesheet">
+
         <link rel="stylesheet" href="{!! url('/public/css/style.css') !!}"/>
         <link rel="stylesheet" href="{!! url('/public/css/hover.css') !!}"/>
         <link rel="stylesheet" href="{!! url('/public/css/font-awesome.css') !!}"/>
@@ -47,7 +56,7 @@
 
             </div>
         </div>
-        
+
         <script src="{!! url('public/js/jquery-1.11.3.min.js') !!}"></script>
         <script src="{!! url('public/js/style.js') !!}"></script>
         <script src="{!! url('public/js/play-sound.js') !!}"></script>

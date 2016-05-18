@@ -8,6 +8,11 @@ use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Requests\LoginRequests;
 use App\Http\Requests\UserRequest;
+use App\Word;
+use App\Learned;
+use App\Learning;
+use App\Learnt;
+use App\NotLearn;
 
 class AuthController extends Controller {
     /*
@@ -23,7 +28,6 @@ class AuthController extends Controller {
 
 //    protected $redirectTo = '/admin';
     protected $redirectPath = '/home';
-
     protected $redirectAfterLogout = '/';
     protected $loginPath = 'login';
 
@@ -55,12 +59,40 @@ class AuthController extends Controller {
 //        $user->level = $request->level;
 //        $user->remember_token = $request->_token;
 //        $user->save();
-        
 //return $request->all();
         $this->auth->login($this->registrar->create($request->all()));
+//        print_r($this->auth->user());
+//
+        $data = Word::get();
+        $list = '';
+        foreach ($data as $word) {
+            $list = $list . ' ' . $word->id;
+        }
+
+        $user_id = $this->auth->user()->id;
+        
+        $not_learn = new NotLearn();
+        $not_learn->user_id = $user_id;
+        $not_learn->word_id_list = trim($list);
+        $not_learn->save();
+
+        $learned = new Learned();
+        $learned->user_id = $user_id;
+        $learned->word_id_list = '';
+        $learned->save();
+
+        $learnt = new Learnt();
+        $learnt->user_id = $user_id;
+        $learnt->word_id_list = '';
+        $learnt->save();
+
+        $learning = new Learning();
+        $learning->user_id = $user_id;
+        $learning->word_id_list = '';
+        $learning->save();
 
         return redirect($this->redirectPath());
-        
+
 //        return redirect()->route('admin.user.getList')->with(['flash_level' => 'success', 'flash_message' => 'Thêm thành công!']);
     }
 

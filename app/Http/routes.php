@@ -109,4 +109,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', ['as' => 'getLogout', 'uses' => 'Auth\AuthController@getLogout']);
+    
+    Route::get('learning/ajax', ['as' => 'getLearningAjax', 'uses' => 'LearnController@getLearningAjax']);
+    Route::get('learned/ajax', ['as' => 'getLearnedAjax', 'uses' => 'LearnController@getLearnedAjax']);
+    Route::get('learnt/ajax', ['as' => 'getLearntAjax', 'uses' => 'LearnController@getLearntAjax']);
+    Route::get('notlearn/ajax', ['as' => 'getNotLearnAjax', 'uses' => 'LearnController@getNotLearnAjax']);
+    
+    Route::get('notlearn',['as' => 'getNotLearn', 'uses' => 'LearnController@getNotLearn']);
 });

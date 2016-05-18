@@ -19,6 +19,7 @@ class CreateWordsTable extends Migration
             $table->string('type');
             $table->string('mean');
             $table->string('sound');
+            $table->string('image');
             $table->integer('parent_id');
             $table->timestamps();
         });

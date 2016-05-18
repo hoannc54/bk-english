@@ -33,6 +33,7 @@ class WordController extends Controller {
         }
         $word->type = trim($word->type);
         $word->sound = 'public/sounds/' . $request->word . '.mp3';
+        $word->image = 'public/images/words/' . $request->word . '.jpg';
         $word->parent_id = 0;
         $word->save();
         word_to_ex($word->id, $word->word);
@@ -52,6 +53,8 @@ class WordController extends Controller {
                         }
                     }
                     $chil_word->type = trim($chil_word->type);
+                    $chil_word->sound = 'public/sounds/' . $chil_word->word . '.mp3';
+                    $chil_word->image = 'public/images/words/' . $chil_word->word . '.jpg';
                     $chil_word->parent_id = $word_parent;
                     $chil_word->save();
 
@@ -63,7 +66,7 @@ class WordController extends Controller {
     }
 
     public function getList() {
-        $data = Word::select('id', 'word', 'spell', 'mean', 'sound', 'parent_id')->orderBy('word', 'ASC')->get();
+        $data = Word::select('id', 'word', 'spell', 'mean', 'sound', 'image', 'parent_id')->orderBy('word', 'ASC')->get();
         return view('admin.word.list', compact('data'));
     }
 

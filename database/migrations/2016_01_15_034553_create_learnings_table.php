@@ -16,7 +16,11 @@ class CreateLearningsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->text('word_id_list');
+            $table->integer('word_id')->unsigned();
+            $table->foreign('word_id')->references('id')->on('words');
+            $table->integer('learn_counts');
+            $table->integer('point');
+//            $table->text('word_id_list');
             $table->timestamps();
         });
     }
