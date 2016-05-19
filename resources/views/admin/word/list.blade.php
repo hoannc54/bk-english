@@ -37,7 +37,7 @@
     </tfoot>
 </table>
 
-
+<span id="span"></span>
 <!-- Modal edit-->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -50,7 +50,7 @@
             </div>
             <div class="modal-body">
                 <div id="modal_message"></div>
-                <form class="form-horizontal form-modal" role="form" method="POST" id="form_modal">
+                <form class="form-horizontal form-modal" role="form" action="{!! route('admin.word.postEdit') !!}" id="form_modal" enctype="multipart/form-data">
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="word">Từ:</label>
                         <div class="col-sm-10">
@@ -72,6 +72,7 @@
                         <label class="control-label col-sm-2" for="spell">Phát âm:</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="spell" name="spell" placeholder="Nhập phát âm" required="required">
+                            <input type="file" class="" id="sound" name="sound" accept="audio/mp3"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -80,12 +81,21 @@
                             <input type="text" class="form-control" id="means" name="means" placeholder="Nhập nghĩa" required="required">
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="parent">Từ gốc:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="parent" name="parent" placeholder="Nhập từ gốc">
+                        <label class="control-label col-sm-2" for="img">Hình minh họa:</label>
+                        <div class="col-sm-8">
+                            <img id="logo-img" title="Hình minh họa" style="width: 200px;" onclick="document.getElementById('img').click();" src="{!! url('public/images/words/no_img.jpg') !!}"/>
+                            <input type="file" style="display: none" id="img" name="img" accept="image/*" onchange="addNewLogo(this)"/>
+                            <!--<input type="file" class="form-control" id="img" name="img" placeholder="Nhập ảnh minh họa">-->
                         </div>
                     </div>
+                    <!--                    <div class="form-group">
+                                            <label class="control-label col-sm-2" for="parent">Từ gốc:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="parent" name="parent" placeholder="Nhập từ gốc">
+                                            </div>
+                                        </div>-->
 
                     <div class="form-group">
                         <div class="col-sm-offset-10">
@@ -116,12 +126,15 @@
 <!-- List word JavaScript -->
 <script src="{!! url('public/js/list-words.js') !!}"></script>
 
+<!-- Jquery Form Javascript-->
+<script src="{!! url('public/js/jquery.form.js') !!}"></script>
+
 <script type="text/javascript">
-            var listAjax = "{!! route('admin.word.getListAjax') !!}",
-            token = "{!! csrf_token() !!}",
-            postDel = "{!! route('admin.word.postDel') !!}",
-            postEdit = "{!! route('admin.word.postEdit') !!}",
-            linkSound = "{!! url('/') !!}";</script>
+                                var listAjax = "{!! route('admin.word.getListAjax') !!}",
+                                        token = "{!! csrf_token() !!}",
+                                        postDel = "{!! route('admin.word.postDel') !!}",
+                                        postEdit = "{!! route('admin.word.postEdit') !!}",
+                                        linkSound = "{!! url('/') !!}";</script>
 
 <!-- play sound -->
 <script src="{!! url('public/js/play-sound.js') !!}"></script>
@@ -140,8 +153,20 @@
     }
     .center{text-align: center;}
     td.word_edit, td.word_delete, td.select-checkbox, td.spell, i.has-chil{cursor: pointer; color: #0000C2;}
-/*    .chil_table{
-        margin-left: 50px;
-    }*/
+    /*    .chil_table{
+            margin-left: 50px;
+        }*/
+    .img_mh{
+        float: right;
+        width: 18%;
+        padding: 1%;
+        border: 1px none;
+        background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+        box-shadow: 0px 1px 4px rgb(204, 204, 204), 0px 0px 10px rgb(204, 204, 204) inset;
+    }
+    .table_ex{
+        width: 70%;
+        float: left;
+    }
 </style>
 @stop

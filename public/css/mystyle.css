@@ -11,6 +11,12 @@ and open the template in the editor.
 .spell{
     cursor: pointer;
 }
+.spell:before{
+    content: '/';
+}
+.spell:after{
+    content: '/';
+}
 /*tr.has-chil td.details-control {
     background: url('../images/details_open.png') no-repeat center center;
     cursor: pointer;

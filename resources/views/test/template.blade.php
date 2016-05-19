@@ -21,7 +21,7 @@
 
         <!-- Custom CSS -->
         <link href="{!! url('public/css/sb-admin-2.css') !!}" rel="stylesheet">
-        
+
         <!-- My CSS -->
         <link href="{!! url('public/css/mystyle.css') !!}" rel="stylesheet">
 
@@ -44,7 +44,7 @@
 
                 @include('admin_test.table-ajax')
                 @include('admin_test.other')
-                
+
             </div>
             <!-- /#page-wrapper -->
 
@@ -63,6 +63,7 @@
         <!-- Custom Theme JavaScript -->
         <script src="{!! url('public/js/sb-admin-2.js') !!}"></script>
         @yield('script')
+
 
     </body>
 

@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WordRequest;
 use App\Word;
+use File;
 
-//use JSON;
+//use Storage;
 
 class WordController extends Controller {
 
@@ -22,7 +23,7 @@ class WordController extends Controller {
 
     public function postAdd(WordRequest $request) {
         $word = new Word();
-        $word->word = $request->word;
+        $word->word = mb_convert_case($request->word, MB_CASE_LOWER, 'utf-8');
         $word->spell = $request->spell;
         $word->mean = $request->means;
         $word->type = '';
@@ -32,36 +33,69 @@ class WordController extends Controller {
             }
         }
         $word->type = trim($word->type);
-        $word->sound = 'public/sounds/' . $request->word . '.mp3';
-        $word->image = 'public/images/words/' . $request->word . '.jpg';
+
+//Thêm file phát âm
+        $sound_folderPath = 'public/sounds';
+        if (!File::isDirectory($sound_folderPath)) {
+            File::makeDirectory($sound_folderPath, 755, true);
+        }
+
+        $sound_file = $request->file('sound');
+        $sound_filename = $request->word . '.mp3';
+        if ($sound_file != NULL) {
+            $sound_upload = $sound_file->move($sound_folderPath, $sound_filename);
+        }
+
+        $word->sound = $sound_filename;
+
+//Thêm ảnh minh họa
+        $img_folderPath = 'public/images/words';
+        if (!File::isDirectory($img_folderPath)) {
+            File::makeDirectory($img_folderPath, 755, true);
+        }
+        $img_file = $request->file('img');
+        $img_filename = $request->word . '.jpg';
+        $img_upload = FALSE;
+        if ($img_file != NULL) {
+//            $img_filename = $file->getClientOriginalName();
+            $img_upload = $img_file->move($img_folderPath, $img_filename);
+        }
+
+        if (!$img_upload) {
+            $word->image = 'no_img.jpg';
+        } else {
+            $word->image = $img_filename;
+        }
+
         $word->parent_id = 0;
         $word->save();
         word_to_ex($word->id, $word->word);
 
-        $word_parent = $word->id;
-        if ($request->check_list == TRUE) {
-            foreach ($request->chil as $chil) {
-                if ($chil['word'] != '' && $chil['spell'] != '' && $chil['means'] != '') {
-                    $chil_word = new Word();
-                    $chil_word->word = $chil['word'];
-                    $chil_word->spell = $chil['spell'];
-                    $chil_word->mean = $chil['means'];
-                    $chil_word->type = '';
-                    if (is_array($chil['type'])) {
-                        foreach ($chil['type'] as $va) {
-                            $chil_word->type .= ' ' . $va;
-                        }
-                    }
-                    $chil_word->type = trim($chil_word->type);
-                    $chil_word->sound = 'public/sounds/' . $chil_word->word . '.mp3';
-                    $chil_word->image = 'public/images/words/' . $chil_word->word . '.jpg';
-                    $chil_word->parent_id = $word_parent;
-                    $chil_word->save();
+//        $word_parent = $word->id;
+//        if ($request->check_list == TRUE) {
+//            foreach ($request->chil as $chil) {
+//                if ($chil['word'] != '' && $chil['spell'] != '' && $chil['means'] != '') {
+//                    $chil_word = new Word();
+//                    $chil_word->word = $chil['word'];
+//                    $chil_word->spell = $chil['spell'];
+//                    $chil_word->mean = $chil['means'];
+//                    $chil_word->type = '';
+//                    if (is_array($chil['type'])) {
+//                        foreach ($chil['type'] as $va) {
+//                            $chil_word->type .= ' ' . $va;
+//                        }
+//                    }
+//                    $chil_word->type = trim($chil_word->type);
+//                    $chil_word->sound = 'public/sounds/' . $chil_word->word . '.mp3';
+//                    $chil_word->image = 'public/images/words/' . $chil_word->word . '.jpg';
+//                    $chil_word->parent_id = $word_parent;
+//                    $chil_word->save();
+//
+//                    word_to_ex($chil_word->id, $chil_word->word);
+//                }
+//            }
+//        }
 
-                    word_to_ex($chil_word->id, $chil_word->word);
-                }
-            }
-        }
         return redirect()->route('admin.word.getAdd')->with(['flash_level' => 'success', 'flash_message' => 'Thêm thành công!']);
     }
 
@@ -71,20 +105,6 @@ class WordController extends Controller {
     }
 
     public function getListAjax() {
-
-//        $data = Word::get()->toArray();
-//        foreach ($data as &$word) {
-//            $p_word = Word::find($word['parent_id']);
-//            if (!empty($p_word)) {
-//                $word['parent_word'] = $p_word->word;
-//            } else {
-//                $word['parent_word'] = 'none';
-//            }
-//        }
-//        $json_word = json_encode($data);
-////        print_r($data2);
-//        return '{"data":' . $json_word . '}';
-
         $ar_data = [];
         $data = Word::get();
         foreach ($data as $word) {
@@ -101,6 +121,14 @@ class WordController extends Controller {
             } else {
                 $a_word['examples'] = $da;
             }
+
+            //Nếu tồn tại file ảnh minh họa thì show ra
+            if (File::exists('public/images/words/' . $a_word['image'])) {
+                $a_word['image'] = url('public/images/words/' . $a_word['image']);
+            } else {
+                $a_word['image'] = url('public/images/words/no_img.jpg');
+            }
+            $a_word['sound'] = url('public/sounds/' . $a_word['sound']);
             $ar_data[] = $a_word;
         }
         $json_word = json_encode($ar_data);
@@ -200,6 +228,43 @@ class WordController extends Controller {
                     $word->word = $new_word;
                 }
             }
+
+
+            $sound_folderPath = 'public/sounds';
+            if (!File::isDirectory($sound_folderPath)) {
+                File::makeDirectory($sound_folderPath, 755, true);
+            }
+//        print_r($request->file('img'));
+//        print_r($_FILES);
+            $sound_file = $request->file('sound');
+            $sound_filename = $request->word . '.mp3';
+            $sound_upload = FALSE;
+            if ($sound_file != NULL) {
+//            $img_filename = $file->getClientOriginalName();
+                $sound_upload = $sound_file->move($sound_folderPath, $sound_filename);
+            }
+
+            if ($sound_upload) {
+                $word->sound = $sound_filename;
+            }
+
+            $img_folderPath = 'public/images/words';
+            if (!File::isDirectory($img_folderPath)) {
+                File::makeDirectory($img_folderPath, 755, true);
+            }
+            $img_file = $request->file('img');
+            $img_filename = $request->word . '.jpg';
+            $img_upload = FALSE;
+            if ($img_file != NULL) {
+//            $img_filename = $file->getClientOriginalName();
+                $img_upload = $img_file->move($img_folderPath, $img_filename);
+            }
+
+            if ($img_upload) {
+                $word->image = $img_filename;
+            }
+
+
             $word->spell = $request->spell;
             $word->type = '';
             if (is_array($request->type)) {

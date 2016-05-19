@@ -117,3 +117,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     Route::get('notlearn',['as' => 'getNotLearn', 'uses' => 'LearnController@getNotLearn']);
 });
+
+Route::any('/test', function (){
+    return view('test.test');
+});

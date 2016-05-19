@@ -47,10 +47,26 @@ function changeTitle($str) {
 }
 
 function ex_to_word($ex_id, $ex) {
-    $ar_word = explode(' ', $ex);
-    foreach ($ar_word as $value) {
-        $word = DB::table('words')->where('word', trim($value, '.,!?;:'))->first();
-        if (!empty($word)) {
+//    $ar_word = explode(' ', $ex);
+//    foreach ($ar_word as $value) {
+//        $word = DB::table('words')->where('word', trim($value, '.,!?;:'))->first();
+//        if (!empty($word)) {
+//            $w_ex = DB::table('word_exes')->where('word_id', $word->id)
+//                            ->where('example_id', $ex_id)->first();
+//            if (empty($w_ex)) {
+//                DB::table('word_exes')->insert(
+//                        ['word_id' => $word->id, 'example_id' => $ex_id]
+//                );
+//            }
+//        }
+//    }
+
+    $arr_seach = [',', '.', ':', ';', '?', '!', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '+'];
+    $example = str_replace($arr_seach, '', mb_convert_case($ex, MB_CASE_LOWER, 'utf-8'));
+
+    $ar_word = DB::table('words')->get();
+    foreach ($ar_word as $word) {
+        if (strpos($example, ' ' . $word->word . ' ')) {
             $w_ex = DB::table('word_exes')->where('word_id', $word->id)
                             ->where('example_id', $ex_id)->first();
             if (empty($w_ex)) {
@@ -64,19 +80,32 @@ function ex_to_word($ex_id, $ex) {
 
 function word_to_ex($w_id, $word) {
     $ar_ex = DB::table('examples')->get();
+    $arr_seach = [',', '.', ':', ';', '?', '!', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '+'];
     foreach ($ar_ex as $ex) {
-        $ar_word = explode(' ', $ex->example);
-        foreach ($ar_word as $val) {
-            $word1 = mb_convert_case($word, MB_CASE_LOWER, 'utf-8');
-            $word2 = mb_convert_case(trim($val, '.,!?;:'), MB_CASE_LOWER, 'utf-8');
-            if (strcmp($word1, $word2) == 0) {
-                $w_ex = DB::table('word_exes')->where('word_id', $w_id)
-                                ->where('example_id', $ex->id)->first();
-                if (empty($w_ex)) {
-                    DB::table('word_exes')->insert(
-                            ['word_id' => $w_id, 'example_id' => $ex->id]
-                    );
-                }
+//        $ar_word = explode(' ', $ex->example);
+//        foreach ($ar_word as $val) {
+//            $word1 = mb_convert_case($word, MB_CASE_LOWER, 'utf-8');
+//            $word2 = mb_convert_case(trim($val, '.,!?;:'), MB_CASE_LOWER, 'utf-8');
+//            if (strcmp($word1, $word2) == 0) {
+//                $w_ex = DB::table('word_exes')->where('word_id', $w_id)
+//                                ->where('example_id', $ex->id)->first();
+//                if (empty($w_ex)) {
+//                    DB::table('word_exes')->insert(
+//                            ['word_id' => $w_id, 'example_id' => $ex->id]
+//                    );
+//                }
+//            }
+//        }
+//        strpos($haystack, $ex);
+        $example = str_replace($arr_seach, '', mb_convert_case($ex->example, MB_CASE_LOWER, 'utf-8'));
+
+        if (strpos($example, ' ' . $word . ' ')) {
+            $w_ex = DB::table('word_exes')->where('word_id', $w_id)
+                            ->where('example_id', $ex->id)->first();
+            if (empty($w_ex)) {
+                DB::table('word_exes')->insert(
+                        ['word_id' => $w_id, 'example_id' => $ex->id]
+                );
             }
         }
     }
