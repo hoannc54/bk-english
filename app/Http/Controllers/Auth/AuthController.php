@@ -10,8 +10,8 @@ use App\Http\Requests\LoginRequests;
 use App\Http\Requests\UserRequest;
 use App\Word;
 use App\Learned;
-use App\Learning;
-use App\Learnt;
+//use App\Learning;
+//use App\Learnt;
 use App\NotLearn;
 
 class AuthController extends Controller {
@@ -81,15 +81,10 @@ class AuthController extends Controller {
         $learned->word_id_list = '';
         $learned->save();
 
-        $learnt = new Learnt();
-        $learnt->user_id = $user_id;
-        $learnt->word_id_list = '';
-        $learnt->save();
-
-        $learning = new Learning();
-        $learning->user_id = $user_id;
-        $learning->word_id_list = '';
-        $learning->save();
+//        $learning = new Learning();
+//        $learning->user_id = $user_id;
+//        $learning->word_id_list = '';
+//        $learning->save();
 
         return redirect($this->redirectPath());
 

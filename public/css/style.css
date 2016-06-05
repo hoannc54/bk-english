@@ -34,7 +34,7 @@ and open the template in the editor.
     font-weight:400;
 }
 body{
-    font-size: 1.1em;
+    font-size: 1em;
     /*font-family: sans-serif;*/
     color: #333;
 }
@@ -591,9 +591,6 @@ body{
 .col-offset-1 {  margin-left: 8.33333333%;}
 [class^="col-"] {
     float: left;
-    /*padding-top: 0.5em;*/
-    /*    padding-left: 30px;
-        padding-right: 30px;*/
 }
 *{
     box-sizing: border-box;        
@@ -612,16 +609,31 @@ body{
     margin-bottom: 2em;
     margin-top: 0.5em;
     line-height: 2em;
-    /*text-height: font-size;*/
-    /*text-justify: auto;*/
-    /*text-align: justify;*/
+    text-align: justify;
     float: left;
     width: 100%;
 }
 .shadow{
     box-shadow: 1px 1px 10px #808080;    
 }
+.bg-color-1{
+    background-color:#f9ed7f;
+}
+.bg-color-2{
+    background-color:#fd8fb2;
+}
+.bg-color-3{
+    background-color:#feff75;
+}
+.bg-color-4{
+    background-color:#fea956;
+}
+.bg-color-5{
+    background-color:#fdcbc4;
+}
 
+/*============================================================================*/
+/*Style left menu*/
 .left-menu {
     margin-top: 50px;
     margin-bottom: 70px;
@@ -629,7 +641,6 @@ body{
     margin-right: 15%;
     padding-top: 60px;
     /*margin-right: 10%;*/
-    background-color:#f9ed7f;
     padding-bottom: 30px;
     line-height: 1.5em;
     border: 1px solid #dedede;
@@ -639,7 +650,18 @@ body{
     -o-transition:all 0.4s;
     box-shadow:1px 2px 4px rgba(0,0,0,0.7);
 }
-
+.left-menu > ul > li > a{
+    /*text-decoration: underline;*/
+    text-decoration: none;
+    color: #0000C2;
+    cursor: pointer;
+}
+.left-menu > ul > li > a:hover{
+    /*text-decoration: underline;*/
+    /*text-decoration: none;*/
+    color: #0094FF;
+    /*cursor: pointer;*/
+}
 .left-menu:hover{
     border-bottom-right-radius:140px 30px;
     box-shadow:6px 6px 6px rgba(0,0,0,0.7);
@@ -666,24 +688,25 @@ body{
 }
 
 .main{
-    margin-top: 2.4em;
+    margin-top: 2em;
     margin-bottom: 4em;
     margin-left: 7%;
     margin-right: 7%;
+    float: left;
 }
 .main-title{
     font-size: 2em;
     font-weight: bold;
     padding-bottom: 1em;
 }
-.main-content{}
+.main-content{
+    float: left;
+}
 .group{
-    /*float: left;*/
 }
 .group::before{
     content: " ";
     display: table;
-    /*float: left;*/
 }
 .group::after{
     content: " ";
@@ -692,10 +715,6 @@ body{
 }
 label{
     display: inline-block;
-    /*max-width: 100%;*/
-    /*position: relative;*/
-    /*margin-bottom: 5px;*/
-    /*font-weight: 700;*/
 }
 .form-control:focus {
     border-color: #66AFE9;
@@ -703,16 +722,10 @@ label{
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
 }
 .form-control {
-    /*display: block;*/
-    /*width: 100%;*/
-    /*height: 2em;*/
     padding: 4px 12px;
-    /*font-size: 14px;*/
-    /*line-height: 1.42857;*/
     color: #555;
     alignment-adjust: middle;
     background-color: #FFF;
-    /*background-image: none;*/
     border: 1px solid #CCC;
     border-radius: 4px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
@@ -745,7 +758,9 @@ label{
 .footer{
     height: 100px;
 }
+/*============================================================================*/
 
+/*Style thông báo*/
 .alert {
     padding: 5px;
     margin-bottom: 10px;
@@ -778,3 +793,243 @@ label{
     background-color: #f2dede;
     border-color: #ebccd1;
 }
+/*============================================================================*/
+
+/*Style phân trang*/
+.pag-bottom{
+    width: 100%;
+    float: left;
+    line-height: 1em;
+    height: 2em;
+    margin: 2em 0 0 0;
+}
+.pag-top{
+    width: 100%;
+    float: left;
+    line-height: 1em;
+    height: 2em;
+    /*font-size: 1em;*/
+    margin: 0 0 2em 0;
+}
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.pagination li {
+    display: inline;
+}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: default;
+    margin-left: 2px;
+}
+
+ul.pagination li a.active {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+ul.pagination li a.hidden {
+    display: none;
+}
+
+ul.pagination li a:hover:not(.active):not(.none) {
+    background-color: #ddd;
+    cursor: pointer;
+}
+/*============================================================================*/
+
+/*Style từng từ trong learn*/
+.item{
+    width: 100%;
+    min-height: 10em;
+    margin-bottom: 2em;
+    float: left;
+}
+.item img{
+    width: 40%;
+    height: 12em;
+    float: left;
+    padding: 0.4em;
+    border: 1px none;
+    background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    box-shadow: 0px 1px 4px rgb(204, 204, 204), 0px 0px 10px rgb(204, 204, 204) inset;
+}
+.item .profile{
+    width: 60%;
+    padding-left: 15px;
+    float: left;
+}
+.item .profile .word{
+    font-size: 1.5em;
+    font-weight: bold;
+    text-shadow: 1px 0 1px blue ;
+}
+.item .profile .word small{
+    font-size: 0.8em;
+    color: red;
+    font-weight: bold;
+    text-shadow: none;
+}
+.item .profile .word i{
+    font-size: 0.8em;
+    color: blue;
+    font-weight: bold;
+    text-shadow: none;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.item .profile .word i:hover{
+    font-size: 1.1em;
+}
+.item .profile .word small:before{
+    content: '  /';
+}
+.item .profile .word small:after{
+    content: '/';
+}
+.item .profile .thongtin{
+    line-height: 1.3em;
+}
+.item .profile .thongtin .mean_example{
+    color: #3a50d9;
+}
+/*============================================================================*/
+
+/*Style tap trong danh sách từ đang học*/
+/*#page-wrap {
+    width: 640px; 
+    margin: 100px auto;
+}*/
+
+/*h1 {
+    font: bold 32px Sans-Serif;
+    margin: 0 0 20px 0; 
+}*/
+
+#tab-top-bar {
+    text-align: left;
+    background: #222;
+    position: relative;
+    zoom: 1;
+    width: 100% !important;
+    z-index: 6000;
+    padding: 20px 0 20px;
+}
+#tab-bar-inside {
+    width: 960px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+#tab-bar-buttons {
+    padding-top: 10px;
+    float: right;
+}
+#tab-bar-buttons a {
+    font-size: 12px;
+    margin-left: 20px;
+    color: white;
+    margin: 2px 0;
+    text-decoration: none;
+    font: 14px "Lucida Grande", Sans-Serif !important;
+}
+#tab-bar-buttons a:hover,
+#tab-bar-buttons a:focus {
+    text-decoration: underline;
+}
+#tab-bar-badge {
+    display: inline-block;
+    width: 302px;
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: transparent !important;
+}
+#tab-bar-badge a {
+    display: block;
+    width: 100%;
+    height: 38px;
+    border-radius: 0;
+    bottom: auto;
+    margin: 0;
+    background-size: 100%;
+    overflow: hidden;
+    text-indent: -9999px;
+}
+#tab-bar-badge:before, #tab-bar-badge:after {
+    display: none !important;
+}
+.tabs {
+    position: relative;
+    /*min-height: 200px;  This part sucks */
+    clear: both;
+    width: 640px;
+    min-height: 20em;
+    /*margin: 25px 0;*/
+}
+.tab {
+    float: left;
+}
+.tab label {
+    background: #eee;
+    padding: 1em;
+    border: 1px solid #ccc;
+    margin-left: -1px;
+    position: relative;
+    left: 1px;
+    /*height: 2em;*/
+}
+.tab [type=radio] {
+    display: none;
+}
+.tab-content {
+    /*width: 100%;*/
+    position: absolute;
+    top: 4em;
+    left: 0;
+    background: white;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+.tab-content > * {
+    opacity: 0;
+
+    -webkit-transform: translate3d(0, 0, 0);
+
+    -webkit-transform: translateX(-100%);
+    -moz-transform:    translateX(-100%);
+    -ms-transform:     translateX(-100%);
+    -o-transform:      translateX(-100%);
+
+    -webkit-transition: all 0.6s ease;
+    -moz-transition:    all 0.6s ease;
+    -ms-transition:     all 0.6s ease;
+    -o-transition:      all 0.6s ease;
+}
+[type=radio]:checked ~ label {
+    background: white;
+    border-bottom: 1px solid white;
+    z-index: 2;
+}
+[type=radio]:checked ~ label ~ .tab-content {
+    z-index: 1;
+}
+[type=radio]:checked ~ label ~ .tab-content > * {
+    opacity: 1;
+
+    -webkit-transform: translateX(0);
+    -moz-transform:    translateX(0);
+    -ms-transform:     translateX(0);
+    -o-transform:      translateX(0);
+}
+/*============================================================================*/

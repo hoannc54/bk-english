@@ -124,3 +124,4 @@ function del_ex_word($ex_id) {
         $exampleEx->delete();
     }
 }
+

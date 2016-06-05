@@ -18,14 +18,14 @@ $(document).ready(function () {
             {
                 "orderable": false,
                 "className": "center",
-                "data": function (source, type, val) {
-                    if (source.examples) {
-                        return '<i class="has-chil fa fa-plus-square"></i>';
-                    } else {
-                        return '';
-                    }
-                },
-                "defaultContent": ''
+//                "data": function (source, type, val) {
+//                    if (source.examples) {
+//                        return '<i class="has-chil fa fa-plus-square"></i>';
+//                    } else {
+//                        return '<i class="has-chil fa fa-plus-square"></i>';
+//                    }
+//                },
+                "defaultContent": '<i class="has-chil fa fa-plus-square"></i>'
             },
             {"data": "word"},
             {
@@ -34,7 +34,9 @@ $(document).ready(function () {
             },
             {"data": "type"},
             {"data": "mean"},
-            {"data": "parent_word"},
+//            {"data": "example"},
+//            {"data": "mean_ex"},
+//            {"data": "parent_word"},
             {
                 "orderable": false,
                 "searchable": false,
@@ -185,17 +187,25 @@ $(document).ready(function () {
         var row = table.row(tr);
 
 //Tạo bảng các câu ví dụ
-        var examples = row.data().examples;
-        var data_chil = '<table class="table_ex"><tr><td colspan="3">Ví dụ:</td></tr>';
-        for (var i = 0; i < examples.length; i++) {
-            data_chil += '<tr class="info"><td>' + (i + 1) + '.</td><td>' + examples[i].example + '</td>\n\
-                            <td>' + examples[i].mean + '</td></tr>';
-        }
-        data_chil += '</table>';
+//        var examples = row.data().examples;
+//        var data_chil = '<table class="table_ex"><tr><td colspan="3">Ví dụ:</td></tr>';
+//        if (examples) {
+//            for (var i = 0; i < examples.length; i++) {
+//                data_chil += '<tr class="info"><td>' + (i + 1) + '.</td><td>' + examples[i].example + '</td>\n\
+//                            <td>' + examples[i].mean + '</td></tr>';
+//            }
+//        }
+//        data_chil += '</table>';
 
+        var data_chil = '<table class="table_ex"><tr><td colspan="2">Ví dụ:</td></tr>';
+        data_chil += '<tr class="info">';
+        data_chil += '<td>' + row.data().example + '</td>';
+        data_chil += '<td>' + row.data().mean_ex + '</td>';
+        data_chil += '</tr>';
+        data_chil += '</table>';
 //Tạo thẻ hiện ảnh minh họa
-        data_chil += '<img src="'+row.data().image+'" class="img_mh"/>';
-        
+        data_chil += '<img src="' + row.data().image + '" class="img_mh"/>';
+
 
         if (row.child.isShown()) {
             // This row is already open - close it
@@ -221,7 +231,11 @@ $(document).ready(function () {
         $('#id').val(rdata.id);
         $('#word').val(rdata.word);
         $('#spell').val(rdata.spell);
-        $('#means').val(rdata.mean);
+        $('#mean').val(rdata.mean);
+        $('#example').val(rdata.example);
+        $('#mean_ex').val(rdata.mean_ex);
+        $('#sound').val('');
+        $('#img').val('');
         $('#logo-img').attr('src', rdata.image);
 
 

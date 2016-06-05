@@ -15,7 +15,9 @@
             <th>Phát âm</th>
             <th>Từ loại</th>
             <th>Nghĩa</th>
-            <th>Từ gốc</th>
+<!--            <th>Câu ví dụ</th>
+            <th>Nghĩa câu ví dụ</th>-->
+            <!--<th>Từ gốc</th>-->
             <th></th>
             <th></th>
             <th></th>
@@ -29,7 +31,9 @@
             <th>Phát âm</th>
             <th>Từ loại</th>
             <th>Nghĩa</th>
-            <th>Từ gốc</th>
+<!--            <th>Câu ví dụ</th>
+            <th>Nghĩa câu ví dụ</th>-->
+            <!--<th>Từ gốc</th>-->
             <th></th>
             <th></th>
             <th></th>
@@ -75,10 +79,25 @@
                             <input type="file" class="" id="sound" name="sound" accept="audio/mp3"/>
                         </div>
                     </div>
+                    
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="means">Nghĩa:</label>
+                        <label class="control-label col-sm-2" for="mean">Nghĩa:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="means" name="means" placeholder="Nhập nghĩa" required="required">
+                            <input type="text" class="form-control" id="mean" name="mean" placeholder="Nhập nghĩa" required="required">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="example">Câu ví dụ:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="example" name="example" placeholder="Nhập câu ví dụ" required="required">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="mean_ex">Nghĩa câu ví dụ:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="mean_ex" name="mean_ex" placeholder="Nhập nghĩa câu ví dụ" required="required">
                         </div>
                     </div>
 

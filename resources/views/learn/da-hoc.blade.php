@@ -1,8 +1,33 @@
-<?php
+@extends('template')
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+@section('main-title','Các từ đã học')
 
+@section('content')
+<div id="show" style="float: left;"></div>
+@endsection
+
+
+@section('script')
+@parent
+<script src="{!! url('public/js/learn.js') !!}"></script>
+<script src="{!! url('public/js/play-sound.js') !!}"></script>
+<script>
+    $(document).ready(function () {
+    var notlearn_option = {
+    url: '{{ route("getLearnedAjax") }}',
+            view: $('#show')
+    };
+    var learned = new learn();
+    learned.init(notlearn_option);
+    });
+</script>
+@stop
+
+
+@section('style')
+@parent
+
+
+<style>
+</style>
+@stop

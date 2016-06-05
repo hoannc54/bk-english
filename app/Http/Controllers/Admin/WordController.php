@@ -25,7 +25,7 @@ class WordController extends Controller {
         $word = new Word();
         $word->word = mb_convert_case($request->word, MB_CASE_LOWER, 'utf-8');
         $word->spell = $request->spell;
-        $word->mean = $request->means;
+        $word->mean = $request->mean;
         $word->type = '';
         if (is_array($request->type)) {
             foreach ($request->type as $va) {
@@ -66,10 +66,11 @@ class WordController extends Controller {
         } else {
             $word->image = $img_filename;
         }
-
-        $word->parent_id = 0;
+        $word->example = $request->example;
+        $word->mean_ex = $request->mean_ex;
+//        $word->parent_id = 0;
         $word->save();
-        word_to_ex($word->id, $word->word);
+//        word_to_ex($word->id, $word->word);
 
 //        $word_parent = $word->id;
 //        if ($request->check_list == TRUE) {
@@ -100,27 +101,28 @@ class WordController extends Controller {
     }
 
     public function getList() {
-        $data = Word::select('id', 'word', 'spell', 'mean', 'sound', 'image', 'parent_id')->orderBy('word', 'ASC')->get();
-        return view('admin.word.list', compact('data'));
+//        $data = Word::select('id', 'word', 'spell', 'mean', 'sound', 'image', 'parent_id')->orderBy('word', 'ASC')->get();
+//        return view('admin.word.list', compact('data'));
+        return view('admin.word.list');
     }
 
     public function getListAjax() {
         $ar_data = [];
         $data = Word::get();
         foreach ($data as $word) {
-            $da = $word->examples()->get()->toArray();
+//            $da = $word->examples()->get()->toArray();
             $a_word = $word->toArray();
-            $p_word = Word::find($word->parent_id);
-            if (!empty($p_word)) {
-                $a_word['parent_word'] = $p_word->word;
-            } else {
-                $a_word['parent_word'] = 'none';
-            }
-            if (empty($da)) {
-                $a_word['example'] = '';
-            } else {
-                $a_word['examples'] = $da;
-            }
+//            $p_word = Word::find($word->parent_id);
+//            if (!empty($p_word)) {
+//                $a_word['parent_word'] = $p_word->word;
+//            } else {
+//                $a_word['parent_word'] = 'none';
+//            }
+//            if (empty($da)) {
+//                $a_word['example'] = '';
+//            } else {
+//                $a_word['examples'] = $da;
+//            }
 
             //Nếu tồn tại file ảnh minh họa thì show ra
             if (File::exists('public/images/words/' . $a_word['image'])) {
@@ -135,80 +137,80 @@ class WordController extends Controller {
 //        print_r($data2);
         return '{"data":' . $json_word . '}';
     }
-
-    public function getExample($id = NULL) {
-        $word = Word::find($id);
-        if (!empty($word)) {
-            $exs = $word->examples()->get()->toArray();
-            if (empty($exs)) {
-                return NULL;
-            } else {
-//                echo '<span>';
-                return $exs;
-            }
-        } else {
-            return NULL;
-        }
-    }
-
-    public function getEdit($id) {
-//        echo $id;
-        $data = Word::find($id);
-        if (!empty($data)) {
-            $parent = Word::find($data->parent_id);
-//            print_r($parent);
-            return view('admin.word.edit', compact('data', 'parent'));
-        } else {
-            return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không tìm thấy từ cần sửa!']);
-        }
-    }
-
-    public function postEdit2(Request $request, $id) {
-        $word = Word::find($id);
-
-        if (!empty($word)) {
-            $old_word = mb_convert_case($word->word, MB_CASE_LOWER, 'utf-8');
-            $new_word = mb_convert_case($request->word, MB_CASE_LOWER, 'utf-8');
-//            $word->word = $request->word;
-            if (strcmp($old_word, $new_word) != 0) {
-                $w = Word::where('word', $new_word)->count();
-                if ($w > 0) {
-                    return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ sửa bị trùng.']);
-                }
-                del_word_ex($id);
-                word_to_ex($id, $new_word);
-                $word->word = $new_word;
-            }
-            $word->spell = $request->spell;
-            $word->type = '';
-            if (is_array($request->type)) {
-                foreach ($request->type as $va) {
-                    $word->type .= ' ' . $va;
-                }
-            }
-            $word->type = trim($word->type);
-            $word->mean = $request->means;
-            $word->save();
-
-            if (trim($request->parent) != '') {
-                $word_parent = Word::where('word', trim($request->parent))->first();
-                if (!empty($word_parent)) {
-                    if ($word_parent->parent_id == 0) {
-                        $word->parent_id = $word_parent->id;
-                    } else {
-                        return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ gốc là từ con của 1 từ khác.']);
-                    }
-                } else {
-                    $word->parent_id = 0;
-                    return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ gốc không tồn tại.']);
-                }
-                $word->save();
-            }
-            return redirect()->route('admin.word.getList')->with(['flash_level' => 'success', 'flash_message' => 'Sửa thành công!']);
-        } else {
-            return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không tìm thấy từ cần sửa!']);
-        }
-    }
+//
+//    public function getExample($id = NULL) {
+//        $word = Word::find($id);
+//        if (!empty($word)) {
+//            $exs = $word->examples()->get()->toArray();
+//            if (empty($exs)) {
+//                return NULL;
+//            } else {
+////                echo '<span>';
+//                return $exs;
+//            }
+//        } else {
+//            return NULL;
+//        }
+//    }
+//
+//    public function getEdit($id) {
+////        echo $id;
+//        $data = Word::find($id);
+//        if (!empty($data)) {
+//            $parent = Word::find($data->parent_id);
+////            print_r($parent);
+//            return view('admin.word.edit', compact('data', 'parent'));
+//        } else {
+//            return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không tìm thấy từ cần sửa!']);
+//        }
+//    }
+//
+//    public function postEdit2(Request $request, $id) {
+//        $word = Word::find($id);
+//
+//        if (!empty($word)) {
+//            $old_word = mb_convert_case($word->word, MB_CASE_LOWER, 'utf-8');
+//            $new_word = mb_convert_case($request->word, MB_CASE_LOWER, 'utf-8');
+////            $word->word = $request->word;
+//            if (strcmp($old_word, $new_word) != 0) {
+//                $w = Word::where('word', $new_word)->count();
+//                if ($w > 0) {
+//                    return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ sửa bị trùng.']);
+//                }
+//                del_word_ex($id);
+//                word_to_ex($id, $new_word);
+//                $word->word = $new_word;
+//            }
+//            $word->spell = $request->spell;
+//            $word->type = '';
+//            if (is_array($request->type)) {
+//                foreach ($request->type as $va) {
+//                    $word->type .= ' ' . $va;
+//                }
+//            }
+//            $word->type = trim($word->type);
+//            $word->mean = $request->means;
+//            $word->save();
+//
+//            if (trim($request->parent) != '') {
+//                $word_parent = Word::where('word', trim($request->parent))->first();
+//                if (!empty($word_parent)) {
+//                    if ($word_parent->parent_id == 0) {
+//                        $word->parent_id = $word_parent->id;
+//                    } else {
+//                        return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ gốc là từ con của 1 từ khác.']);
+//                    }
+//                } else {
+//                    $word->parent_id = 0;
+//                    return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ gốc không tồn tại.']);
+//                }
+//                $word->save();
+//            }
+//            return redirect()->route('admin.word.getList')->with(['flash_level' => 'success', 'flash_message' => 'Sửa thành công!']);
+//        } else {
+//            return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không tìm thấy từ cần sửa!']);
+//        }
+//    }
 
     public function postEdit(Request $request) {
         $word = Word::find($request->id);
@@ -273,62 +275,64 @@ class WordController extends Controller {
                 }
             }
             $word->type = trim($word->type);
-            $word->mean = $request->means;
+            $word->mean = $request->mean;
+            $word->example = $request->example;
+            $word->mean_ex = $request->mean_ex;
             $word->save();
 
-            if (trim($request->parent) != '') {
-                $word_parent = Word::where('word', trim($request->parent))->first();
-                if (!empty($word_parent)) {
-                    if ($word_parent->parent_id == 0) {
-                        $word->parent_id = $word_parent->id;
-                    } else {
-                        return '{"status" : "danger", "message" : "Lỗi! Từ gốc là từ con của 1 từ khác."}';
+//            if (trim($request->parent) != '') {
+//                $word_parent = Word::where('word', trim($request->parent))->first();
+//                if (!empty($word_parent)) {
+//                    if ($word_parent->parent_id == 0) {
+//                        $word->parent_id = $word_parent->id;
+//                    } else {
+//                        return '{"status" : "danger", "message" : "Lỗi! Từ gốc là từ con của 1 từ khác."}';
 //                        return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => 'Lỗi! Từ gốc là từ con của 1 từ khác.']);
-                    }
-                } else {
-                    $word->parent_id = 0;
-                    return '{"status" : "danger", "message" : "Lỗi! Từ gốc không tồn tại."}';
+//                    }
+//                } else {
+//                    $word->parent_id = 0;
+//                    return '{"status" : "danger", "message" : "Lỗi! Từ gốc không tồn tại."}';
 //                    return redirect()->route('admin.word.getEdit', $id)->with(['flash_level' => 'danger', 'flash_message' => '']);
-                }
-                $word->save();
-            }
+//                }
+//                $word->save();
+//            }
             return '{"status" : "success", "message" : "Sửa thành công!"}';
         } else {
             return '{"status" : "danger", "message" : "Không tìm thấy từ cần sửa!"}';
         }
     }
-
-    public function postDelete(Request $request) {
-        $i = 0;
-        if (is_string($request->ids) && strcmp($request->action, 'delete') == 0) {
-            $list_w = explode(' ', $request->ids);
-//            print_r($list_w);
-            foreach ($list_w as $w_id) {
-                if ($w_id != NULL) {
-                    $chil = Word::where('parent_id', $w_id)->get();
-                    if ($chil->count() > 0) {
-//            print_r($chil);
-                        foreach ($chil as $value) {
-                            del_word_ex($value->id);
-                            $value->delete();
-                        }
-                    }
-                    $word = Word::find($w_id);
-                    if (!empty($word)) {
-                        del_word_ex($word->id);
-                        $word->delete();
-                        $i++;
-                    }
-                }
-            }
-        }
-//        echo $request->ids;
-        if ($i != 0) {
-            return redirect()->route('admin.word.getList')->with(['flash_level' => 'success', 'flash_message' => 'Xóa thành công ' . $i . ' mục!']);
-        } else {
-            return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không có gì để xóa.']);
-        }
-    }
+//
+//    public function postDelete(Request $request) {
+//        $i = 0;
+//        if (is_string($request->ids) && strcmp($request->action, 'delete') == 0) {
+//            $list_w = explode(' ', $request->ids);
+////            print_r($list_w);
+//            foreach ($list_w as $w_id) {
+//                if ($w_id != NULL) {
+//                    $chil = Word::where('parent_id', $w_id)->get();
+//                    if ($chil->count() > 0) {
+////            print_r($chil);
+//                        foreach ($chil as $value) {
+//                            del_word_ex($value->id);
+//                            $value->delete();
+//                        }
+//                    }
+//                    $word = Word::find($w_id);
+//                    if (!empty($word)) {
+//                        del_word_ex($word->id);
+//                        $word->delete();
+//                        $i++;
+//                    }
+//                }
+//            }
+//        }
+////        echo $request->ids;
+//        if ($i != 0) {
+//            return redirect()->route('admin.word.getList')->with(['flash_level' => 'success', 'flash_message' => 'Xóa thành công ' . $i . ' mục!']);
+//        } else {
+//            return redirect()->route('admin.word.getList')->with(['flash_level' => 'danger', 'flash_message' => 'Không có gì để xóa.']);
+//        }
+//    }
 
     public function postDel(Request $request) {
         $i = 0;

@@ -4,14 +4,6 @@
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <title>600 Words For TOEIC</title>
-        <!-- DataTables CSS -->
-        <link href="{!! url('public/css/dataTables.bootstrap.css') !!}" rel="stylesheet">
-
-        <!-- Select DataTables CSS -->
-        <link href="{!! url('public/css/select.dataTables.css') !!}" rel="stylesheet">
-
-        <!-- DataTables Responsive CSS -->
-        <link href="{!! url('public/css/jquery.dataTables.css') !!}" rel="stylesheet">
 
         <link rel="stylesheet" href="{!! url('/public/css/style.css') !!}"/>
         <link rel="stylesheet" href="{!! url('/public/css/hover.css') !!}"/>
@@ -37,11 +29,20 @@
             <!--<div style="height: 100px;"></div>-->
             <div class="BackgroundLinedPaper shadow content">
                 <div class="col-4">
-                    @yield('left-menu')
+                    @yield('leftmenu')
+
+                    @if (Auth::check())
+                    @include('block.leftmenu')
+                    @else
+                    @include('block.leftmenu-guest')
+                    @endif
+
                 </div>
                 <div class="col-8">
                     <div class="main">
-                        <div class="main-title">@yield('main-title')</div>
+                        <div class="main-title" id="main-title">@yield('main-title')</div>
+                        @include('block.error')
+                        <div id="message"></div>
                         <div class="main-content">
                             <!--Đây là nội dung-->
                             @yield('content')
@@ -58,8 +59,11 @@
         </div>
 
         <script src="{!! url('public/js/jquery-1.11.3.min.js') !!}"></script>
+        <script src="{!! url('public/js/myscript.js') !!}"></script>
         <script src="{!! url('public/js/style.js') !!}"></script>
-        <script src="{!! url('public/js/play-sound.js') !!}"></script>
+
+        @yield('script')
+        <!--<script src="{!! url('public/js/play-sound.js') !!}"></script>-->
         <!--<script src="{!! url('public/js/mousehoa.js') !!}" type="text/javascript"></script>-->
     </body>
 </html>

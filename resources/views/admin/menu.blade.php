@@ -72,7 +72,7 @@
                     </ul>
                 </li>
 
-                <li>
+<!--                <li>
                     <a href="#"><i class="fa fa-file-text-o fa-fw"></i> Quản lý câu ví dụ<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -82,7 +82,7 @@
                             <a href="{!! route('admin.example.getList') !!}">Danh sách câu ví dụ</a>
                         </li>
                     </ul>
-                </li>
+                </li>-->
 
                 <li>
                     <a href="#"><i class="fa fa-group fa-fw"></i> Quản lý thành viên<span class="fa arrow"></span></a>

@@ -11,10 +11,10 @@ and open the template in the editor.
 .spell{
     cursor: pointer;
 }
-.spell:before{
+.spell:not(th):before{
     content: '/';
 }
-.spell:after{
+.spell:not(th):after{
     content: '/';
 }
 /*tr.has-chil td.details-control {

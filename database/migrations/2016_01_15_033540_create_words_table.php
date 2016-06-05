@@ -3,15 +3,14 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWordsTable extends Migration
-{
+class CreateWordsTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('words', function (Blueprint $table) {
             $table->increments('id');
             $table->string('word');
@@ -20,6 +19,10 @@ class CreateWordsTable extends Migration
             $table->string('mean');
             $table->string('sound');
             $table->string('image');
+
+            $table->text('example');
+            $table->text('mean_ex');
+
             $table->integer('parent_id');
             $table->timestamps();
         });
@@ -30,8 +33,8 @@ class CreateWordsTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::drop('words');
     }
+
 }

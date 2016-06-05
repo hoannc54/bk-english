@@ -26,7 +26,7 @@ class WordRequest extends Request
         return [
             'word'  =>  'required|unique:words,word',
             'spell'  =>  'required',
-            'means'  =>  'required'
+            'mean'  =>  'required'
         ];
     }
     public function messages() {
@@ -34,7 +34,7 @@ class WordRequest extends Request
             'word.required' =>  'Vui lòng nhập từ!',
             'word.unique'  =>  'Từ đã tồn tại!',
             'spell.required' =>  'Bạn chưa nhập phát âm!',
-            'means.required' =>  'Bạn chưa nhập nghĩa!'
+            'mean.required' =>  'Bạn chưa nhập nghĩa!'
         ];
     }
 }
