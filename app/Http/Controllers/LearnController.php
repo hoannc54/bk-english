@@ -221,7 +221,7 @@ class LearnController extends Controller {
     //dang hoc
     public function getLearningList() {
 
-        return view('learn.dang-hoc.danh-sach-tu');
+        return view('learn.dang-hoc');
     }
 
     //da hoc thuoc

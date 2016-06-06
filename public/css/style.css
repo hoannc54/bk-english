@@ -549,6 +549,9 @@ body{
     margin-right: auto;
     margin-left: auto;
 }
+.col{
+    overflow: auto;
+}
 @media (min-width: 768px) {
     .container {
         width: 750px;
@@ -692,7 +695,7 @@ body{
     margin-bottom: 4em;
     margin-left: 7%;
     margin-right: 7%;
-    float: left;
+    /*float: left;*/
 }
 .main-title{
     font-size: 2em;
@@ -700,7 +703,8 @@ body{
     padding-bottom: 1em;
 }
 .main-content{
-    float: left;
+    /*float: left;*/
+    /*overflow:auto;*/
 }
 .group{
 }
@@ -798,14 +802,14 @@ label{
 /*Style phân trang*/
 .pag-bottom{
     width: 100%;
-    float: left;
+    /*float: left;*/
     line-height: 1em;
     height: 2em;
     margin: 2em 0 0 0;
 }
 .pag-top{
     width: 100%;
-    float: left;
+    /*float: left;*/
     line-height: 1em;
     height: 2em;
     /*font-size: 1em;*/
@@ -851,7 +855,8 @@ ul.pagination li a:hover:not(.active):not(.none) {
     width: 100%;
     min-height: 10em;
     margin-bottom: 2em;
-    float: left;
+    /*float: left;*/
+    overflow: auto;
 }
 .item img{
     width: 40%;
@@ -1033,3 +1038,34 @@ ul.pagination li a:hover:not(.active):not(.none) {
     -o-transform:      translateX(0);
 }
 /*============================================================================*/
+
+.doremon{
+    width: 30%;
+    background-image: url('../images/doremon full.png');
+    background-repeat: no-repeat;
+    background-size: 1100%;
+    content: ' ';
+    /*background-position: 50%;*/
+}
+
+.doremon_noi{
+    width: 55%;
+    /*height:*/ 
+    position: absolute;
+    background-image: url('../images/noi.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    left: 46%;
+    top: 14%;
+
+    padding-top: 5%;
+    padding-left: 6%;
+    padding-right: 6%;
+    padding-bottom: 10%;
+    font-size: 20px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.2em;
+    color: blue;
+}

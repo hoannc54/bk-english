@@ -3,7 +3,7 @@
 @section('main-title','Các từ đã học')
 
 @section('content')
-<div id="show" style="float: left;"></div>
+<div id="show"></div>
 @endsection
 
 
