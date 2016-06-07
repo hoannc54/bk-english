@@ -1045,27 +1045,39 @@ ul.pagination li a:hover:not(.active):not(.none) {
     background-repeat: no-repeat;
     background-size: 1100%;
     content: ' ';
+    position: relative;
     /*background-position: 50%;*/
 }
 
 .doremon_noi{
-    width: 55%;
+    /*width: 55%;*/
+    width: 200%;
     /*height:*/ 
     position: absolute;
     background-image: url('../images/noi.png');
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center;
-    left: 46%;
-    top: 14%;
+    /*    left: 46%;
+        top: 14%;*/
 
-    padding-top: 5%;
-    padding-left: 6%;
-    padding-right: 6%;
-    padding-bottom: 10%;
+    top: -85%;
+    left: -119%;
+
+    /*    padding-top: 5%;
+        padding-left: 6%;
+        padding-right: 6%;
+        padding-bottom: 10%;*/
     font-size: 20px;
     text-align: center;
     vertical-align: middle;
     line-height: 1.2em;
     color: blue;
+}
+.doremon_noi .noi{
+    left: 50%;
+    top: 51%;
+    transform: translateX(-50%) translateY(-75%);
+    position: absolute;
+    right: -29%;
 }

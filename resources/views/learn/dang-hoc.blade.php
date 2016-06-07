@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
-<div id="show" style=" width: 100%; position: relative;">
+<div id="show" style=" width: 100%; position: relative; padding-bottom: 4em;">
     <!--
         <div class="tabs">
             <div class="tab">
@@ -44,6 +44,11 @@
         <div>
             <input type="text" class="tra_loi" id="tra_loi"/>
         </div>-->
+    <input type="radio" id="pa_1" class="phuong_an" value=""/><label for="pa_1">Phương án 1</label>
+    <input type="radio" id="pa_2" class="phuong_an" value=""/><label for="pa_2">Phương án 2</label>
+    <input type="radio" id="pa_3" class="phuong_an" value=""/><label for="pa_3">Phương án 3</label>
+    <input type="radio" id="pa_4" class="phuong_an" value=""/><label for="pa_4">Phương án 4</label>
+    <input type="button" id="b_pa" value="OK"/>
 </div>
 @endsection
 
@@ -108,7 +113,11 @@
 
         var learning_option = {
             url: '{{ route("getLearningAjax") }}',
-            view: $('#show')
+            view: $('#show'),
+            _token: '{!! csrf_token() !!}',
+            update_url: '{!! route("postLearningUpdate") !!}',
+            test_url: '{!! route("getLearnedAjax") !!}',
+            test_up_url: '{!! route("postLearningUptest") !!}'
         };
         var Learning = new learning();
         Learning.init(learning_option);
@@ -160,7 +169,7 @@
 @parent
 <style>
     .tra_loi{
-        width: 50%;
+        /*width: 50%;*/
         padding: 10px 12px;
         /*color: #555;*/
         /*alignment-adjust: middle;*/
@@ -174,27 +183,120 @@
         /*text-align: condensed;*/
         color: blue;
         margin-top: 1em;
+        margin-bottom: 1em;
 
     }
     .tl_dung{
         text-shadow: 1px 0 1px blue;
     }
+    /*    .tl_sai{
+            text-shadow: 1px 0 1px blue;
+        }*/
     .goi_y{
         /*float: left;*/ 
         width: 50%; 
         min-height: 4em;
     }
-    .goi_y:after{
-        content: ' ';
-        clear: both;
-    }
+    /*    .goi_y:after{
+            content: ' ';
+            clear: both;
+        }*/
     .anh{
         cursor: pointer;
-        width: 50%;
+        max-width: 80%;
+        height: 16em;
         padding: 0.4em;
         border: 1px none;
         background: rgb(255, 255, 255) none repeat scroll 0% 0%;
         box-shadow: 0px 1px 4px rgb(204, 204, 204), 0px 0px 10px rgb(204, 204, 204) inset;
+    }
+    .nex_pre{
+        font-size:4em; 
+        overflow: hidden;
+        color: red;
+        cursor: pointer;
+        /*min-height: 1em;*/
+    }
+
+    .word_test{
+        width: 65%;
+        padding-top: 0.6em;
+        text-align: center;
+        /*color: #555;*/
+        /*alignment-adjust: middle;*/
+        /*background-color: #FFF;*/
+        /*border: 1px solid #CCC;*/
+        /*border-radius: 4px;*/
+        /*box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;*/
+        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+        font-size: 2em;
+        font-family: inherit;
+        /*text-align: condensed;*/
+        color: blue;
+        /*margin-top: 1em;*/
+        margin-bottom: 0.4em;
+        text-shadow: 1px 0 1px blue;
+    }
+    .b_pa{
+        margin-left: 50%;
+        margin-top: 2.3em;
+    }
+
+
+
+
+    /* button
+---------------------------------------------- */
+    .button {
+        display: inline-block;
+        /*zoom: 1;*/ 
+        /*zoom and *display = ie7 hack for display:inline-block*/ 
+        /**display: inline;*/
+        vertical-align: baseline;
+        /*margin: 0 2px;*/
+        outline: none;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        font: 14px/100% Arial, Helvetica, sans-serif;
+        padding: .5em 2em .55em;
+        text-shadow: 0 1px 1px rgba(0,0,0,.3);
+        -webkit-border-radius: .5em;
+        -moz-border-radius: .5em;
+        border-radius: .5em;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    }
+    .button:hover {
+        text-decoration: none;
+    }
+    .button:active {
+        position: relative;
+        top: 1px;
+    }
+
+
+    /* blue */
+    .blue {
+        color: #d9eef7;
+        border: solid 1px #0076a3;
+        background: #0095cd;
+        background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5));
+        background: -moz-linear-gradient(top, #00adee, #0078a5);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5');
+    }
+    .blue:hover {
+        background: #007ead;
+        background: -webkit-gradient(linear, left top, left bottom, from(#0095cc), to(#00678e));
+        background: -moz-linear-gradient(top, #0095cc, #00678e);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0095cc', endColorstr='#00678e');
+    }
+    .blue:active {
+        color: #80bed6;
+        background: -webkit-gradient(linear, left top, left bottom, from(#0078a5), to(#00adee));
+        background: -moz-linear-gradient(top, #0078a5, #00adee);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5', endColorstr='#00adee');
     }
 </style>
 @stop

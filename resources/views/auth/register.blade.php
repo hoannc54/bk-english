@@ -19,19 +19,19 @@
 <form action="{!! route('postRegister') !!}" method="POST" >
     <div class="group">
         <label class="col-4" for="name">Tên đăng nhập:</label>
-        <input class="col-7 form-control" type="text" id="name" name="name"/>
+        <input class="col-7 form-control" type="text" id="name" name="name" value="{!! old('name') !!}"/>
     </div>
     <div class="group">
         <label class="col-4" for="email">Email:</label>
-        <input class="col-7 form-control" type="email" id="email" name="email"/>
+        <input class="col-7 form-control" type="email" id="email" name="email" value="{!! old('email') !!}"/>
     </div>
     <div class="group">
         <label class="col-4" for="password">Mật khẩu:</label>
-        <input class="col-7 form-control" type="text" id="password" name="password"/>
+        <input class="col-7 form-control" type="password" id="password" name="password"/>
     </div>
     <div class="group">
         <label class="col-4" for="password">Nhập lại mật khẩu:</label>
-        <input class="col-7 form-control" type="text" id="repassword" name="repassword"/>
+        <input class="col-7 form-control" type="password" id="repassword" name="repassword"/>
     </div>
 
     <!--    <div class="col-7 col-offset-4 checkbox">

@@ -111,8 +111,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', ['as' => 'getLogout', 'uses' => 'Auth\AuthController@getLogout']);
 
     Route::get('learning/ajax', ['as' => 'getLearningAjax', 'uses' => 'LearnController@getLearningAjax']);
-    Route::get('learning/list', ['as' => 'getLearningList', 'uses' => 'LearnController@getLearningList']);
-    Route::get('learning', ['as' => 'getLearningList', 'uses' => 'LearnController@getLearningList']);
+    Route::post('learning/update', ['as' => 'postLearningUpdate', 'uses' => 'LearnController@postLearningUpdate']);
+    Route::post('learning/uptest', ['as' => 'postLearningUptest', 'uses' => 'LearnController@postTestUpdate']);
+    Route::get('learning', ['as' => 'getLearningList', 'uses' => 'LearnController@getLearning']);
 
 
     Route::get('notlearn/ajax', ['as' => 'getNotLearnAjax', 'uses' => 'LearnController@getNotLearnAjax']);

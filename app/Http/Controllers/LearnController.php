@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 //use App\Http\Requests;
 use App\Http\Controllers\Controller;
-//use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use Auth;
 use File;
 use App\Word;
@@ -219,8 +219,7 @@ class LearnController extends Controller {
     }
 
     //dang hoc
-    public function getLearningList() {
-
+    public function getLearning() {
         return view('learn.dang-hoc');
     }
 
@@ -232,6 +231,65 @@ class LearnController extends Controller {
     //chua hoc
     public function getNotLearn() {
         return view('learn.chua-hoc');
+    }
+
+    //Cập nhật từ đang học
+    public function postLearningUpdate(Request $request) {
+        if ($request->id != '') {
+            $id = (int) $request->id;
+            $kq = (boolean) $request->kq;
+            $l = Learning::where('word_id', $id)->where('user_id', Auth::user()->id)->first();
+
+            if ($l && $l->user_id == Auth::user()->id) {
+                $l->learn_counts++;
+                if ($kq) {
+                    $l->point++;
+                }
+
+                $l->save();
+                return '{"status":"success", "message":"Cập nhật thành công!"}';
+            }
+        }
+
+        return '{"status":"error", "message":"Đã có lỗi cập nhật!"}';
+    }
+
+    public function postTestUpdate(Request $request) {
+        if ($request->id != '') {
+            $id = (int) $request->id;
+//            $kq = (boolean) $request->kq;
+
+            $learned = Learned::where('user_id', Auth::user()->id)->first();
+            $notLearn = NotLearn::where('user_id', Auth::user()->id)->first();
+
+//            $l = Learning::where('word_id', $id)->where('user_id', Auth::user()->id)->first();
+//            if ($l && $l->user_id == Auth::user()->id) {
+//            $arr_learned = $l->learn_counts++;
+//            if ($kq) {
+//                $l->point++;
+//            }
+
+            if (!empty($learned->word_id_list)) {
+                $arr_learned = explode(' ', $learned->word_id_list);
+//                $l->save();
+                $key = array_search($id, $arr_learned);
+                if ($key) {
+                    unset($arr_learned[$key]);
+                    $notLearn->word_id_list = $id . ' ' . $notLearn->word_id_list;
+                    $learned->word_id_list = implode(' ', $arr_learned);
+
+
+                    $learned->word_id_list = trim($learned->word_id_list);
+                    $notLearn->word_id_list = trim($notLearn->word_id_list);
+                    $learned->save();
+                    $notLearn->save();
+//                }
+                    return '{"status":"success", "message":"Cập nhật thành công!"}';
+                }
+            }
+        }
+        
+        return '{"status":"error", "message":"Đã có lỗi cập nhật!"}';
     }
 
 }
