@@ -4,7 +4,7 @@ function learn() {
     this.type = 'get';
     this.data = '';
     this.maxPage = 1;
-    this.length1page = 2;
+    this.length1page = 10;
 //    Các biến thông báo
     this.emty = '<div style="text-align: center;">Danh sách trống.</div>';
     this.loading = '<div style="text-align: center;"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>';

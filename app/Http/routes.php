@@ -43,6 +43,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     Route::group(['prefix' => 'words'], function() {
         Route::get('/', ['as' => 'admin.word', 'uses' => 'Admin\WordController@index']);
+        Route::get('update', ['as' => 'admin.word.getUdate', 'uses' => 'Admin\WordController@getUpdate']);
+        
 
         Route::get('add', ['as' => 'admin.word.getAdd', 'uses' => 'Admin\WordController@getAdd']);
         Route::post('add', ['as' => 'admin.word.postAdd', 'uses' => 'Admin\WordController@postAdd']);

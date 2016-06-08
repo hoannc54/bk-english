@@ -19,7 +19,7 @@
         <input class="col-7 form-control" type="text"/>
     </div>
     <div class="group">
-        <label class="col-4" for="pass">mật khẩu:</label>
+        <label class="col-4" for="pass">Mật khẩu:</label>
         <input class="col-7 form-control" type="text"/>
     </div>
 

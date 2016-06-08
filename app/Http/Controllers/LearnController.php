@@ -237,7 +237,7 @@ class LearnController extends Controller {
     public function postLearningUpdate(Request $request) {
         if ($request->id != '') {
             $id = (int) $request->id;
-            $kq = (boolean) $request->kq;
+            $kq = (int) $request->kq;
             $l = Learning::where('word_id', $id)->where('user_id', Auth::user()->id)->first();
 
             if ($l && $l->user_id == Auth::user()->id) {
@@ -273,7 +273,7 @@ class LearnController extends Controller {
                 $arr_learned = explode(' ', $learned->word_id_list);
 //                $l->save();
                 $key = array_search($id, $arr_learned);
-                if ($key) {
+                if ($key !== FALSE) {
                     unset($arr_learned[$key]);
                     $notLearn->word_id_list = $id . ' ' . $notLearn->word_id_list;
                     $learned->word_id_list = implode(' ', $arr_learned);
@@ -288,7 +288,7 @@ class LearnController extends Controller {
                 }
             }
         }
-        
+
         return '{"status":"error", "message":"Đã có lỗi cập nhật!"}';
     }
 

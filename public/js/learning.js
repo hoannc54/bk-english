@@ -360,7 +360,7 @@ function learning() {
             }
         }
         curent.doremon_noi.kho.dem++;
-        if (curent.doremon_noi.kho.dem > 3) {
+        if (curent.doremon_noi.kho.dem > 2) {
             curent.doremon_noi.kho.dem = 0;
         }
 
@@ -468,12 +468,17 @@ function learning() {
             var curent = this;
             var id = this.dang_hoc.id;
             var update_result;
+            var kq_u = 0;
+            if (kq == true) {
+                kq_u = 1;
+            }
+
             $.ajax({
                 method: "POST",
                 url: curent.update_url,
                 dataType: "json",
                 async: false,
-                data: {id: id, kq: kq, _token: curent.token},
+                data: {id: id, kq: kq_u, _token: curent.token},
                 error: function (jqXHR, textStatus, errorThrown) {
                     alert(errorThrown);
                 },
@@ -534,7 +539,7 @@ function learning() {
         var curent = this;
         $('#tra_loi').css('color', 'red');
         curent.doremon_noi.sai.dem2++;
-        if (curent.doremon_noi.sai.dem2 < 25) {
+        if (curent.doremon_noi.sai.dem2 < 30) {
 
             curent.noi('sai', 'sai', 3000, true, false, 2, function () {
 
@@ -543,9 +548,15 @@ function learning() {
 //                    curent.noi('sai', 'sai', true, false, 2);
                 }
             });
-        } else if (curent.doremon_noi.sai.dem2 < 30) {
+        } else if (curent.doremon_noi.sai.dem2 < 40) {
 
-            curent.noi('doi_tu', 'sai', 3000, true);
+            curent.noi('doi_tu', 'sai', 3000, true, false, 2, function () {
+
+//                if (curent.doremon_noi.sai.dem2 >= 5) {
+                curent.goi_y(true);
+//                    curent.noi('sai', 'sai', true, false, 2);
+//                }
+            });
         } else {
             $('#tra_loi').prop('disabled', 'disabled');
             curent.noi('sai_bet', 'sai_bet', 5000, false, true, 3, function () {
@@ -659,6 +670,7 @@ function learning() {
     };
     this.khoi_tao_test = function () {
         var curent = this;
+        this.testLoadAjax();
         this.test_id = Math.floor((Math.random() * curent.test_data.length));
         this.so_lan_nghe = 0;
         this.doremon_noi = {
@@ -680,6 +692,7 @@ function learning() {
                     'Bạn chọn đúng rồi. Chúng ta sang câu tiếp theo nhé! :)',
                     'Đấy là đáp án đúng. Hoan hô bạn.'
                 ], dem: 0, dem2: 0}, //9
+            het: {noi: 'Không có bài học cho hôm nay!', dem: 0},
             im_lang: {noi: '...', dem: 0}
         };
 //        alert(this.test_id);
@@ -687,22 +700,42 @@ function learning() {
 
     this.next_test = function () {
         var curent = this;
-        var html = '';
-        this.test_id = Math.floor((Math.random() * curent.test_data.length));
-        var maso = this.test_id;
-        var arr = this.arr_test();
-        this.so_lan_nghe = 0;
-        html += '<div><input type="radio" id="pa_1" name="pa" class="phuong_an" value="' + arr[0] + '"/><label for="pa_1">' + this.test_data[arr[0]]['mean'] + '</label></div>';
-        html += '<div><input type="radio" id="pa_2" name="pa" class="phuong_an" value="' + arr[1] + '"/><label for="pa_2">' + this.test_data[arr[1]]['mean'] + '</label></div>';
-        html += '<div><input type="radio" id="pa_3" name="pa" class="phuong_an" value="' + arr[2] + '"/><label for="pa_3">' + this.test_data[arr[2]]['mean'] + '</label></div>';
+        if (this.test_data.length >= 3) {
+            var html = '';
+            this.test_id = Math.floor((Math.random() * curent.test_data.length));
+            var maso = this.test_id;
+            var arr = this.arr_test();
+//        this.cap_nhat = true;
+            this.so_lan_nghe = 0;
+            html += '<div><input type="radio" id="pa_1" name="pa" class="phuong_an" value="' + arr[0] + '"/><label for="pa_1">' + this.test_data[arr[0]]['mean'] + '</label></div>';
+            html += '<div><input type="radio" id="pa_2" name="pa" class="phuong_an" value="' + arr[1] + '"/><label for="pa_2">' + this.test_data[arr[1]]['mean'] + '</label></div>';
+            html += '<div><input type="radio" id="pa_3" name="pa" class="phuong_an" value="' + arr[2] + '"/><label for="pa_3">' + this.test_data[arr[2]]['mean'] + '</label></div>';
 
 
-        $('#audio').prop('src', curent.test_data[maso]['sound']);
-        $('#anh').prop('src', curent.test_data[maso]['image']);
-        $('#word_test').html(curent.test_data[maso]['word']);
-        $('#pa').html(html);
+            $('#audio').prop('src', curent.test_data[maso]['sound']);
+            $('#anh').prop('src', curent.test_data[maso]['image']);
+            $('#word_test').html(curent.test_data[maso]['word']);
+            $('#pa').html(html);
 
-        console.log('Load xong câu test mới.');
+
+            $('#anh').show();
+            $('#b_pa').show();
+            $('#pa').show();
+            $('#word_test').show();
+            $('#show').unbind('click');
+            console.log('Load xong câu test mới.');
+        } else {
+            $('#anh').hide();
+            $('#pa').hide();
+            $('#b_pa').hide();
+            $('#word_test').hide();
+
+            $('#show').on('click', function () {
+                curent.noi('het', 'vui', 3000, true, true);
+            });
+            this.noi('het', 'vui', 3000, false, true);
+            console.log('Không load câu test mới.');
+        }
 
     };
 
@@ -788,36 +821,36 @@ function learning() {
     };
 
     this.up_test = function () {
-        if (this.cap_nhat == false) {
-            var kq = false;
-            var curent = this;
-            var id = this.test_data[this.test_id].id;
-            var update_result;
-            $.ajax({
-                method: "POST",
-                url: curent.test_up_url,
-                dataType: "json",
-                async: false,
-                data: {id: id, kq: kq, _token: curent.token},
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert(errorThrown);
-                },
-                success: function (result) {
-                    update_result = result;
+//        if (this.cap_nhat == false) {
+        var kq = false;
+        var curent = this;
+        var id = this.test_data[this.test_id].id;
+        var update_result;
+        $.ajax({
+            method: "POST",
+            url: curent.test_up_url,
+            dataType: "json",
+            async: false,
+            data: {id: id, kq: kq, _token: curent.token},
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+            },
+            success: function (result) {
+                update_result = result;
 //                    console.log('Kết quả: '+result);
-                    console.log('Gửi cập nhật test thành công: ' + id + ' ' + kq + ' lên hệ thống.');
-//                    console.log('Kết quả: ' + update_result['status'] + ' ' + update_result.message);
-                }
-            });
-            if (update_result['status'] == 'error') {
-                console.log('Không cập nhật được lên hệ thống. Lỗi: ' + update_result.message);
-            } else {
-                this.cap_nhat = true;
+                console.log('Gửi cập nhật test thành công: ' + id + ' ' + kq + ' lên hệ thống.');
+                console.log('Kết quả: ' + update_result['status'] + ' ' + update_result.message);
             }
-//            if (kq == true) {
-            curent.testLoadAjax();
-//            }
+        });
+        if (update_result['status'] == 'error') {
+            console.log('Không cập nhật được lên hệ thống. Lỗi: ' + update_result.message);
+        } else {
+            this.cap_nhat = true;
         }
+//            if (kq == true) {
+        curent.testLoadAjax();
+//            }
+//        }
     };
 
     this.dap_an = function () {
@@ -838,7 +871,7 @@ function learning() {
                 this.up_test();
                 this.noi('sai_bet', 'sai_bet', 5000, false, true, 3, function () {
                     curent.next_test();
-                    $('#b_pa').show();
+//                    $('#b_pa').show();
                 }, dung);
             }
         }
@@ -848,42 +881,43 @@ function learning() {
         this.khoi_tao_test();
         $('#main-title').html('Kiểm tra');
 
-        var arr = this.arr_test();
-        console.log(this.test_id);
-        for (var i = 0; i < arr.length; i++) {
-            console.log(arr[i] + ' ');
-        }
+//        var arr = this.arr_test();
+//        console.log(this.test_id);
+//        for (var i = 0; i < arr.length; i++) {
+//            console.log(arr[i] + ' ');
+//        }
 
 
-        var maso = this.test_id;
+//        var maso = this.test_id;
         var html = '';
-        if (this.test_data.length < 3) {
-            html += 'Không có bài kiểm tra';
-            this.view(html);
-        } else {
+//        if (this.test_data.length < 3) {
+//            html += 'Không có bài kiểm tra';
+//            this.view(html);
+//        } else {
 
 
-            html += '<div style="height: 16em;">';
-            html += '<audio id="audio" src="' + this.test_data[maso]['sound'] + '"></audio>';
-            html += '<img src="' + this.test_data[maso]['image'] + '" class="anh" id="anh"/>';
-            html += '</div>';
-            html += '';
-            html += '<div class="doremon" style="float: right;">';
-            html += '<div class="doremon_noi" id="doremon_noi"><div id="noi" class="noi">Kiểm tra bài cũ!</div></div>';
-            html += '</div>';
-            html += '<div class="word_test" id="word_test">';
-            html += this.test_data[maso]['word'];
-            html += '</div>';
-            html += '<div style="width=50%;" id="pa">';
-            html += '<div><input type="radio" id="pa_1" name="pa" class="phuong_an" value="' + arr[0] + '"/><label for="pa_1">' + this.test_data[arr[0]]['mean'] + '</label></div>';
-            html += '<div><input type="radio" id="pa_2" name="pa" class="phuong_an" value="' + arr[1] + '"/><label for="pa_2">' + this.test_data[arr[1]]['mean'] + '</label></div>';
-            html += '<div><input type="radio" id="pa_3" name="pa" class="phuong_an" value="' + arr[2] + '"/><label for="pa_3">' + this.test_data[arr[2]]['mean'] + '</label></div>';
-            html += '</div>';
-            html += '<button id="b_pa" class="button blue b_pa">OK</button>';
+        html += '<div style="height: 16em;">';
+        html += '<audio id="audio" src=""></audio>';
+        html += '<img src="" class="anh" id="anh" alt="không có ảnh"/>';
+        html += '</div>';
+        html += '';
+        html += '<div class="doremon" style="float: right;">';
+        html += '<div class="doremon_noi" id="doremon_noi"><div id="noi" class="noi">Kiểm tra bài cũ!</div></div>';
+        html += '</div>';
+        html += '<div class="word_test" id="word_test">';
+//            html += this.test_data[maso]['word'];
+        html += '</div>';
+        html += '<div style="width=50%;" id="pa">';
+//            html += '<div><input type="radio" id="pa_1" name="pa" class="phuong_an" value="' + arr[0] + '"/><label for="pa_1">' + this.test_data[arr[0]]['mean'] + '</label></div>';
+//            html += '<div><input type="radio" id="pa_2" name="pa" class="phuong_an" value="' + arr[1] + '"/><label for="pa_2">' + this.test_data[arr[1]]['mean'] + '</label></div>';
+//            html += '<div><input type="radio" id="pa_3" name="pa" class="phuong_an" value="' + arr[2] + '"/><label for="pa_3">' + this.test_data[arr[2]]['mean'] + '</label></div>';
+        html += '</div>';
+        html += '<button id="b_pa" class="button blue b_pa">OK</button>';
 
-            this.view(html);
-            this.add_av_test();
-        }
+        this.view(html);
+        this.add_av_test();
+        this.next_test();
+//        }
     };
     return this;
 }

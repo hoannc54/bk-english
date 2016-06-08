@@ -44,11 +44,11 @@
         <div>
             <input type="text" class="tra_loi" id="tra_loi"/>
         </div>-->
-    <input type="radio" id="pa_1" class="phuong_an" value=""/><label for="pa_1">Phương án 1</label>
+<!--    <input type="radio" id="pa_1" class="phuong_an" value=""/><label for="pa_1">Phương án 1</label>
     <input type="radio" id="pa_2" class="phuong_an" value=""/><label for="pa_2">Phương án 2</label>
     <input type="radio" id="pa_3" class="phuong_an" value=""/><label for="pa_3">Phương án 3</label>
     <input type="radio" id="pa_4" class="phuong_an" value=""/><label for="pa_4">Phương án 4</label>
-    <input type="button" id="b_pa" value="OK"/>
+    <input type="button" id="b_pa" value="OK"/>-->
 </div>
 @endsection
 

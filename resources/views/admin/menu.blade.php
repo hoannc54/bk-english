@@ -55,11 +55,11 @@
                 <li>
                     <a href="{!! route('getHome') !!}"><i class="fa fa-home fa-fw"></i> Trang chủ web</a>
                 </li>
-                
+
                 <li>
                     <a href="{!! route('admin.home') !!}"><i class="fa fa-dashboard fa-fw"></i> Thống kê</a>
                 </li>
-                
+
                 <li>
                     <a href="#"><i class="fa fa-file-word-o fa-fw"></i> Quản lý từ<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -69,20 +69,23 @@
                         <li>
                             <a href="{!! route('admin.word.getList') !!}">Danh sách từ</a>
                         </li>
+                        <li>
+                            <a href="{!! route('admin.word.getUdate') !!}">Update từ chưa học cho thành viên</a>
+                        </li>
                     </ul>
                 </li>
 
-<!--                <li>
-                    <a href="#"><i class="fa fa-file-text-o fa-fw"></i> Quản lý câu ví dụ<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="{!! route('admin.example.getAdd') !!}">Thêm câu mới</a>
-                        </li>
-                        <li>
-                            <a href="{!! route('admin.example.getList') !!}">Danh sách câu ví dụ</a>
-                        </li>
-                    </ul>
-                </li>-->
+                <!--                <li>
+                                    <a href="#"><i class="fa fa-file-text-o fa-fw"></i> Quản lý câu ví dụ<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="{!! route('admin.example.getAdd') !!}">Thêm câu mới</a>
+                                        </li>
+                                        <li>
+                                            <a href="{!! route('admin.example.getList') !!}">Danh sách câu ví dụ</a>
+                                        </li>
+                                    </ul>
+                                </li>-->
 
                 <li>
                     <a href="#"><i class="fa fa-group fa-fw"></i> Quản lý thành viên<span class="fa arrow"></span></a>

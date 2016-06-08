@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 //use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WordRequest;
+use App\User;
 use App\Word;
+use App\Learned;
+use App\Learning;
+use App\NotLearn;
 use File;
 
 //use Storage;
@@ -71,7 +75,6 @@ class WordController extends Controller {
 //        $word->parent_id = 0;
         $word->save();
 //        word_to_ex($word->id, $word->word);
-
 //        $word_parent = $word->id;
 //        if ($request->check_list == TRUE) {
 //            foreach ($request->chil as $chil) {
@@ -123,7 +126,6 @@ class WordController extends Controller {
 //            } else {
 //                $a_word['examples'] = $da;
 //            }
-
             //Nếu tồn tại file ảnh minh họa thì show ra
             if (File::exists('public/images/words/' . $a_word['image'])) {
                 $a_word['image'] = url('public/images/words/' . $a_word['image']);
@@ -137,6 +139,7 @@ class WordController extends Controller {
 //        print_r($data2);
         return '{"data":' . $json_word . '}';
     }
+
 //
 //    public function getExample($id = NULL) {
 //        $word = Word::find($id);
@@ -301,6 +304,7 @@ class WordController extends Controller {
             return '{"status" : "danger", "message" : "Không tìm thấy từ cần sửa!"}';
         }
     }
+
 //
 //    public function postDelete(Request $request) {
 //        $i = 0;
@@ -363,6 +367,58 @@ class WordController extends Controller {
         } else {
             return '{"status":"danger", "message":"Không có gì để xóa."}';
         }
+    }
+
+    protected function updateOne(User $user) {
+        $learned = Learned::where('user_id', $user->id)->first();
+        $learning = Learning::where('user_id', $user->id)->get();
+        $notLearn = NotLearn::where('user_id', $user->id)->first();
+        $words = Word::get();
+
+//        $arr_word = [];
+        $arr_learned = [];
+//        $arr_learning = [];
+        $arr_notlearn = [];
+        if ($learned->word_id_list != '') {
+            $arr_learned = explode(' ', $learned->word_id_list);
+        }
+
+        foreach ($words as $key => $w) {
+            $kq = FALSE;
+            if (!$kq) {
+                foreach ($arr_learned as $va) {
+                    if ($w->id == $va) {
+                        unset($words[$key]);
+                        $kq = TRUE;
+                        break;
+                    }
+                }
+            }
+            if (!$kq) {
+                foreach ($learning as $va) {
+                    if ($w->id == $va->word_id) {
+                        unset($words[$key]);
+                        $kq = TRUE;
+                        break;
+                    }
+                }
+            }
+
+            if (!$kq) {
+                $arr_notlearn[] = $w->id;
+            }
+        }
+        $notLearn->word_id_list = implode(' ', $arr_notlearn);
+
+        $notLearn->save();
+    }
+
+    public function getUpdate() {
+        $users = User::get();
+        foreach ($users as $user) {
+            $this->updateOne($user);
+        }
+        return redirect()->route('admin.home')->with(['flash_level' => 'success', 'flash_message' => 'Update thành công!']);
     }
 
 }
